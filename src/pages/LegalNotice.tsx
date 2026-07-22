@@ -35,6 +35,7 @@ export const LegalNotice: React.FC = () => {
             <p><strong className="text-[#e2e2e2]">Raison Sociale :</strong> CK IMMOBILIER SARL</p>
             <p><strong className="text-[#e2e2e2]">Forme Juridique :</strong> Société à Responsabilité Limitée (SARL) de droit camerounais</p>
             <p><strong className="text-[#e2e2e2]">Agrément Officiel :</strong> Inscrite au tableau des Agents et Promoteurs Immobiliers agréés par le Ministère de l'Habitat et du Développement Urbain (MINHDU - Cameroun)</p>
+            <p><strong className="text-[#e2e2e2]">Boîte Postale :</strong> BP 15387 Douala — Cameroun</p>
             <p><strong className="text-[#e2e2e2]">Objet Social :</strong> Transaction immobilière, Gestion de patrimoine, Conseil foncier et Conciergerie de prestige</p>
           </div>
         </section>
@@ -53,8 +54,8 @@ export const LegalNotice: React.FC = () => {
             </div>
             <div className="bg-[#1a1c1c] p-5 rounded-xl border border-[#4d4635]/30">
               <strong className="text-[#f2ca50] block text-sm mb-1">Agence Douala</strong>
-              <p className="text-[#e2e2e2]">Quartier Logpom, Douala</p>
-              <p className="text-[#99907c]">République du Cameroun</p>
+              <p className="text-[#e2e2e2]">Carrefour Bassong, Logpom</p>
+              <p className="text-[#99907c]">BP 15387 Douala — Cameroun</p>
             </div>
           </div>
         </section>
@@ -78,7 +79,7 @@ export const LegalNotice: React.FC = () => {
             4. Propriété Intellectuelle & Protection des Marques
           </h2>
           <p>
-            L'ensemble des visuels, logos (*CK Immobilier Prestige*), chartes de design, textes et photographies d'architecture présents sur ce site sont la propriété exclusive de CK Immobilier SARL ou font l'objet d'une autorisation spécifique d'exploitation. Toute reproduction partielle ou totale sans accord écrit préalable est strictly interdite.
+            L'ensemble des visuels, logos (*CK Immobilier Prestige*), chartes de design, textes et photographies d'architecture présents sur ce site sont la propriété exclusive de CK Immobilier SARL ou font l'objet d'une autorisation spécifique d'exploitation. Toute reproduction partielle ou totale sans accord écrit préalable est strictement interdite.
           </p>
         </section>
 

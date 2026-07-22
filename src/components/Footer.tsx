@@ -62,7 +62,7 @@ export const Footer: React.FC = () => {
           {/* Col 3: Agences & Siège */}
           <div>
             <h4 className="font-['Playfair_Display'] font-semibold text-[#f2ca50] text-lg mb-4">
-              Nos Implantation
+              Nos Implantations
             </h4>
             <div className="space-y-4 text-xs text-[#d0c5af]">
               <div className="flex items-start gap-2.5">
@@ -76,7 +76,7 @@ export const Footer: React.FC = () => {
                 <MapPin className="w-4 h-4 text-[#f2ca50] shrink-0 mt-0.5" />
                 <div>
                   <strong className="text-[#e2e2e2] block">Douala — Agence Logpom</strong>
-                  Quartier Logpom, Douala
+                  Carrefour Bassong, Logpom (BP 15387 Douala)
                 </div>
               </div>
             </div>

@@ -24,7 +24,7 @@ export const Contact: React.FC = () => {
           Contact & Prise de Rendez-vous Privé
         </h1>
         <p className="font-['Manrope'] text-base text-[#d0c5af]">
-          Notre cabinet vous accueille en toute confidentialité au siège de Yaoundé (Carrefour Golf) et à notre agence de Douala (Logpom).
+          Notre cabinet vous accueille en toute confidentialité au siège de Yaoundé (Carrefour Golf) et à notre agence de Douala (Carrefour Bassong, Logpom).
         </p>
       </div>
 
@@ -148,7 +148,7 @@ export const Contact: React.FC = () => {
                 <MapPin className="w-5 h-5 text-[#f2ca50] shrink-0 mt-0.5" />
                 <div>
                   <strong className="text-[#e2e2e2] block">Douala — Agence Logpom</strong>
-                  Quartier Logpom, Douala
+                  Carrefour Bassong, Logpom (BP 15387 Douala)
                 </div>
               </div>
 
