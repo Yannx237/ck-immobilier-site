@@ -6,6 +6,7 @@ import { PropertyCard } from '../components/PropertyCard';
 import { sampleProperties } from '../data/properties';
 import { ShieldCheck, Eye, Key, ChevronRight, PhoneCall, ArrowUpRight, Sparkles, Award } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import heroBuildingImg from '../assets/hero_ck.jpg';
 
 export const Home: React.FC = () => {
   const { t } = useTranslation();
@@ -40,17 +41,17 @@ export const Home: React.FC = () => {
   return (
     <div className="space-y-24 pb-20">
       
-      {/* Hero Section */}
+      {/* Hero Section with Official Generated Building Image */}
       <section className="relative min-h-[90vh] flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 text-center pt-24 pb-16 overflow-hidden">
         {/* Background Image with Dark Overlay */}
         <div className="absolute inset-0 z-0">
           <img
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzLihmQWOaM5YRkeJyMyxZUnBfy-6PgUrX1WGIC9_2oqIIntZHLfqXGbP_Pa1AVtUB9MZ8-hNB09o9hpp0Bnbfzz9TQs5dSGbA0MgrSlEZim000ofDRufJCrlgm4CD1_7W_7trtPx4GFCQIGd4t2AXrfAdp_uf5cJxZsZgHvZx7-pGmNVxPiB0TKy4TL3ROgHWlXKDVOwECyYbfT1RusGumumDM66bHZxsIJku2jun-5o3t4lH4kIbELLMMRV2KZP7TNFQjqSDz_Do"
-            alt="Architecture de Prestige"
+            src={heroBuildingImg}
+            alt="Immeuble CK Immobilier Prestige"
             className="w-full h-full object-cover object-center scale-105"
           />
           <div className="absolute inset-0 bg-[#121414]/75 backdrop-brightness-75 mix-blend-multiply"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#121414] via-transparent to-[#121414]/60"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#121414] via-[#121414]/50 to-[#121414]/70"></div>
         </div>
 
         {/* Hero Content */}
