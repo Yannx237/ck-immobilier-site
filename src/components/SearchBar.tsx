@@ -41,7 +41,10 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
       <div className="flex border-b border-[#4d4635]/40 mb-6">
         <button
           type="button"
-          onClick={() => setMode('ACHETER')}
+          onClick={() => {
+            setMode('ACHETER');
+            setBudget('');
+          }}
           className={`flex-1 py-3 font-['Hanken_Grotesk'] text-xs tracking-widest font-bold transition-all ${
             mode === 'ACHETER'
               ? 'text-[#f2ca50] border-b-2 border-[#f2ca50]'
@@ -52,7 +55,10 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         </button>
         <button
           type="button"
-          onClick={() => setMode('LOUER')}
+          onClick={() => {
+            setMode('LOUER');
+            setBudget('');
+          }}
           className={`flex-1 py-3 font-['Hanken_Grotesk'] text-xs tracking-widest font-bold transition-all ${
             mode === 'LOUER'
               ? 'text-[#f2ca50] border-b-2 border-[#f2ca50]'
@@ -77,7 +83,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
           />
         </div>
 
-        {/* Budget */}
+        {/* Dynamic Budget dropdown depending on ACHETER vs LOUER */}
         <div className="w-full md:w-1/3 relative">
           <DollarSign className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#f2ca50] w-5 h-5 pointer-events-none" />
           <select
@@ -86,9 +92,19 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
             className="w-full bg-[#1a1c1c] border border-[#4d4635] rounded px-10 py-3 text-[#e2e2e2] focus:border-[#f2ca50] focus:outline-none transition-colors text-sm font-['Manrope'] appearance-none cursor-pointer"
           >
             <option value="">{t('search.budgetFCFA')}</option>
-            <option value="500m">500 000 000 FCFA</option>
-            <option value="1.5b">1 500 000 000 FCFA</option>
-            <option value="3b+">3 000 000 000 FCFA +</option>
+            {mode === 'ACHETER' ? (
+              <>
+                <option value="50m">50 000 000 FCFA</option>
+                <option value="150m">150 000 000 FCFA</option>
+                <option value="300m+">300 000 000 FCFA +</option>
+              </>
+            ) : (
+              <>
+                <option value="250k">250 000 FCFA / mois</option>
+                <option value="500k">500 000 FCFA / mois</option>
+                <option value="1m+">1 000 000 FCFA / mois +</option>
+              </>
+            )}
           </select>
         </div>
 

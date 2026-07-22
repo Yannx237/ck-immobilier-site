@@ -44,7 +44,7 @@ export const BentoGrid: React.FC = () => {
 
           <div className="flex flex-col items-start md:items-end gap-2.5 sm:gap-3 w-full md:w-auto pt-2 md:pt-0">
             <span className="font-['Playfair_Display'] font-bold text-xl sm:text-2xl text-[#f2ca50]">
-              3 400 000 000 FCFA
+              350 000 000 FCFA
             </span>
             <Link
               to="/property/1"
@@ -81,7 +81,7 @@ export const BentoGrid: React.FC = () => {
             Penthouse Panoramique Bonanjo
           </h3>
           <p className="font-['Playfair_Display'] font-bold text-base sm:text-lg text-[#f2ca50]">
-            4 500 000 FCFA / mois
+            450 000 FCFA / mois
           </p>
         </div>
       </div>
@@ -110,7 +110,7 @@ export const BentoGrid: React.FC = () => {
             Résidence Privée Njo-Njo
           </h3>
           <p className="font-['Playfair_Display'] font-bold text-base sm:text-lg text-[#f2ca50]">
-            1 850 000 000 FCFA
+            185 000 000 FCFA
           </p>
         </div>
       </div>
