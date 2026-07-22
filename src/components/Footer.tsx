@@ -22,7 +22,7 @@ export const Footer: React.FC = () => {
               </span>
             </div>
             <p className="text-sm text-[#d0c5af] leading-relaxed font-['Manrope']">
-              Société immobilière agréée au Cameroun (MINHDU). Expertise et transaction de biens d'exception à Douala et Yaoundé.
+              Société immobilière agréée au Cameroun (MINHDU). Expertise et transaction de biens d'exception à Yaoundé et Douala.
             </p>
             <div className="flex items-center gap-2 text-xs text-[#f2ca50] font-['Hanken_Grotesk'] tracking-widest pt-2 font-bold">
               <Award className="w-4 h-4 text-[#f2ca50]" />
@@ -59,24 +59,24 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Col 3: Agences */}
+          {/* Col 3: Agences & Siège */}
           <div>
             <h4 className="font-['Playfair_Display'] font-semibold text-[#f2ca50] text-lg mb-4">
-              Nos Agences
+              Nos Implantation
             </h4>
             <div className="space-y-4 text-xs text-[#d0c5af]">
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#f2ca50] shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-[#e2e2e2] block">Douala — Siège Social</strong>
-                  Avenue Njo-Njo, Quartier Bonapriso (BP 15387)
+                  <strong className="text-[#e2e2e2] block">Yaoundé — Siège Social</strong>
+                  Carrefour Golf, Yaoundé
                 </div>
               </div>
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#f2ca50] shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-[#e2e2e2] block">Yaoundé — Agence Golf</strong>
-                  Carrefour Golf, Yaoundé
+                  <strong className="text-[#e2e2e2] block">Douala — Agence Logpom</strong>
+                  Quartier Logpom, Douala
                 </div>
               </div>
             </div>

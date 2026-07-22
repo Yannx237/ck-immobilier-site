@@ -2,7 +2,6 @@ import React from 'react';
 import { ShieldCheck, Building2, MapPin, Award, Phone, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-
 export const LegalNotice: React.FC = () => {
   return (
     <div className="pt-28 pb-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
@@ -19,7 +18,7 @@ export const LegalNotice: React.FC = () => {
           Mentions Légales & Informations Officieuses
         </h1>
         <p className="font-['Manrope'] text-sm text-[#d0c5af]">
-          Informations légales relatives à la société CK Immobilier SARL, agrée au République du Cameroun.
+          Informations légales relatives à la société CK Immobilier SARL, agrée en République du Cameroun.
         </p>
       </div>
 
@@ -48,13 +47,13 @@ export const LegalNotice: React.FC = () => {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
             <div className="bg-[#1a1c1c] p-5 rounded-xl border border-[#4d4635]/30">
-              <strong className="text-[#f2ca50] block text-sm mb-1">Siège Social & Agence Douala</strong>
-              <p className="text-[#e2e2e2]">Avenue Njo-Njo, Quartier Bonapriso</p>
-              <p className="text-[#99907c]">BP 15387 Douala — Cameroun</p>
+              <strong className="text-[#f2ca50] block text-sm mb-1">Siège Social — Yaoundé</strong>
+              <p className="text-[#e2e2e2]">Carrefour Golf, Yaoundé</p>
+              <p className="text-[#99907c]">République du Cameroun</p>
             </div>
             <div className="bg-[#1a1c1c] p-5 rounded-xl border border-[#4d4635]/30">
-              <strong className="text-[#f2ca50] block text-sm mb-1">Agence Yaoundé</strong>
-              <p className="text-[#e2e2e2]">Carrefour Golf, Yaoundé</p>
+              <strong className="text-[#f2ca50] block text-sm mb-1">Agence Douala</strong>
+              <p className="text-[#e2e2e2]">Quartier Logpom, Douala</p>
               <p className="text-[#99907c]">République du Cameroun</p>
             </div>
           </div>
@@ -79,7 +78,7 @@ export const LegalNotice: React.FC = () => {
             4. Propriété Intellectuelle & Protection des Marques
           </h2>
           <p>
-            L'ensemble des visuels, logos (*CK Immobilier Prestige*), chartes de design, textes et photographies d'architecture présents sur ce site sont la propriété exclusive de CK Immobilier SARL ou font l'objet d'une autorisation spécifique d'exploitation. Toute reproduction partielle ou totale sans accord écrit préalable est strictement interdite.
+            L'ensemble des visuels, logos (*CK Immobilier Prestige*), chartes de design, textes et photographies d'architecture présents sur ce site sont la propriété exclusive de CK Immobilier SARL ou font l'objet d'une autorisation spécifique d'exploitation. Toute reproduction partielle ou totale sans accord écrit préalable est strictly interdite.
           </p>
         </section>
 

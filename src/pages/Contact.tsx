@@ -24,7 +24,7 @@ export const Contact: React.FC = () => {
           Contact & Prise de Rendez-vous Privé
         </h1>
         <p className="font-['Manrope'] text-base text-[#d0c5af]">
-          Notre cabinet vous accueille en toute confidentialité dans ses bureaux de Douala (Bonapriso) et Yaoundé (Carrefour Golf).
+          Notre cabinet vous accueille en toute confidentialité au siège de Yaoundé (Carrefour Golf) et à notre agence de Douala (Logpom).
         </p>
       </div>
 
@@ -118,7 +118,7 @@ export const Contact: React.FC = () => {
 
               <button
                 type="submit"
-                className="bg-[#f2ca50] hover:bg-[#ffe088] text-[#3c2f00] font-['Hanken_Grotesk'] font-bold text-xs tracking-widest px-8 py-4 rounded shadow-[0_0_15px_rgba(242,202,80,0.3)] transition-all flex items-center justify-center gap-2"
+                className="bg-[#f2ca50] hover:bg-[#ffe088] text-[#3c2f00] font-['Hanken_Grotesk'] font-bold text-xs tracking-widest px-8 py-4 rounded shadow-[0_0_15px_rgba(242,202,80,0.3)] transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Send className="w-4 h-4" />
                 <span>TRANSMETTRE MA DEMANDE PRIVÉE</span>
@@ -139,16 +139,16 @@ export const Contact: React.FC = () => {
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-[#f2ca50] shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-[#e2e2e2] block">Douala — Siège Social</strong>
-                  Avenue Njo-Njo, Quartier Bonapriso, BP 15387 Douala
+                  <strong className="text-[#e2e2e2] block">Yaoundé — Siège Social</strong>
+                  Carrefour Golf, Yaoundé
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-[#f2ca50] shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-[#e2e2e2] block">Yaoundé — Agence Golf</strong>
-                  Carrefour Golf, Yaoundé
+                  <strong className="text-[#e2e2e2] block">Douala — Agence Logpom</strong>
+                  Quartier Logpom, Douala
                 </div>
               </div>
 

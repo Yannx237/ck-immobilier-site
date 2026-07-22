@@ -150,8 +150,9 @@ export const Navbar: React.FC = () => {
               <span>{t('nav.clientPortal')}</span>
             </Link>
             <p className="text-center font-['Manrope'] text-xs text-[#99907c]">
-              Douala (Bonapriso) • Yaoundé (Carrefour Golf)
+              Yaoundé (Carrefour Golf) • Douala (Logpom)
             </p>
+
           </div>
         </div>
       )}
