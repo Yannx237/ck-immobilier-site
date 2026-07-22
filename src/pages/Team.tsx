@@ -1,18 +1,18 @@
 import React from 'react';
 import { ShieldCheck, Award, CheckCircle, MessageCircle, Mail, Sparkles, MapPin } from 'lucide-react';
-
+import founderImg from '../assets/colbert_kouatcho.jpg';
 
 export const Team: React.FC = () => {
   const teamMembers = [
     {
-      name: 'Christian Kouam',
+      name: 'Colbert Kouatcho',
       role: 'Fondateur & Directeur Général',
       specialty: 'YAOUNDÉ — CARREFOUR GOLF & BASTOS',
-      bio: 'Plus de 15 ans d\'expérience dans le conseil financier, les mandats exclusifs et la gestion des actifs immobiliers d\'exception en Afrique Centrale.',
-      imageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80',
+      bio: 'Fondateur et visionnaire du cabinet CK Immobilier SARL. Plus de 15 ans d\'expertise dans la sécurisation foncière, les mandats exclusifs et la gestion du patrimoine immobilier d\'exception au Cameroun.',
+      imageUrl: founderImg,
       whatsapp: '237678386875',
-      email: 'c.kouam@ck-immobilier.cm',
-      tag: 'ASSOCIÉ FONDATEUR',
+      email: 'c.kouatcho@ck-immobilier.cm',
+      tag: 'FONDATEUR & DG',
     },
     {
       name: 'Vanessa Ndedi',
@@ -51,7 +51,7 @@ export const Team: React.FC = () => {
           L'Équipe Dirigeante CK Immobilier
         </h1>
         <p className="font-['Manrope'] text-base text-[#d0c5af]">
-          Une équipe chevronnée de courtiers seniors et d'experts fonciers unis par la même exigence de confidentialité et de déontologie.
+          Une équipe chevronnée de courtiers seniors et d'experts fonciers unis sous la direction de Mr Colbert Kouatcho.
         </p>
       </div>
 
@@ -83,7 +83,7 @@ export const Team: React.FC = () => {
             Double Ancrage Yaoundé & Douala
           </h3>
           <p className="text-xs text-[#d0c5af] font-['Manrope'] leading-relaxed">
-            Une couverture directe des deux capitales économiques et politiques au Carrefour Golf (Yaoundé) et Carrefour Bassong (Douala).
+            Une couverture directe des deux capitales au Carrefour Golf (Yaoundé) et Carrefour Bassong (Douala).
           </p>
         </div>
       </div>
@@ -108,7 +108,7 @@ export const Team: React.FC = () => {
                   <img
                     src={member.imageUrl}
                     alt={member.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100"
+                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 opacity-95 group-hover:opacity-100"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#141616] via-transparent to-transparent"></div>
                   
@@ -140,7 +140,7 @@ export const Team: React.FC = () => {
               {/* Direct Contact Buttons */}
               <div className="p-6 pt-0 flex items-center gap-2">
                 <a
-                  href={`https://wa.me/${member.whatsapp}?text=${encodeURIComponent(`Bonjour ${member.name}, je vous contacte depuis le site CK Immobilier pour un projet de prestige.`)}`}
+                  href={`https://wa.me/${member.whatsapp}?text=${encodeURIComponent(`Bonjour Mr ${member.name}, je vous contacte depuis le site CK Immobilier pour un projet de prestige.`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 bg-[#25D366] hover:bg-[#20bd5a] text-white text-[11px] font-['Hanken_Grotesk'] font-bold py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 transition-all shadow-md cursor-pointer"

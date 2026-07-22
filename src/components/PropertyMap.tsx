@@ -28,6 +28,19 @@ const keySvg = `
 </svg>
 `;
 
+// Helper to format map badge prices concisely (e.g. 350M FCFA or 450k/mo)
+const formatMapPrice = (priceStr: string, isRent: boolean): string => {
+  const num = parseInt(priceStr.replace(/[^0-9]/g, ''), 10) || 0;
+  if (num >= 1_000_000) {
+    const millions = (num / 1_000_000).toLocaleString('fr-FR');
+    return isRent ? `${millions}M FCFA/mo` : `${millions}M FCFA`;
+  } else if (num >= 1_000) {
+    const thousands = (num / 1_000).toLocaleString('fr-FR');
+    return isRent ? `${thousands}k FCFA/mo` : `${thousands}k FCFA`;
+  }
+  return priceStr;
+};
+
 // Custom Leaflet DivIcon with House/Key SVG Icons & Color Coding (Achat vs Location)
 const createCustomMarkerIcon = (
   price: string,
@@ -38,9 +51,7 @@ const createCustomMarkerIcon = (
   const isRent = listingType === 'RENT';
   const tagLabel = isRent ? 'LOC' : 'ACHAT';
   
-  // Format short price (e.g. 3.4B FCFA or 4.5M/mo)
-  const pricePart = price.split(' ')[0];
-  const shortPriceStr = isRent ? `${pricePart} FCFA/mo` : `${pricePart} FCFA`;
+  const shortPriceStr = formatMapPrice(price, isRent);
 
   // Color tokens
   const primaryBg = isRent ? '#25a475' : '#d4af37'; // Emerald Green for RENT, Prestige Gold for SALE
@@ -102,7 +113,6 @@ const createCustomMarkerIcon = (
     iconSize: [44, 44],
     iconAnchor: [22, 44],
   });
-
 };
 
 // Map recenter helper
