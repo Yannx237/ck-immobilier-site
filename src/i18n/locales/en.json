@@ -1,8 +1,8 @@
 {
   "nav": {
     "home": "HOME",
-    "portfolio": "PROPERTY PORTFOLIO",
-    "team": "TEAM & SERVICES",
+    "portfolio": "PORTFOLIO PATRIMONY",
+    "team": "MANAGEMENT & GOVERNANCE",
     "contact": "PRIVATE CONTACT",
     "clientPortal": "CLIENT PORTAL",
     "prestigePatrimony": "PRESTIGE & PATRIMONY",
@@ -15,38 +15,88 @@
     "allCities": "ALL CITIES",
     "douala": "DOUALA",
     "yaounde": "YAOUNDE",
-    "budgetFCFA": "MAXIMUM BUDGET (FCFA)",
+    "minPrice": "Min FCFA",
+    "maxPrice": "Max FCFA",
     "searchProperties": "SEARCH PROPERTIES",
     "directCkOnly": "DIRECT CK MANDATES",
     "viewGrid": "GRID VIEW",
-    "viewMap": "INTERACTIVE MAP VIEW"
+    "viewMap": "INTERACTIVE MAP VIEW",
+    "allTypes": "ALL TYPES",
+    "propertiesFound": "EXCLUSIVE PROPERTIES FOUND",
+    "propertyFound": "EXCLUSIVE PROPERTY FOUND",
+    "resetFilters": "RESET FILTERS",
+    "page": "PAGE",
+    "of": "OF",
+    "previous": "PREVIOUS",
+    "next": "NEXT",
+    "noProperties": "No properties match your current search criteria."
   },
   "hero": {
     "title1": "REAL ESTATE EXCELLENCE,",
     "title2": "AT EVERY STEP.",
-    "sub": "Discover an exclusive selection of luxury residences, contemporary villas and prestige penthouses in Douala and Yaounde.",
-    "ourPatrimony": "Our Portfolio",
+    "sub": "Discover an exclusive selection of luxury residences, contemporary villas, and prestige penthouses in Douala and Yaounde.",
+    "ourPatrimony": "Our Patrimony",
     "exclusivePatrimony": "Exclusive",
-    "seeAllProperties": "VIEW ENTIRE PORTFOLIO"
+    "seeAllProperties": "VIEW ALL PROPERTIES"
+  },
+  "services": {
+    "badge": "EXCELLENCE & ADVISORY DUTY",
+    "title1": "The Art of Real Estate",
+    "title2": "Transactions",
+    "desc": "CK Immobilier SARL redefines the standards of exceptional real estate in Cameroon. We combine legal rigor, systematic land title verification, and absolute discretion.",
+    "stat": "100% VERIFIED LAND TITLES",
+    "statDesc": "Every file undergoes a prior ownership audit with the land conservatories of Douala and Yaounde.",
+    "ctaSenior": "CONSULT WITH A SENIOR ASSOCIATE"
   },
   "property": {
-    "saleBadge": "FOR SALE",
-    "rentBadge": "FOR RENT",
-    "directCkBadge": "DIRECT CK MANDATE",
+    "saleBadge": "PRESTIGE PURCHASE",
+    "rentBadge": "LUXURY RENTAL",
+    "directCkBadge": "DIRECT CK (EXCLUSIVE MANDATE)",
     "perMonth": "/ month",
-    "bedrooms": "bedrooms",
+    "bedrooms": "Bedrooms",
+    "bathrooms": "Bathrooms",
     "surface": "sqm",
-    "bookPrivateTour": "BOOK PRIVATE TOUR",
-    "callAgent": "DIRECT AGENT CALL"
+    "bookPrivateTour": "REQUEST A PRIVATE TOUR",
+    "callAgent": "DIRECT CALL: +237 678 38 68 75 / +237 656 24 20 81",
+    "whatsappChat": "CHAT ON WHATSAPP WITH AGENT",
+    "titleGuarantee": "Verified Land Title Guarantee",
+    "titleGuaranteeDesc": "This property has undergone prior ownership verification at the competent land conservatory.",
+    "editorialDesc": "Editorial Description & Features",
+    "luxuryEquipments": "LUXURY FEATURES & AMENITIES"
+  },
+  "team": {
+    "badge": "OUR FIRM & GOVERNANCE",
+    "title": "CK Immobilier Management",
+    "sub": "Exceptional guidance under the strategic direction of Mr. Colbert Kouatcho.",
+    "founderTitle": "Founder & Managing Director",
+    "privilegedInterlocutor": "PRIVILEGED ADVISOR",
+    "excellenceTitle": "Excellence & Land Rigor",
+    "excellenceDesc": "Every property under mandate undergoes systematic prior legal audit at the land conservatories.",
+    "confidentialityTitle": "Confidentiality & Off-Market",
+    "confidentialityDesc": "Scrupulous respect for the anonymity of our buyers and sellers under confidentiality agreements.",
+    "anchoringTitle": "Dual Base Yaounde & Douala",
+    "anchoringDesc": "Direct coverage of both capitals at Carrefour Golf (Yaounde) and Carrefour Bassong (Douala)."
   },
   "contact": {
     "title": "Contact & Private Appointment",
-    "sub": "Our firm welcomes you with complete confidentiality in Douala (Bonapriso) and Yaounde (Carrefour Golf) offices.",
-    "fullName": "YOUR FULL NAME *",
+    "sub": "Our firm welcomes you in strict confidence at our Yaounde headquarters (Carrefour Golf) and Douala agency (Carrefour Bassong, Logpom).",
+    "fullName": "FULL NAME *",
     "phoneWhatsapp": "PHONE / WHATSAPP *",
     "emailAddress": "EMAIL ADDRESS",
-    "selectMotif": "PURPOSE OF INQUIRY *",
+    "selectMotif": "PURPOSE OF REQUEST *",
     "message": "YOUR MESSAGE / PROJECT SPECIFICATIONS",
-    "submitRequest": "SUBMIT PRIVATE INQUIRY"
+    "submitRequest": "SUBMIT PRIVATE REQUEST",
+    "successTitle": "Your request has been registered",
+    "successDesc": "One of our senior associates will contact you within 24 hours to arrange a confidential interview."
+  },
+  "footer": {
+    "companyDesc": "Accredited real estate company in Cameroon (MINHDU). Expertise and transaction of prestige properties in Yaounde and Douala.",
+    "locationsTitle": "Our Locations",
+    "yaoundeHeadquarters": "Yaounde — Headquarters",
+    "doualaAgency": "Douala — Logpom Agency",
+    "contactTitle": "Prestige Contact",
+    "legalNotice": "Legal Notice",
+    "privacyPolicy": "Privacy Policy",
+    "ethicsCharter": "Ethics Charter & Prestige"
   }
 }

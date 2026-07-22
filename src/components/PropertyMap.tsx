@@ -156,8 +156,9 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
   return (
     <div className="relative w-full h-full min-h-[500px] overflow-hidden rounded-xl border border-[#4d4635]/40 shadow-2xl">
       
-      {/* Floating In-Map Search Bar & Filters Overlay (Mobile & Desktop) */}
-      <div className="absolute top-3 left-3 right-3 sm:left-4 sm:right-auto z-[1000] flex flex-col sm:flex-row items-stretch sm:items-center gap-2 bg-[#1a1c1c]/95 backdrop-blur-md p-2 rounded-xl border border-[#f2ca50]/40 shadow-2xl max-w-lg">
+      {/* Floating In-Map Search Bar & Filters Overlay (Visible ONLY on Mobile) */}
+      <div className="absolute top-3 left-3 right-3 z-[1000] flex sm:hidden flex-col gap-2 bg-[#1a1c1c]/95 backdrop-blur-md p-2 rounded-xl border border-[#f2ca50]/40 shadow-2xl">
+
         
         {/* Search Input */}
         <div className="relative flex-grow">

@@ -1,11 +1,14 @@
 import React from 'react';
 import { ShieldCheck, Award, CheckCircle, Sparkles, MapPin } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import founderImg from '../assets/colbert_kouatcho.jpg';
 
 export const Team: React.FC = () => {
+  const { t } = useTranslation();
+
   const founderMember = {
     name: 'Colbert Kouatcho',
-    role: 'Fondateur & Directeur Général',
+    role: t('team.founderTitle'),
     specialty: 'YAOUNDÉ (SIÈGE) & DOUALA (AGENCE)',
     bio: 'Fondateur et visionnaire du cabinet CK Immobilier SARL. Plus de 15 ans d\'expertise dans la sécurisation foncière, la vérification systématique des Titres Fonciers, les mandats exclusifs et la gestion du patrimoine immobilier d\'exception au Cameroun.',
     imageUrl: founderImg,
@@ -20,14 +23,14 @@ export const Team: React.FC = () => {
         <div className="inline-flex items-center gap-2 bg-[#1e2020] border border-[#f2ca50]/40 px-4 py-1.5 rounded-full">
           <ShieldCheck className="w-4 h-4 text-[#f2ca50]" />
           <span className="font-['Hanken_Grotesk'] text-xs font-bold tracking-[0.2em] text-[#f2ca50]">
-            NOTRE CABINET & GOUVERNANCE
+            {t('team.badge')}
           </span>
         </div>
         <h1 className="font-['Playfair_Display'] text-4xl sm:text-5xl font-bold text-[#e2e2e2]">
-          La Direction CK Immobilier
+          {t('team.title')}
         </h1>
         <p className="font-['Manrope'] text-base text-[#d0c5af]">
-          Un accompagnement d'exception sous la direction stratégique de Mr Colbert Kouatcho.
+          {t('team.sub')}
         </p>
       </div>
 
@@ -36,30 +39,30 @@ export const Team: React.FC = () => {
         <div className="bg-[#141616] hover:bg-[#181a1a] p-8 rounded-2xl border border-[#4d4635]/40 hover:border-[#f2ca50]/50 transition-all space-y-3 shadow-xl">
           <Award className="w-8 h-8 text-[#f2ca50]" />
           <h3 className="font-['Playfair_Display'] text-xl font-semibold text-[#e2e2e2]">
-            Excellence & Rigueur Foncière
+            {t('team.excellenceTitle')}
           </h3>
           <p className="text-xs text-[#d0c5af] font-['Manrope'] leading-relaxed">
-            Chaque bien sous mandat fait l'objet d'un audit juridique préalable systématique auprès des conservations foncières.
+            {t('team.excellenceDesc')}
           </p>
         </div>
 
         <div className="bg-[#141616] hover:bg-[#181a1a] p-8 rounded-2xl border border-[#4d4635]/40 hover:border-[#f2ca50]/50 transition-all space-y-3 shadow-xl">
           <Sparkles className="w-8 h-8 text-[#f2ca50]" />
           <h3 className="font-['Playfair_Display'] text-xl font-semibold text-[#e2e2e2]">
-            Confidentialité & Off-Market
+            {t('team.confidentialityTitle')}
           </h3>
           <p className="text-xs text-[#d0c5af] font-['Manrope'] leading-relaxed">
-            Respect scrupuleux de l'anonymat de nos acquéreurs et vendeurs d'exception sous accord de confidentialité.
+            {t('team.confidentialityDesc')}
           </p>
         </div>
 
         <div className="bg-[#141616] hover:bg-[#181a1a] p-8 rounded-2xl border border-[#4d4635]/40 hover:border-[#f2ca50]/50 transition-all space-y-3 shadow-xl">
           <CheckCircle className="w-8 h-8 text-[#f2ca50]" />
           <h3 className="font-['Playfair_Display'] text-xl font-semibold text-[#e2e2e2]">
-            Double Ancrage Yaoundé & Douala
+            {t('team.anchoringTitle')}
           </h3>
           <p className="text-xs text-[#d0c5af] font-['Manrope'] leading-relaxed">
-            Une couverture directe des deux capitales au Carrefour Golf (Yaoundé) et Carrefour Bassong (Douala).
+            {t('team.anchoringDesc')}
           </p>
         </div>
       </div>
@@ -68,10 +71,10 @@ export const Team: React.FC = () => {
       <div className="max-w-4xl mx-auto space-y-8">
         <div className="text-center space-y-2">
           <span className="font-['Hanken_Grotesk'] text-xs font-bold text-[#f2ca50] tracking-widest block">
-            INTERLOCUTEUR PRIVILÉGIÉ
+            {t('team.privilegedInterlocutor')}
           </span>
           <h2 className="font-['Playfair_Display'] text-3xl font-bold text-[#e2e2e2]">
-            Le Fondateur & Directeur Général
+            {t('team.founderTitle')}
           </h2>
         </div>
 
