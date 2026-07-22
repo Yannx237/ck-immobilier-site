@@ -3,7 +3,8 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import type { PropertyWithMap } from '../data/properties';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, ArrowRight, Search, Filter } from 'lucide-react';
+import { ShieldCheck, ArrowRight, Search, Maximize2, Minimize2 } from 'lucide-react';
+
 
 interface PropertyMapProps {
   properties: PropertyWithMap[];
@@ -131,6 +132,7 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
 }) => {
   const [mapSearchText, setMapSearchText] = useState<string>('');
   const [mapModeFilter, setMapModeFilter] = useState<'ALL' | 'ACHETER' | 'LOUER'>('ALL');
+  const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
 
   // Filter map markers in real-time based on map floating search bar
   const displayedProperties = properties.filter((prop) => {
@@ -154,36 +156,38 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
     : [4.0435, 9.6894];
 
   return (
-    <div className="relative w-full h-full min-h-[500px] overflow-hidden rounded-xl border border-[#4d4635]/40 shadow-2xl">
+    <div className={`relative w-full transition-all duration-300 overflow-hidden rounded-xl border border-[#4d4635]/40 shadow-2xl ${
+      isFullScreen
+        ? 'fixed inset-0 z-[2000] w-screen h-screen rounded-none border-none'
+        : 'h-full min-h-[480px] sm:min-h-[600px]'
+    }`}>
       
-      {/* Floating In-Map Search Bar & Filters Overlay (Visible ONLY on Mobile) */}
-      <div className="absolute top-3 left-3 right-3 z-[1000] flex sm:hidden flex-col gap-2 bg-[#1a1c1c]/95 backdrop-blur-md p-2 rounded-xl border border-[#f2ca50]/40 shadow-2xl">
-
+      {/* Floating In-Map Search Bar & Fullscreen Controls Overlay (Visible ONLY on Mobile) */}
+      <div className="absolute top-3 left-3 right-3 z-[1000] flex sm:hidden items-center gap-2 bg-[#1a1c1c]/95 backdrop-blur-md p-2 rounded-xl border border-[#f2ca50]/40 shadow-2xl">
         
         {/* Search Input */}
         <div className="relative flex-grow">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#f2ca50] w-3.5 h-3.5" />
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#f2ca50] w-3.5 h-3.5" />
           <input
             type="text"
             value={mapSearchText}
             onChange={(e) => setMapSearchText(e.target.value)}
             placeholder="Rechercher sur la carte..."
-            className="w-full bg-[#121414] border border-[#4d4635]/40 rounded-lg pl-8 pr-3 py-1.5 text-xs text-[#e2e2e2] placeholder-[#99907c] focus:border-[#f2ca50] focus:outline-none font-['Manrope']"
+            className="w-full bg-[#121414] border border-[#4d4635]/40 rounded-lg pl-7 pr-2 py-1.5 text-xs text-[#e2e2e2] placeholder-[#99907c] focus:border-[#f2ca50] focus:outline-none font-['Manrope']"
           />
         </div>
 
         {/* Quick Mode Filters */}
         <div className="flex items-center gap-1 shrink-0">
-          <Filter className="w-3 h-3 text-[#f2ca50] hidden sm:inline" />
           {(['ALL', 'ACHETER', 'LOUER'] as const).map((mode) => (
             <button
               key={mode}
               type="button"
               onClick={() => setMapModeFilter(mode)}
-              className={`text-[10px] font-['Hanken_Grotesk'] font-bold px-2 py-1 rounded transition-all cursor-pointer ${
+              className={`text-[9px] font-['Hanken_Grotesk'] font-bold px-2 py-1.5 rounded transition-all cursor-pointer ${
                 mapModeFilter === mode
                   ? 'bg-[#f2ca50] text-[#3c2f00]'
-                  : 'bg-[#121414] text-[#d0c5af] hover:text-[#f2ca50] border border-[#4d4635]/30'
+                  : 'bg-[#121414] text-[#d0c5af] border border-[#4d4635]/30'
               }`}
             >
               {mode === 'ALL' ? 'TOUS' : mode === 'ACHETER' ? 'ACHAT' : 'LOC'}
@@ -191,6 +195,28 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
           ))}
         </div>
 
+        {/* Fullscreen Toggle Button */}
+        <button
+          type="button"
+          onClick={() => setIsFullScreen(!isFullScreen)}
+          aria-label={isFullScreen ? 'Quitter le plein écran' : 'Carte en plein écran'}
+          className="p-1.5 bg-[#f2ca50] text-[#3c2f00] rounded-lg shrink-0 shadow-md cursor-pointer font-bold"
+        >
+          {isFullScreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+        </button>
+
+      </div>
+
+      {/* Desktop Fullscreen Button */}
+      <div className="absolute top-4 right-4 z-[1000] hidden sm:block">
+        <button
+          type="button"
+          onClick={() => setIsFullScreen(!isFullScreen)}
+          className="flex items-center gap-2 bg-[#1a1c1c]/90 backdrop-blur-md px-3.5 py-2 border border-[#f2ca50]/40 text-[#f2ca50] rounded-lg text-xs font-['Hanken_Grotesk'] font-bold hover:bg-[#f2ca50] hover:text-[#3c2f00] transition-colors shadow-lg cursor-pointer"
+        >
+          {isFullScreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+          <span>{isFullScreen ? 'REDUIRE' : 'PLEIN ÉCRAN'}</span>
+        </button>
       </div>
 
       <MapContainer
