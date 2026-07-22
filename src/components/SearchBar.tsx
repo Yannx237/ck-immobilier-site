@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Search, MapPin, DollarSign, CheckSquare, Square } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface SearchBarProps {
   onSearch?: (filters: { mode: string; location: string; budget: string; directCk: boolean }) => void;
 }
 
 export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+
   const [mode, setMode] = useState<'ACHETER' | 'LOUER'>('ACHETER');
   const [location, setLocation] = useState('');
   const [budget, setBudget] = useState('');
@@ -15,11 +20,20 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     e.preventDefault();
     if (onSearch) {
       onSearch({ mode, location, budget, directCk });
+    } else {
+      // Navigate to /catalogue with search params
+      const params = new URLSearchParams();
+      if (mode) params.set('mode', mode);
+      if (location.trim()) params.set('search', location.trim());
+      if (budget) params.set('budget', budget);
+      if (directCk) params.set('directCk', 'true');
+      
+      navigate(`/catalogue?${params.toString()}`);
     }
   };
 
   return (
-    <div className="glass-panel w-full max-w-4xl mx-auto p-6 md:p-8 rounded-xl shadow-2xl relative overflow-hidden">
+    <div className="glass-panel w-full max-w-4xl mx-auto p-5 sm:p-6 md:p-8 rounded-xl shadow-2xl relative overflow-hidden">
       {/* Top golden highlight line */}
       <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#f2ca50] to-transparent opacity-80"></div>
 
@@ -34,7 +48,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
               : 'text-[#d0c5af] hover:text-[#f2ca50]'
           }`}
         >
-          ACHETER
+          {t('search.buy')}
         </button>
         <button
           type="button"
@@ -45,7 +59,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
               : 'text-[#d0c5af] hover:text-[#f2ca50]'
           }`}
         >
-          LOUER
+          {t('search.rent')}
         </button>
       </div>
 
@@ -71,7 +85,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
             onChange={(e) => setBudget(e.target.value)}
             className="w-full bg-[#1a1c1c] border border-[#4d4635] rounded px-10 py-3 text-[#e2e2e2] focus:border-[#f2ca50] focus:outline-none transition-colors text-sm font-['Manrope'] appearance-none cursor-pointer"
           >
-            <option value="">Budget Max (FCFA)</option>
+            <option value="">{t('search.budgetFCFA')}</option>
             <option value="500m">500 000 000 FCFA</option>
             <option value="1.5b">1 500 000 000 FCFA</option>
             <option value="3b+">3 000 000 000 FCFA +</option>
@@ -95,7 +109,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
 
           <button
             type="submit"
-            className="bg-[#f2ca50] text-[#3c2f00] font-bold p-3.5 rounded hover:bg-[#ffe088] transition-all shadow-[0_0_15px_rgba(242,202,80,0.3)] hover:shadow-[0_0_20px_rgba(242,202,80,0.6)] flex items-center justify-center shrink-0"
+            aria-label="Rechercher"
+            className="bg-[#f2ca50] text-[#3c2f00] font-bold p-3.5 rounded hover:bg-[#ffe088] transition-all shadow-[0_0_15px_rgba(242,202,80,0.3)] hover:shadow-[0_0_20px_rgba(242,202,80,0.6)] flex items-center justify-center shrink-0 cursor-pointer"
           >
             <Search className="w-5 h-5" />
           </button>

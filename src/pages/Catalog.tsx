@@ -1,27 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams, Link } from 'react-router-dom';
 import { PropertyCard } from '../components/PropertyCard';
 import { PropertyMap } from '../components/PropertyMap';
 import { sampleProperties, type PropertyWithMap } from '../data/properties';
 import { Search, Filter, ShieldCheck, LayoutGrid, Map as MapIcon, ArrowRight } from 'lucide-react';
-
-import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export const Catalog: React.FC = () => {
-  const [selectedCity, setSelectedCity] = useState<string>('ALL');
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [onlyDirectCk, setOnlyDirectCk] = useState<boolean>(false);
+  const [searchParams] = useSearchParams();
+
+  const { t } = useTranslation();
+
+  // Read URL query params
+  const paramMode = searchParams.get('mode'); // 'ACHETER' | 'LOUER'
+  const paramSearch = searchParams.get('search') || '';
+  const paramDirectCk = searchParams.get('directCk') === 'true';
+  const paramCity = searchParams.get('city') || 'ALL';
+
+  const [selectedMode, setSelectedMode] = useState<'ALL' | 'ACHETER' | 'LOUER'>(
+    paramMode === 'LOUER' ? 'LOUER' : paramMode === 'ACHETER' ? 'ACHETER' : 'ALL'
+  );
+  const [selectedCity, setSelectedCity] = useState<string>(paramCity);
+  const [searchQuery, setSearchQuery] = useState<string>(paramSearch);
+  const [onlyDirectCk, setOnlyDirectCk] = useState<boolean>(paramDirectCk);
   const [viewMode, setViewMode] = useState<'MAP' | 'GRID'>('MAP');
   const [selectedPropertyId, setSelectedPropertyId] = useState<string | null>(null);
 
+  // Sync state if URL search parameters change
+  useEffect(() => {
+    if (paramMode === 'LOUER') setSelectedMode('LOUER');
+    else if (paramMode === 'ACHETER') setSelectedMode('ACHETER');
+    
+    if (paramSearch) setSearchQuery(paramSearch);
+    if (paramDirectCk) setOnlyDirectCk(true);
+    if (paramCity) setSelectedCity(paramCity);
+  }, [paramMode, paramSearch, paramDirectCk, paramCity]);
+
   const filteredProperties: PropertyWithMap[] = sampleProperties.filter((item) => {
+    // Mode filter (ACHETER -> SALE, LOUER -> RENT)
+    const matchesMode =
+      selectedMode === 'ALL' ||
+      (selectedMode === 'ACHETER' && item.listingType === 'SALE') ||
+      (selectedMode === 'LOUER' && item.listingType === 'RENT');
+
     const matchesCity = selectedCity === 'ALL' || item.city.toUpperCase() === selectedCity;
+
     const matchesSearch =
+      !searchQuery.trim() ||
       item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.category.toLowerCase().includes(searchQuery.toLowerCase());
+
     const matchesDirectCk = !onlyDirectCk || item.isDirectCk;
 
-    return matchesCity && matchesSearch && matchesDirectCk;
+    return matchesMode && matchesCity && matchesSearch && matchesDirectCk;
   });
 
   return (
@@ -55,7 +88,7 @@ export const Catalog: React.FC = () => {
                 }`}
               >
                 <MapIcon className="w-4 h-4" />
-                <span className="hidden sm:inline">VUE CARTE</span>
+                <span className="hidden sm:inline">{t('search.viewMap')}</span>
               </button>
 
               <button
@@ -68,13 +101,13 @@ export const Catalog: React.FC = () => {
                 }`}
               >
                 <LayoutGrid className="w-4 h-4" />
-                <span className="hidden sm:inline">VUE GRILLE</span>
+                <span className="hidden sm:inline">{t('search.viewGrid')}</span>
               </button>
             </div>
           </div>
 
           {/* Search Input */}
-          <div className="relative w-full lg:w-96">
+          <div className="relative w-full lg:w-80">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#f2ca50] w-4 h-4" />
             <input
               type="text"
@@ -88,25 +121,45 @@ export const Catalog: React.FC = () => {
           {/* Filter Pills */}
           <div className="flex items-center gap-2.5 w-full lg:w-auto overflow-x-auto pb-1 lg:pb-0 no-scrollbar">
             <Filter className="w-4 h-4 text-[#f2ca50] shrink-0" />
+            
+            {/* Mode Pills: TOUS / ACHAT / LOCATION */}
+            {(['ALL', 'ACHETER', 'LOUER'] as const).map((m) => (
+              <button
+                key={m}
+                type="button"
+                onClick={() => setSelectedMode(m)}
+                className={`font-['Hanken_Grotesk'] text-[11px] font-bold tracking-wider px-3 py-1.5 rounded transition-all shrink-0 ${
+                  selectedMode === m
+                    ? 'bg-[#f2ca50] text-[#3c2f00] shadow-md'
+                    : 'bg-[#1a1c1c] text-[#d0c5af] hover:text-[#f2ca50] border border-[#4d4635]/50'
+                }`}
+              >
+                {m === 'ALL' ? 'TOUS LES TYPES' : m === 'ACHETER' ? 'ACHAT' : 'LOCATION'}
+              </button>
+            ))}
+
+            <span className="text-[#4d4635] font-bold">|</span>
+
+            {/* City Pills */}
             {['ALL', 'DOUALA', 'YAOUNDÉ'].map((city) => (
               <button
                 key={city}
                 type="button"
                 onClick={() => setSelectedCity(city)}
-                className={`font-['Hanken_Grotesk'] text-[11px] font-bold tracking-wider px-3.5 py-1.5 rounded transition-all shrink-0 ${
+                className={`font-['Hanken_Grotesk'] text-[11px] font-bold tracking-wider px-3 py-1.5 rounded transition-all shrink-0 ${
                   selectedCity === city
                     ? 'bg-[#f2ca50] text-[#3c2f00] shadow-md'
                     : 'bg-[#1a1c1c] text-[#d0c5af] hover:text-[#f2ca50] border border-[#4d4635]/50'
                 }`}
               >
-                {city === 'ALL' ? 'TOUTES LES VILLES' : city}
+                {city === 'ALL' ? 'VILLES' : city}
               </button>
             ))}
 
             <button
               type="button"
               onClick={() => setOnlyDirectCk(!onlyDirectCk)}
-              className={`font-['Hanken_Grotesk'] text-[11px] font-bold tracking-wider px-3.5 py-1.5 rounded transition-all shrink-0 border ${
+              className={`font-['Hanken_Grotesk'] text-[11px] font-bold tracking-wider px-3 py-1.5 rounded transition-all shrink-0 border ${
                 onlyDirectCk
                   ? 'border-[#f2ca50] bg-[#f2ca50]/20 text-[#f2ca50]'
                   : 'border-[#4d4635]/50 bg-[#1a1c1c] text-[#99907c]'
@@ -151,9 +204,16 @@ export const Catalog: React.FC = () => {
 
                     <div className="flex flex-col justify-between flex-grow">
                       <div>
-                        <span className="text-[10px] font-['Hanken_Grotesk'] text-[#f2ca50] font-bold tracking-wider block">
-                          {prop.location.toUpperCase()} — {prop.city.toUpperCase()}
-                        </span>
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-[10px] font-['Hanken_Grotesk'] text-[#f2ca50] font-bold tracking-wider">
+                            {prop.location.toUpperCase()} — {prop.city.toUpperCase()}
+                          </span>
+                          <span className={`text-[9px] font-['Hanken_Grotesk'] font-bold px-1.5 py-0.5 rounded ${
+                            prop.listingType === 'SALE' ? 'bg-[#f2ca50]/20 text-[#f2ca50]' : 'bg-[#68dba9]/20 text-[#68dba9]'
+                          }`}>
+                            {prop.listingType === 'SALE' ? 'ACHAT' : 'LOCATION'}
+                          </span>
+                        </div>
                         <h3 className="font-['Playfair_Display'] font-semibold text-base text-[#e2e2e2] line-clamp-1">
                           {prop.title}
                         </h3>
@@ -180,7 +240,7 @@ export const Catalog: React.FC = () => {
             ) : (
               <div className="text-center py-12 bg-[#1a1c1c] rounded-xl border border-[#4d4635]/30">
                 <p className="font-['Playfair_Display'] text-sm text-[#d0c5af]">
-                  Aucun bien ne correspond aux filtres.
+                  Aucun bien ne correspond aux filtres actuels.
                 </p>
               </div>
             )}
