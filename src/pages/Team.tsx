@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, Award, CheckCircle, MessageCircle, Mail, Sparkles, MapPin } from 'lucide-react';
+import { ShieldCheck, Award, CheckCircle, Sparkles, MapPin } from 'lucide-react';
 import founderImg from '../assets/colbert_kouatcho.jpg';
 
 export const Team: React.FC = () => {
@@ -9,8 +9,6 @@ export const Team: React.FC = () => {
     specialty: 'YAOUNDÉ (SIÈGE) & DOUALA (AGENCE)',
     bio: 'Fondateur et visionnaire du cabinet CK Immobilier SARL. Plus de 15 ans d\'expertise dans la sécurisation foncière, la vérification systématique des Titres Fonciers, les mandats exclusifs et la gestion du patrimoine immobilier d\'exception au Cameroun.',
     imageUrl: founderImg,
-    whatsapp: '237678386875',
-    email: 'c.kouatcho@ck-immobilier.cm',
     tag: 'FONDATEUR & DG',
   };
 
@@ -107,28 +105,6 @@ export const Team: React.FC = () => {
             <p className="text-sm text-[#d0c5af] font-['Manrope'] leading-relaxed">
               {founderMember.bio}
             </p>
-
-            {/* Direct Contact Buttons */}
-            <div className="pt-2 flex flex-wrap items-center gap-4">
-              <a
-                href={`https://wa.me/${founderMember.whatsapp}?text=${encodeURIComponent(`Bonjour Mr ${founderMember.name}, je vous contacte depuis le site CK Immobilier pour un projet de prestige.`)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-['Hanken_Grotesk'] font-bold py-3.5 px-6 rounded-xl flex items-center gap-2 transition-all shadow-lg cursor-pointer"
-              >
-                <MessageCircle className="w-4 h-4" />
-                <span>DISCUTER SUR WHATSAPP</span>
-              </a>
-
-              <a
-                href={`mailto:${founderMember.email}`}
-                className="bg-[#1a1c1c] hover:bg-[#252828] text-[#e2e2e2] border border-[#4d4635]/50 text-xs font-['Hanken_Grotesk'] font-bold py-3.5 px-6 rounded-xl flex items-center gap-2 transition-all cursor-pointer"
-              >
-                <Mail className="w-4 h-4 text-[#f2ca50]" />
-                <span>CONTACTER PAR EMAIL</span>
-              </a>
-            </div>
-
           </div>
 
         </div>
