@@ -3,10 +3,10 @@ import { useSearchParams, Link } from 'react-router-dom';
 import { PropertyCard } from '../components/PropertyCard';
 import { PropertyMap } from '../components/PropertyMap';
 import { sampleProperties, type PropertyWithMap } from '../data/properties';
-import { Search, Filter, ShieldCheck, LayoutGrid, Map as MapIcon, ArrowRight, DollarSign } from 'lucide-react';
+import { Search, Filter, ShieldCheck, LayoutGrid, Map as MapIcon, ArrowRight, DollarSign, RotateCcw, Sparkles } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
-// Helper function to extract numeric price from price string (e.g. "350 000 000 FCFA" -> 350000000)
+// Helper function to extract numeric price from price string
 const parsePrice = (priceStr: string): number => {
   const digitsOnly = priceStr.replace(/[^0-9]/g, '');
   return parseInt(digitsOnly, 10) || 0;
@@ -47,8 +47,16 @@ export const Catalog: React.FC = () => {
     if (paramCity) setSelectedCity(paramCity);
   }, [paramMode, paramSearch, paramMinPrice, paramMaxPrice, paramDirectCk, paramCity]);
 
+  const handleResetFilters = () => {
+    setSelectedMode('ALL');
+    setSelectedCity('ALL');
+    setSearchQuery('');
+    setMinPriceInput('');
+    setMaxPriceInput('');
+    setOnlyDirectCk(false);
+  };
+
   const filteredProperties: PropertyWithMap[] = sampleProperties.filter((item) => {
-    // Mode filter (ACHETER -> SALE, LOUER -> RENT)
     const matchesMode =
       selectedMode === 'ALL' ||
       (selectedMode === 'ACHETER' && item.listingType === 'SALE') ||
@@ -72,6 +80,14 @@ export const Catalog: React.FC = () => {
 
     return matchesMode && matchesCity && matchesSearch && matchesPriceRange && matchesDirectCk;
   });
+
+  const isFilterActive =
+    selectedMode !== 'ALL' ||
+    selectedCity !== 'ALL' ||
+    searchQuery !== '' ||
+    minPriceInput !== '' ||
+    maxPriceInput !== '' ||
+    onlyDirectCk;
 
   return (
     <div className="pt-24 pb-12 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
@@ -97,7 +113,7 @@ export const Catalog: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setViewMode('MAP')}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded text-xs font-['Hanken_Grotesk'] font-bold tracking-wider transition-all ${
+                className={`flex items-center gap-2 px-3 py-1.5 rounded text-xs font-['Hanken_Grotesk'] font-bold tracking-wider transition-all cursor-pointer ${
                   viewMode === 'MAP'
                     ? 'bg-[#f2ca50] text-[#3c2f00] shadow-md'
                     : 'text-[#d0c5af] hover:text-[#f2ca50]'
@@ -110,7 +126,7 @@ export const Catalog: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setViewMode('GRID')}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded text-xs font-['Hanken_Grotesk'] font-bold tracking-wider transition-all ${
+                className={`flex items-center gap-2 px-3 py-1.5 rounded text-xs font-['Hanken_Grotesk'] font-bold tracking-wider transition-all cursor-pointer ${
                   viewMode === 'GRID'
                     ? 'bg-[#f2ca50] text-[#3c2f00] shadow-md'
                     : 'text-[#d0c5af] hover:text-[#f2ca50]'
@@ -134,7 +150,7 @@ export const Catalog: React.FC = () => {
             />
           </div>
 
-          {/* Price Range Inputs on Catalog Header */}
+          {/* Price Range Inputs */}
           <div className="flex items-center gap-1.5 bg-[#1a1c1c] border border-[#4d4635]/50 px-2.5 py-1.5 rounded text-xs">
             <DollarSign className="w-3.5 h-3.5 text-[#f2ca50]" />
             <input
@@ -158,13 +174,13 @@ export const Catalog: React.FC = () => {
           <div className="flex items-center gap-2 w-full lg:w-auto overflow-x-auto pb-1 lg:pb-0 no-scrollbar">
             <Filter className="w-4 h-4 text-[#f2ca50] shrink-0" />
             
-            {/* Mode Pills: TOUS / ACHAT / LOCATION */}
+            {/* Mode Pills */}
             {(['ALL', 'ACHETER', 'LOUER'] as const).map((m) => (
               <button
                 key={m}
                 type="button"
                 onClick={() => setSelectedMode(m)}
-                className={`font-['Hanken_Grotesk'] text-[11px] font-bold tracking-wider px-3 py-1.5 rounded transition-all shrink-0 ${
+                className={`font-['Hanken_Grotesk'] text-[11px] font-bold tracking-wider px-3 py-1.5 rounded transition-all shrink-0 cursor-pointer ${
                   selectedMode === m
                     ? 'bg-[#f2ca50] text-[#3c2f00] shadow-md'
                     : 'bg-[#1a1c1c] text-[#d0c5af] hover:text-[#f2ca50] border border-[#4d4635]/50'
@@ -182,7 +198,7 @@ export const Catalog: React.FC = () => {
                 key={city}
                 type="button"
                 onClick={() => setSelectedCity(city)}
-                className={`font-['Hanken_Grotesk'] text-[11px] font-bold tracking-wider px-3 py-1.5 rounded transition-all shrink-0 ${
+                className={`font-['Hanken_Grotesk'] text-[11px] font-bold tracking-wider px-3 py-1.5 rounded transition-all shrink-0 cursor-pointer ${
                   selectedCity === city
                     ? 'bg-[#f2ca50] text-[#3c2f00] shadow-md'
                     : 'bg-[#1a1c1c] text-[#d0c5af] hover:text-[#f2ca50] border border-[#4d4635]/50'
@@ -195,7 +211,7 @@ export const Catalog: React.FC = () => {
             <button
               type="button"
               onClick={() => setOnlyDirectCk(!onlyDirectCk)}
-              className={`font-['Hanken_Grotesk'] text-[11px] font-bold tracking-wider px-3 py-1.5 rounded transition-all shrink-0 border ${
+              className={`font-['Hanken_Grotesk'] text-[11px] font-bold tracking-wider px-3 py-1.5 rounded transition-all shrink-0 border cursor-pointer ${
                 onlyDirectCk
                   ? 'border-[#f2ca50] bg-[#f2ca50]/20 text-[#f2ca50]'
                   : 'border-[#4d4635]/50 bg-[#1a1c1c] text-[#99907c]'
@@ -205,6 +221,27 @@ export const Catalog: React.FC = () => {
             </button>
           </div>
 
+        </div>
+
+        {/* UI/UX Pro Max Counter & Reset Bar */}
+        <div className="flex flex-wrap items-center justify-between pt-3 border-t border-[#4d4635]/30 text-xs font-['Hanken_Grotesk']">
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 bg-[#f2ca50]/15 text-[#f2ca50] border border-[#f2ca50]/30 px-3 py-1 rounded-full font-bold">
+              <Sparkles className="w-3.5 h-3.5 text-[#f2ca50]" />
+              {filteredProperties.length} {filteredProperties.length > 1 ? 'PROPRIÉTÉS D\'EXCEPTION TROUVÉES' : 'PROPRIÉTÉ D\'EXCEPTION TROUVÉE'}
+            </span>
+          </div>
+
+          {isFilterActive && (
+            <button
+              type="button"
+              onClick={handleResetFilters}
+              className="inline-flex items-center gap-1.5 text-[#99907c] hover:text-[#f2ca50] transition-colors cursor-pointer font-bold tracking-wider"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>RÉINITIALISER LES FILTRES</span>
+            </button>
+          )}
         </div>
 
       </div>
@@ -274,10 +311,17 @@ export const Catalog: React.FC = () => {
                 );
               })
             ) : (
-              <div className="text-center py-12 bg-[#1a1c1c] rounded-xl border border-[#4d4635]/30">
-                <p className="font-['Playfair_Display'] text-sm text-[#d0c5af]">
-                  Aucun bien ne correspond à la fourchette de prix spécifiée.
+              <div className="text-center py-16 bg-[#1a1c1c] rounded-xl border border-[#4d4635]/30 space-y-3">
+                <p className="font-['Playfair_Display'] text-base text-[#d0c5af]">
+                  Aucun bien ne correspond à la tranche de filtres actuelle.
                 </p>
+                <button
+                  type="button"
+                  onClick={handleResetFilters}
+                  className="font-['Hanken_Grotesk'] text-xs font-bold text-[#f2ca50] hover:underline"
+                >
+                  RÉINITIALISER TOUS LES FILTRES
+                </button>
               </div>
             )}
           </div>
@@ -302,10 +346,17 @@ export const Catalog: React.FC = () => {
               ))}
             </div>
           ) : (
-            <div className="text-center py-16 bg-[#1a1c1c] rounded-xl border border-[#4d4635]/30">
+            <div className="text-center py-16 bg-[#1a1c1c] rounded-xl border border-[#4d4635]/30 space-y-3">
               <p className="font-['Playfair_Display'] text-xl text-[#d0c5af]">
                 Aucun bien ne correspond à votre tranche de budget actuelle.
               </p>
+              <button
+                type="button"
+                onClick={handleResetFilters}
+                className="font-['Hanken_Grotesk'] text-xs font-bold text-[#f2ca50] hover:underline"
+              >
+                RÉINITIALISER TOUS LES FILTRES
+              </button>
             </div>
           )}
         </div>

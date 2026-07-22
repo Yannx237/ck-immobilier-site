@@ -11,6 +11,8 @@ export interface Property {
   galleryImages: string[];
   isDirectCk?: boolean;
   category: string;
+  description?: string;
+  features?: string[];
 }
 
 export interface PropertyWithMap extends Property {
