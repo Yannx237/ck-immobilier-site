@@ -3,17 +3,24 @@ import { useSearchParams, Link } from 'react-router-dom';
 import { PropertyCard } from '../components/PropertyCard';
 import { PropertyMap } from '../components/PropertyMap';
 import { sampleProperties, type PropertyWithMap } from '../data/properties';
-import { Search, Filter, ShieldCheck, LayoutGrid, Map as MapIcon, ArrowRight } from 'lucide-react';
+import { Search, Filter, ShieldCheck, LayoutGrid, Map as MapIcon, ArrowRight, DollarSign } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+
+// Helper function to extract numeric price from price string (e.g. "350 000 000 FCFA" -> 350000000)
+const parsePrice = (priceStr: string): number => {
+  const digitsOnly = priceStr.replace(/[^0-9]/g, '');
+  return parseInt(digitsOnly, 10) || 0;
+};
 
 export const Catalog: React.FC = () => {
   const [searchParams] = useSearchParams();
-
   const { t } = useTranslation();
 
   // Read URL query params
   const paramMode = searchParams.get('mode'); // 'ACHETER' | 'LOUER'
   const paramSearch = searchParams.get('search') || '';
+  const paramMinPrice = searchParams.get('minPrice') || '';
+  const paramMaxPrice = searchParams.get('maxPrice') || '';
   const paramDirectCk = searchParams.get('directCk') === 'true';
   const paramCity = searchParams.get('city') || 'ALL';
 
@@ -22,6 +29,8 @@ export const Catalog: React.FC = () => {
   );
   const [selectedCity, setSelectedCity] = useState<string>(paramCity);
   const [searchQuery, setSearchQuery] = useState<string>(paramSearch);
+  const [minPriceInput, setMinPriceInput] = useState<string>(paramMinPrice);
+  const [maxPriceInput, setMaxPriceInput] = useState<string>(paramMaxPrice);
   const [onlyDirectCk, setOnlyDirectCk] = useState<boolean>(paramDirectCk);
   const [viewMode, setViewMode] = useState<'MAP' | 'GRID'>('MAP');
   const [selectedPropertyId, setSelectedPropertyId] = useState<string | null>(null);
@@ -32,9 +41,11 @@ export const Catalog: React.FC = () => {
     else if (paramMode === 'ACHETER') setSelectedMode('ACHETER');
     
     if (paramSearch) setSearchQuery(paramSearch);
+    if (paramMinPrice) setMinPriceInput(paramMinPrice);
+    if (paramMaxPrice) setMaxPriceInput(paramMaxPrice);
     if (paramDirectCk) setOnlyDirectCk(true);
     if (paramCity) setSelectedCity(paramCity);
-  }, [paramMode, paramSearch, paramDirectCk, paramCity]);
+  }, [paramMode, paramSearch, paramMinPrice, paramMaxPrice, paramDirectCk, paramCity]);
 
   const filteredProperties: PropertyWithMap[] = sampleProperties.filter((item) => {
     // Mode filter (ACHETER -> SALE, LOUER -> RENT)
@@ -52,9 +63,14 @@ export const Catalog: React.FC = () => {
       item.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.category.toLowerCase().includes(searchQuery.toLowerCase());
 
+    const itemPrice = parsePrice(item.price);
+    const minVal = minPriceInput ? parseInt(minPriceInput, 10) : 0;
+    const maxVal = maxPriceInput ? parseInt(maxPriceInput, 10) : Infinity;
+
+    const matchesPriceRange = itemPrice >= minVal && itemPrice <= maxVal;
     const matchesDirectCk = !onlyDirectCk || item.isDirectCk;
 
-    return matchesMode && matchesCity && matchesSearch && matchesDirectCk;
+    return matchesMode && matchesCity && matchesSearch && matchesPriceRange && matchesDirectCk;
   });
 
   return (
@@ -107,7 +123,7 @@ export const Catalog: React.FC = () => {
           </div>
 
           {/* Search Input */}
-          <div className="relative w-full lg:w-80">
+          <div className="relative w-full lg:w-64">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#f2ca50] w-4 h-4" />
             <input
               type="text"
@@ -118,8 +134,28 @@ export const Catalog: React.FC = () => {
             />
           </div>
 
+          {/* Price Range Inputs on Catalog Header */}
+          <div className="flex items-center gap-1.5 bg-[#1a1c1c] border border-[#4d4635]/50 px-2.5 py-1.5 rounded text-xs">
+            <DollarSign className="w-3.5 h-3.5 text-[#f2ca50]" />
+            <input
+              type="number"
+              value={minPriceInput}
+              onChange={(e) => setMinPriceInput(e.target.value)}
+              placeholder="Min FCFA"
+              className="w-20 bg-transparent text-xs text-[#e2e2e2] placeholder-[#99907c] focus:outline-none font-['Manrope']"
+            />
+            <span className="text-[#99907c]">-</span>
+            <input
+              type="number"
+              value={maxPriceInput}
+              onChange={(e) => setMaxPriceInput(e.target.value)}
+              placeholder="Max FCFA"
+              className="w-20 bg-transparent text-xs text-[#e2e2e2] placeholder-[#99907c] focus:outline-none font-['Manrope']"
+            />
+          </div>
+
           {/* Filter Pills */}
-          <div className="flex items-center gap-2.5 w-full lg:w-auto overflow-x-auto pb-1 lg:pb-0 no-scrollbar">
+          <div className="flex items-center gap-2 w-full lg:w-auto overflow-x-auto pb-1 lg:pb-0 no-scrollbar">
             <Filter className="w-4 h-4 text-[#f2ca50] shrink-0" />
             
             {/* Mode Pills: TOUS / ACHAT / LOCATION */}
@@ -134,7 +170,7 @@ export const Catalog: React.FC = () => {
                     : 'bg-[#1a1c1c] text-[#d0c5af] hover:text-[#f2ca50] border border-[#4d4635]/50'
                 }`}
               >
-                {m === 'ALL' ? 'TOUS LES TYPES' : m === 'ACHETER' ? 'ACHAT' : 'LOCATION'}
+                {m === 'ALL' ? 'TOUS TYPES' : m === 'ACHETER' ? 'ACHAT' : 'LOCATION'}
               </button>
             ))}
 
@@ -240,7 +276,7 @@ export const Catalog: React.FC = () => {
             ) : (
               <div className="text-center py-12 bg-[#1a1c1c] rounded-xl border border-[#4d4635]/30">
                 <p className="font-['Playfair_Display'] text-sm text-[#d0c5af]">
-                  Aucun bien ne correspond aux filtres actuels.
+                  Aucun bien ne correspond à la fourchette de prix spécifiée.
                 </p>
               </div>
             )}
@@ -268,7 +304,7 @@ export const Catalog: React.FC = () => {
           ) : (
             <div className="text-center py-16 bg-[#1a1c1c] rounded-xl border border-[#4d4635]/30">
               <p className="font-['Playfair_Display'] text-xl text-[#d0c5af]">
-                Aucun bien ne correspond à vos critères actuels.
+                Aucun bien ne correspond à votre tranche de budget actuelle.
               </p>
             </div>
           )}

@@ -4,7 +4,7 @@ import { Search, MapPin, DollarSign, CheckSquare, Square } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 interface SearchBarProps {
-  onSearch?: (filters: { mode: string; location: string; budget: string; directCk: boolean }) => void;
+  onSearch?: (filters: { mode: string; location: string; minBudget: string; maxBudget: string; directCk: boolean }) => void;
 }
 
 export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
@@ -13,19 +13,21 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
 
   const [mode, setMode] = useState<'ACHETER' | 'LOUER'>('ACHETER');
   const [location, setLocation] = useState('');
-  const [budget, setBudget] = useState('');
+  const [minBudget, setMinBudget] = useState('');
+  const [maxBudget, setMaxBudget] = useState('');
   const [directCk, setDirectCk] = useState(true);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (onSearch) {
-      onSearch({ mode, location, budget, directCk });
+      onSearch({ mode, location, minBudget, maxBudget, directCk });
     } else {
       // Navigate to /catalogue with search params
       const params = new URLSearchParams();
       if (mode) params.set('mode', mode);
       if (location.trim()) params.set('search', location.trim());
-      if (budget) params.set('budget', budget);
+      if (minBudget.trim()) params.set('minPrice', minBudget.trim());
+      if (maxBudget.trim()) params.set('maxPrice', maxBudget.trim());
       if (directCk) params.set('directCk', 'true');
       
       navigate(`/catalogue?${params.toString()}`);
@@ -43,7 +45,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
           type="button"
           onClick={() => {
             setMode('ACHETER');
-            setBudget('');
+            setMinBudget('');
+            setMaxBudget('');
           }}
           className={`flex-1 py-3 font-['Hanken_Grotesk'] text-xs tracking-widest font-bold transition-all ${
             mode === 'ACHETER'
@@ -57,7 +60,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
           type="button"
           onClick={() => {
             setMode('LOUER');
-            setBudget('');
+            setMinBudget('');
+            setMaxBudget('');
           }}
           className={`flex-1 py-3 font-['Hanken_Grotesk'] text-xs tracking-widest font-bold transition-all ${
             mode === 'LOUER'
@@ -69,51 +73,53 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         </button>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-4 items-center">
+      <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-3 items-center">
         
         {/* Localisation */}
         <div className="w-full md:w-1/3 relative">
-          <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#f2ca50] w-5 h-5 pointer-events-none" />
+          <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#f2ca50] w-4 h-4 pointer-events-none" />
           <input
             type="text"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
-            placeholder="Localisation, Quartier, Ville..."
-            className="w-full bg-[#1a1c1c] border border-[#4d4635] rounded px-10 py-3 text-[#e2e2e2] placeholder-[#99907c] focus:border-[#f2ca50] focus:outline-none transition-colors text-sm font-['Manrope']"
+            placeholder="Localisation, Quartier..."
+            className="w-full bg-[#1a1c1c] border border-[#4d4635] rounded px-9 py-3 text-[#e2e2e2] placeholder-[#99907c] focus:border-[#f2ca50] focus:outline-none transition-colors text-sm font-['Manrope']"
           />
         </div>
 
-        {/* Dynamic Budget dropdown depending on ACHETER vs LOUER */}
-        <div className="w-full md:w-1/3 relative">
-          <DollarSign className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#f2ca50] w-5 h-5 pointer-events-none" />
-          <select
-            value={budget}
-            onChange={(e) => setBudget(e.target.value)}
-            className="w-full bg-[#1a1c1c] border border-[#4d4635] rounded px-10 py-3 text-[#e2e2e2] focus:border-[#f2ca50] focus:outline-none transition-colors text-sm font-['Manrope'] appearance-none cursor-pointer"
-          >
-            <option value="">{t('search.budgetFCFA')}</option>
-            {mode === 'ACHETER' ? (
-              <>
-                <option value="50m">50 000 000 FCFA</option>
-                <option value="150m">150 000 000 FCFA</option>
-                <option value="300m+">300 000 000 FCFA +</option>
-              </>
-            ) : (
-              <>
-                <option value="250k">250 000 FCFA / mois</option>
-                <option value="500k">500 000 FCFA / mois</option>
-                <option value="1m+">1 000 000 FCFA / mois +</option>
-              </>
-            )}
-          </select>
+        {/* Custom Price Range Inputs (Min & Max FCFA) */}
+        <div className="w-full md:w-1/3 flex gap-2">
+          <div className="relative flex-1">
+            <DollarSign className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#f2ca50] w-3.5 h-3.5 pointer-events-none" />
+            <input
+              type="number"
+              value={minBudget}
+              onChange={(e) => setMinBudget(e.target.value)}
+              placeholder={mode === 'LOUER' ? 'Min / mois' : 'Min FCFA'}
+              className="w-full bg-[#1a1c1c] border border-[#4d4635] rounded pl-7 pr-2 py-3 text-[#e2e2e2] placeholder-[#99907c] focus:border-[#f2ca50] focus:outline-none transition-colors text-xs font-['Manrope']"
+            />
+          </div>
+
+          <span className="text-[#99907c] flex items-center font-bold text-xs">-</span>
+
+          <div className="relative flex-1">
+            <DollarSign className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#f2ca50] w-3.5 h-3.5 pointer-events-none" />
+            <input
+              type="number"
+              value={maxBudget}
+              onChange={(e) => setMaxBudget(e.target.value)}
+              placeholder={mode === 'LOUER' ? 'Max / mois' : 'Max FCFA'}
+              className="w-full bg-[#1a1c1c] border border-[#4d4635] rounded pl-7 pr-2 py-3 text-[#e2e2e2] placeholder-[#99907c] focus:border-[#f2ca50] focus:outline-none transition-colors text-xs font-['Manrope']"
+            />
+          </div>
         </div>
 
         {/* Direct CK + Submit */}
-        <div className="w-full md:w-1/3 flex gap-3">
+        <div className="w-full md:w-1/3 flex gap-2">
           <button
             type="button"
             onClick={() => setDirectCk(!directCk)}
-            className="flex items-center gap-2 cursor-pointer border border-[#f2ca50]/30 rounded px-4 py-3 bg-[#1a1c1c]/70 hover:bg-[#1a1c1c] transition-colors w-full justify-center text-xs font-['Hanken_Grotesk'] font-bold text-[#f2ca50] tracking-wider"
+            className="flex items-center gap-2 cursor-pointer border border-[#f2ca50]/30 rounded px-3 py-3 bg-[#1a1c1c]/70 hover:bg-[#1a1c1c] transition-colors w-full justify-center text-xs font-['Hanken_Grotesk'] font-bold text-[#f2ca50] tracking-wider"
           >
             {directCk ? (
               <CheckSquare className="w-4 h-4 text-[#f2ca50]" />
@@ -126,7 +132,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
           <button
             type="submit"
             aria-label="Rechercher"
-            className="bg-[#f2ca50] text-[#3c2f00] font-bold p-3.5 rounded hover:bg-[#ffe088] transition-all shadow-[0_0_15px_rgba(242,202,80,0.3)] hover:shadow-[0_0_20px_rgba(242,202,80,0.6)] flex items-center justify-center shrink-0 cursor-pointer"
+            className="bg-[#f2ca50] text-[#3c2f00] font-bold px-4 py-3.5 rounded hover:bg-[#ffe088] transition-all shadow-[0_0_15px_rgba(242,202,80,0.3)] hover:shadow-[0_0_20px_rgba(242,202,80,0.6)] flex items-center justify-center shrink-0 cursor-pointer"
           >
             <Search className="w-5 h-5" />
           </button>
