@@ -25,22 +25,22 @@ export const Navbar: React.FC = () => {
   return (
     <>
       <nav className="fixed top-0 left-0 w-full z-50 bg-[#121414]/90 backdrop-blur-md border-b border-[#99907c]/25 shadow-xl transition-all duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3 flex items-center justify-between">
           
-          {/* Logo (logo already includes CK) */}
-          <Link to="/" className="flex items-center gap-3 group" onClick={() => setMobileMenuOpen(false)}>
-            <div className="relative h-12 sm:h-14 w-auto flex items-center">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2.5 sm:gap-3 group shrink-0" onClick={() => setMobileMenuOpen(false)}>
+            <div className="relative h-10 sm:h-14 w-auto flex items-center">
               <img
                 src={logoImg}
                 alt="Logo Immobilier"
-                className="h-10 sm:h-12 w-auto object-contain drop-shadow-[0_0_12px_rgba(242,202,80,0.4)] group-hover:scale-105 transition-transform"
+                className="h-9 sm:h-12 w-auto object-contain drop-shadow-[0_0_12px_rgba(242,202,80,0.4)] group-hover:scale-105 transition-transform"
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-['Playfair_Display'] font-bold text-lg sm:text-xl tracking-wider text-[#e2e2e2] group-hover:text-[#f2ca50] transition-colors leading-none">
+              <span className="font-['Playfair_Display'] font-bold text-base sm:text-xl tracking-wider text-[#e2e2e2] group-hover:text-[#f2ca50] transition-colors leading-none">
                 IMMOBILIER
               </span>
-              <span className="font-['Hanken_Grotesk'] text-[8px] sm:text-[9px] tracking-[0.25em] text-[#d0c5af] font-bold mt-1">
+              <span className="font-['Hanken_Grotesk'] text-[8px] sm:text-[9px] tracking-[0.2em] sm:tracking-[0.25em] text-[#d0c5af] font-bold mt-0.5 sm:mt-1">
                 {t('nav.prestigePatrimony')}
               </span>
             </div>
@@ -67,14 +67,14 @@ export const Navbar: React.FC = () => {
           </div>
 
           {/* Language Selector & CTA & Hamburger */}
-          <div className="flex items-center gap-2.5 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-4 shrink-0">
             
             {/* Language Selector */}
-            <div className="flex items-center bg-[#1a1c1c] border border-[#4d4635]/50 rounded px-2 py-1 text-xs font-['Hanken_Grotesk'] font-bold text-[#d0c5af] gap-1">
+            <div className="flex items-center bg-[#1a1c1c] border border-[#4d4635]/50 rounded px-1.5 sm:px-2 py-1 text-xs font-['Hanken_Grotesk'] font-bold text-[#d0c5af] gap-1">
               <Globe className="w-3.5 h-3.5 text-[#f2ca50]" />
               <button
                 onClick={() => changeLanguage('fr')}
-                className={`px-1.5 py-0.5 rounded transition-colors ${
+                className={`px-1 py-0.5 rounded transition-colors ${
                   currentLang === 'fr' ? 'bg-[#f2ca50] text-[#121414]' : 'hover:text-[#f2ca50]'
                 }`}
               >
@@ -83,7 +83,7 @@ export const Navbar: React.FC = () => {
               <span className="text-[#4d4635]">|</span>
               <button
                 onClick={() => changeLanguage('en')}
-                className={`px-1.5 py-0.5 rounded transition-colors ${
+                className={`px-1 py-0.5 rounded transition-colors ${
                   currentLang === 'en' ? 'bg-[#f2ca50] text-[#121414]' : 'hover:text-[#f2ca50]'
                 }`}
               >
@@ -103,7 +103,7 @@ export const Navbar: React.FC = () => {
             {/* Mobile / Tablet Hamburger Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 text-[#e2e2e2] hover:text-[#f2ca50] focus:outline-none"
+              className="lg:hidden p-1.5 text-[#e2e2e2] hover:text-[#f2ca50] focus:outline-none"
               aria-label="Toggle Navigation Menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6 text-[#f2ca50]" /> : <Menu className="w-6 h-6" />}
