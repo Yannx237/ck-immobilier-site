@@ -5,7 +5,6 @@ import type { PropertyWithMap } from '../data/properties';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, ArrowRight, Search, Maximize2, Minimize2 } from 'lucide-react';
 
-
 interface PropertyMapProps {
   properties: PropertyWithMap[];
   selectedPropertyId?: string | null;
@@ -125,6 +124,29 @@ const MapRecenter: React.FC<{ lat: number; lng: number }> = ({ lat, lng }) => {
   return null;
 };
 
+// Helper component to continuously invalidate Leaflet map size when container mounts or toggles fullscreen
+const MapInvalidateSize: React.FC<{ isFullScreen: boolean }> = ({ isFullScreen }) => {
+  const map = useMap();
+  useEffect(() => {
+    const t1 = setTimeout(() => map.invalidateSize(), 100);
+    const t2 = setTimeout(() => map.invalidateSize(), 400);
+    const t3 = setTimeout(() => map.invalidateSize(), 800);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+    };
+  }, [isFullScreen, map]);
+
+  useEffect(() => {
+    const handleResize = () => map.invalidateSize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [map]);
+
+  return null;
+};
+
 export const PropertyMap: React.FC<PropertyMapProps> = ({
   properties,
   selectedPropertyId,
@@ -133,6 +155,18 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
   const [mapSearchText, setMapSearchText] = useState<string>('');
   const [mapModeFilter, setMapModeFilter] = useState<'ALL' | 'ACHETER' | 'LOUER'>('ALL');
   const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
+
+  // Lock body scroll when full screen map is active
+  useEffect(() => {
+    if (isFullScreen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isFullScreen]);
 
   // Filter map markers in real-time based on map floating search bar
   const displayedProperties = properties.filter((prop) => {
@@ -156,10 +190,10 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
     : [4.0435, 9.6894];
 
   return (
-    <div className={`relative w-full transition-all duration-300 overflow-hidden rounded-xl border border-[#4d4635]/40 shadow-2xl ${
+    <div className={`transition-all duration-300 overflow-hidden bg-[#121414] ${
       isFullScreen
-        ? 'fixed inset-0 z-[2000] w-screen h-screen rounded-none border-none'
-        : 'h-full min-h-[480px] sm:min-h-[600px]'
+        ? 'fixed inset-0 z-[9999] w-full h-full rounded-none border-none'
+        : 'relative w-full h-full min-h-[480px] sm:min-h-[600px] rounded-xl border border-[#4d4635]/40 shadow-2xl'
     }`}>
       
       {/* Floating In-Map Search Bar & Fullscreen Controls Overlay (Visible ONLY on Mobile) */}
@@ -200,7 +234,7 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
           type="button"
           onClick={() => setIsFullScreen(!isFullScreen)}
           aria-label={isFullScreen ? 'Quitter le plein écran' : 'Carte en plein écran'}
-          className="p-1.5 bg-[#f2ca50] text-[#3c2f00] rounded-lg shrink-0 shadow-md cursor-pointer font-bold"
+          className="p-2 bg-[#f2ca50] text-[#3c2f00] rounded-lg shrink-0 shadow-lg cursor-pointer font-bold flex items-center justify-center active:scale-95 transition-transform"
         >
           {isFullScreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
         </button>
@@ -215,7 +249,7 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
           className="flex items-center gap-2 bg-[#1a1c1c]/90 backdrop-blur-md px-3.5 py-2 border border-[#f2ca50]/40 text-[#f2ca50] rounded-lg text-xs font-['Hanken_Grotesk'] font-bold hover:bg-[#f2ca50] hover:text-[#3c2f00] transition-colors shadow-lg cursor-pointer"
         >
           {isFullScreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
-          <span>{isFullScreen ? 'REDUIRE' : 'PLEIN ÉCRAN'}</span>
+          <span>{isFullScreen ? 'RÉDUIRE' : 'PLEIN ÉCRAN'}</span>
         </button>
       </div>
 
@@ -225,6 +259,8 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
         scrollWheelZoom={true}
         className="w-full h-full"
       >
+        <MapInvalidateSize isFullScreen={isFullScreen} />
+
         {/* CartoDB Dark Matter Tiles */}
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'

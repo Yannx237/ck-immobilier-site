@@ -268,10 +268,10 @@ export const Catalog: React.FC = () => {
       {/* Main Content Area */}
       {viewMode === 'MAP' ? (
         /* MAP VIEW: Full Height on Mobile + Hidden Cards on Mobile */
-        <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-220px)] min-h-[500px] lg:h-[720px] overflow-hidden">
+        <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-220px)] min-h-[500px] lg:h-[720px] w-full overflow-hidden">
           
           {/* Sidebar Property Cards List (Visible ONLY on Desktop in Map View) */}
-          <div className="hidden lg:flex w-full lg:w-[460px] h-full overflow-y-auto pr-2 flex-col justify-between custom-scrollbar">
+          <div className="hidden lg:flex w-full lg:w-[460px] h-full overflow-y-auto pr-2 flex-col justify-between shrink-0 custom-scrollbar">
             <div className="space-y-4">
               {paginatedProperties.length > 0 ? (
                 paginatedProperties.map((prop) => {
@@ -374,8 +374,8 @@ export const Catalog: React.FC = () => {
             )}
           </div>
 
-          {/* Interactive Map Area (Takes FULL SCREEN on mobile in Map View) */}
-          <div className="flex-grow w-full h-full">
+          {/* Interactive Map Area (Takes Full Width & Height of parent container) */}
+          <div className="flex-grow w-full h-full min-w-0">
             <PropertyMap
               properties={filteredProperties}
               selectedPropertyId={selectedPropertyId}
