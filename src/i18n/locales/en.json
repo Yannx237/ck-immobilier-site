@@ -1,0 +1,52 @@
+{
+  "nav": {
+    "home": "HOME",
+    "portfolio": "PROPERTY PORTFOLIO",
+    "team": "TEAM & SERVICES",
+    "contact": "PRIVATE CONTACT",
+    "clientPortal": "CLIENT PORTAL",
+    "prestigePatrimony": "PRESTIGE & PATRIMONY",
+    "certifiedDirectCk": "CERTIFIED DIRECT CK MEMBER",
+    "minhduAccredited": "MINHDU ACCREDITED • DIRECT CK"
+  },
+  "search": {
+    "buy": "BUY",
+    "rent": "RENT",
+    "allCities": "ALL CITIES",
+    "douala": "DOUALA",
+    "yaounde": "YAOUNDE",
+    "budgetFCFA": "MAXIMUM BUDGET (FCFA)",
+    "searchProperties": "SEARCH PROPERTIES",
+    "directCkOnly": "DIRECT CK MANDATES",
+    "viewGrid": "GRID VIEW",
+    "viewMap": "INTERACTIVE MAP VIEW"
+  },
+  "hero": {
+    "title1": "REAL ESTATE EXCELLENCE,",
+    "title2": "AT EVERY STEP.",
+    "sub": "Discover an exclusive selection of luxury residences, contemporary villas and prestige penthouses in Douala and Yaounde.",
+    "ourPatrimony": "Our Portfolio",
+    "exclusivePatrimony": "Exclusive",
+    "seeAllProperties": "VIEW ENTIRE PORTFOLIO"
+  },
+  "property": {
+    "saleBadge": "FOR SALE",
+    "rentBadge": "FOR RENT",
+    "directCkBadge": "DIRECT CK MANDATE",
+    "perMonth": "/ month",
+    "bedrooms": "bedrooms",
+    "surface": "sqm",
+    "bookPrivateTour": "BOOK PRIVATE TOUR",
+    "callAgent": "DIRECT AGENT CALL"
+  },
+  "contact": {
+    "title": "Contact & Private Appointment",
+    "sub": "Our firm welcomes you with complete confidentiality in Douala (Bonapriso) and Yaounde (Carrefour Golf) offices.",
+    "fullName": "YOUR FULL NAME *",
+    "phoneWhatsapp": "PHONE / WHATSAPP *",
+    "emailAddress": "EMAIL ADDRESS",
+    "selectMotif": "PURPOSE OF INQUIRY *",
+    "message": "YOUR MESSAGE / PROJECT SPECIFICATIONS",
+    "submitRequest": "SUBMIT PRIVATE INQUIRY"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "nav": {
+    "home": "ACCUEIL",
+    "portfolio": "PORTFOLIO PATRIMOINE",
+    "team": "ÉQUIPE & SERVICES",
+    "contact": "CONTACT PRIVÉ",
+    "clientPortal": "ESPACE CLIENT",
+    "prestigePatrimony": "PRESTIGE & PATRIMOINE",
+    "certifiedDirectCk": "MEMBRE CERTIFIÉ DIRECT CK",
+    "minhduAccredited": "AGRÉMENT MINHDU • DIRECT CK"
+  },
+  "search": {
+    "buy": "ACHETER",
+    "rent": "LOUER",
+    "allCities": "TOUTES LES VILLES",
+    "douala": "DOUALA",
+    "yaounde": "YAOUNDÉ",
+    "budgetFCFA": "BUDGET MAXIMUM (FCFA)",
+    "searchProperties": "RECHERCHER DES BIENS",
+    "directCkOnly": "MANDATS DIRECT CK",
+    "viewGrid": "VUE GRILLE",
+    "viewMap": "VUE CARTE INTERACTIVE"
+  },
+  "hero": {
+    "title1": "L'EXCELLENCE IMMOBILIÈRE,",
+    "title2": "À CHAQUE ÉTAPE.",
+    "sub": "Découvrez une sélection exclusive de résidences d'exception, villas contemporaines et penthouses de prestige à Douala et Yaoundé.",
+    "ourPatrimony": "Notre Patrimoine",
+    "exclusivePatrimony": "Exclusif",
+    "seeAllProperties": "VOIR TOUT LE PATRIMOINE"
+  },
+  "property": {
+    "saleBadge": "ACHAT",
+    "rentBadge": "LOCATION",
+    "directCkBadge": "MANDAT DIRECT CK",
+    "perMonth": "/ mois",
+    "bedrooms": "chambres",
+    "surface": "m²",
+    "bookPrivateTour": "RÉSERVER LA VISITE PRIVÉE",
+    "callAgent": "CONTACT DIRECT AGENT"
+  },
+  "contact": {
+    "title": "Contact & Prise de Rendez-vous Privé",
+    "sub": "Notre cabinet vous accueille en toute confidentialité dans ses bureaux de Douala (Bonapriso) et Yaoundé (Carrefour Golf).",
+    "fullName": "VOTRE NOM & PRÉNOM *",
+    "phoneWhatsapp": "TÉLÉPHONE / WHATSAPP *",
+    "emailAddress": "ADRESSE EMAIL",
+    "selectMotif": "OBJET DE LA DEMANDE *",
+    "message": "VOTRE MESSAGE / SPÉCIFICATIONS DU PROJET",
+    "submitRequest": "TRANSMETTRE MA DEMANDE PRIVÉE"
+  }
+}

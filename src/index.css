@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+@theme {
+  --color-gold-50: #fffdf0;
+  --color-gold-100: #fff9c4;
+  --color-gold-200: #fff185;
+  --color-gold-300: #ffe547;
+  --color-gold-400: #ffd41c;
+  --color-gold-500: #f2ca50;
+  --color-gold-600: #d4af37;
+  --color-gold-700: #aa8620;
+  --color-gold-800: #88681c;
+  --color-gold-900: #71551b;
+  --color-gold-950: #422f0b;
+
+  --color-dark-bg: #121414;
+  --color-dark-surface: #1a1c1c;
+  --color-dark-[#121414]: #121414;
+
+  --font-playfair: 'Playfair Display', serif;
+  --font-manrope: 'Manrope', sans-serif;
+  --font-hanken: 'Hanken Grotesk', sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: #121414;
+    color: #e2e2e2;
+    font-family: 'Manrope', sans-serif;
+    overflow-x: hidden;
+  }
+}
+
+/* Elegant Slim Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #121414;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4d4635;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #f2ca50;
+}
+
+/* Class to completely hide scrollbar while preserving scrollability */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Glassmorphism & Gold Glow utilities */
+.glass-panel {
+  background: rgba(26, 28, 28, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(153, 144, 124, 0.2);
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #fff9c4 0%, #f2ca50 50%, #aa8620 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-glow {
+  box-shadow: 0 0 25px rgba(242, 202, 80, 0.25);
+}
+
+.hover-gold-glow {
+  transition: all 0.3s ease;
+}
+
+.hover-gold-glow:hover {
+  box-shadow: 0 0 20px rgba(242, 202, 80, 0.3);
+  border-color: rgba(242, 202, 80, 0.5);
+}
+
+/* Custom Leaflet Map Dark Theme Overrides */
+.leaflet-container {
+  background-color: #121414 !important;
+  font-family: 'Manrope', sans-serif !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #1a1c1c !important;
+  color: #e2e2e2 !important;
+  border: 1px solid rgba(242, 202, 80, 0.3) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8) !important;
+}
+
+.leaflet-popup-tip {
+  background: #1a1c1c !important;
+}
