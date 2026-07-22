@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import type { PropertyWithMap } from '../data/properties';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, ArrowRight, MapPin } from 'lucide-react';
+import { ShieldCheck, ArrowRight, Search, Filter } from 'lucide-react';
 
 interface PropertyMapProps {
   properties: PropertyWithMap[];
@@ -129,7 +129,26 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
   selectedPropertyId,
   onSelectProperty,
 }) => {
-  const selectedProp = properties.find((p) => p.id === selectedPropertyId) || properties[0];
+  const [mapSearchText, setMapSearchText] = useState<string>('');
+  const [mapModeFilter, setMapModeFilter] = useState<'ALL' | 'ACHETER' | 'LOUER'>('ALL');
+
+  // Filter map markers in real-time based on map floating search bar
+  const displayedProperties = properties.filter((prop) => {
+    const matchesSearch =
+      !mapSearchText.trim() ||
+      prop.title.toLowerCase().includes(mapSearchText.toLowerCase()) ||
+      prop.location.toLowerCase().includes(mapSearchText.toLowerCase()) ||
+      prop.city.toLowerCase().includes(mapSearchText.toLowerCase());
+
+    const matchesMode =
+      mapModeFilter === 'ALL' ||
+      (mapModeFilter === 'ACHETER' && prop.listingType === 'SALE') ||
+      (mapModeFilter === 'LOUER' && prop.listingType === 'RENT');
+
+    return matchesSearch && matchesMode;
+  });
+
+  const selectedProp = displayedProperties.find((p) => p.id === selectedPropertyId) || displayedProperties[0] || properties[0];
   const defaultCenter: [number, number] = selectedProp
     ? [selectedProp.mapCoordinates.lat, selectedProp.mapCoordinates.lng]
     : [4.0435, 9.6894];
@@ -137,21 +156,40 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
   return (
     <div className="relative w-full h-full min-h-[500px] overflow-hidden rounded-xl border border-[#4d4635]/40 shadow-2xl">
       
-      {/* Header Legend Overlay */}
-      <div className="absolute top-4 left-4 z-20 flex items-center gap-3 bg-[#1a1c1c]/90 backdrop-blur-md px-4 py-2 border border-[#f2ca50]/30 rounded-full shadow-lg pointer-events-none">
-        <MapPin className="w-4 h-4 text-[#f2ca50]" />
-        <span className="font-['Hanken_Grotesk'] text-xs font-bold text-[#e2e2e2] tracking-wider">
-          CARTE INTERACTIVE
-        </span>
-        <div className="h-3 w-[1px] bg-[#4d4635]"></div>
-        <div className="flex items-center gap-3 text-[10px] font-['Hanken_Grotesk'] font-bold">
-          <span className="flex items-center gap-1 text-[#f2ca50]">
-            <span className="w-2 h-2 rounded-full bg-[#f2ca50]"></span> ACHAT
-          </span>
-          <span className="flex items-center gap-1 text-[#68dba9]">
-            <span className="w-2 h-2 rounded-full bg-[#68dba9]"></span> LOCATION
-          </span>
+      {/* Floating In-Map Search Bar & Filters Overlay (Mobile & Desktop) */}
+      <div className="absolute top-3 left-3 right-3 sm:left-4 sm:right-auto z-[1000] flex flex-col sm:flex-row items-stretch sm:items-center gap-2 bg-[#1a1c1c]/95 backdrop-blur-md p-2 rounded-xl border border-[#f2ca50]/40 shadow-2xl max-w-lg">
+        
+        {/* Search Input */}
+        <div className="relative flex-grow">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#f2ca50] w-3.5 h-3.5" />
+          <input
+            type="text"
+            value={mapSearchText}
+            onChange={(e) => setMapSearchText(e.target.value)}
+            placeholder="Rechercher sur la carte..."
+            className="w-full bg-[#121414] border border-[#4d4635]/40 rounded-lg pl-8 pr-3 py-1.5 text-xs text-[#e2e2e2] placeholder-[#99907c] focus:border-[#f2ca50] focus:outline-none font-['Manrope']"
+          />
         </div>
+
+        {/* Quick Mode Filters */}
+        <div className="flex items-center gap-1 shrink-0">
+          <Filter className="w-3 h-3 text-[#f2ca50] hidden sm:inline" />
+          {(['ALL', 'ACHETER', 'LOUER'] as const).map((mode) => (
+            <button
+              key={mode}
+              type="button"
+              onClick={() => setMapModeFilter(mode)}
+              className={`text-[10px] font-['Hanken_Grotesk'] font-bold px-2 py-1 rounded transition-all cursor-pointer ${
+                mapModeFilter === mode
+                  ? 'bg-[#f2ca50] text-[#3c2f00]'
+                  : 'bg-[#121414] text-[#d0c5af] hover:text-[#f2ca50] border border-[#4d4635]/30'
+              }`}
+            >
+              {mode === 'ALL' ? 'TOUS' : mode === 'ACHETER' ? 'ACHAT' : 'LOC'}
+            </button>
+          ))}
+        </div>
+
       </div>
 
       <MapContainer
@@ -174,7 +212,7 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
           />
         )}
 
-        {properties.map((prop) => {
+        {displayedProperties.map((prop) => {
           const isSelected = selectedPropertyId === prop.id;
           const isRent = prop.listingType === 'RENT';
           const customIcon = createCustomMarkerIcon(
@@ -194,8 +232,8 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
               }}
             >
               <Popup>
-                <div className="w-64 p-3 space-y-2">
-                  <div className="relative h-28 rounded-lg overflow-hidden bg-[#0c0f0f]">
+                <div className="w-60 p-2 space-y-2">
+                  <div className="relative h-24 rounded-lg overflow-hidden bg-[#0c0f0f]">
                     <img
                       src={prop.imageUrl}
                       alt={prop.title}
@@ -203,9 +241,9 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
                     />
 
                     {/* Badge Achat/Location in Popup */}
-                    <div className="absolute top-2 left-2 flex items-center gap-1">
+                    <div className="absolute top-1.5 left-1.5 flex items-center gap-1">
                       <span
-                        className={`text-[9px] font-['Hanken_Grotesk'] font-bold px-2 py-0.5 rounded shadow ${
+                        className={`text-[8px] font-['Hanken_Grotesk'] font-bold px-1.5 py-0.5 rounded shadow ${
                           isRent ? 'bg-[#00311f] text-[#68dba9]' : 'bg-[#3c2f00] text-[#f2ca50]'
                         }`}
                       >
@@ -214,27 +252,27 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
                     </div>
 
                     {prop.isDirectCk && (
-                      <span className="absolute top-2 right-2 bg-[#121414]/90 text-[#f2ca50] border border-[#f2ca50]/40 text-[9px] font-['Hanken_Grotesk'] font-bold px-2 py-0.5 rounded flex items-center gap-1 shadow">
-                        <ShieldCheck className="w-3 h-3 text-[#f2ca50]" /> DIRECT CK
+                      <span className="absolute top-1.5 right-1.5 bg-[#121414]/90 text-[#f2ca50] border border-[#f2ca50]/40 text-[8px] font-['Hanken_Grotesk'] font-bold px-1.5 py-0.5 rounded flex items-center gap-0.5 shadow">
+                        <ShieldCheck className="w-2.5 h-2.5 text-[#f2ca50]" /> CK
                       </span>
                     )}
                   </div>
 
                   <div>
-                    <span className="text-[10px] font-['Hanken_Grotesk'] font-bold text-[#f2ca50] tracking-wider block">
+                    <span className="text-[9px] font-['Hanken_Grotesk'] font-bold text-[#f2ca50] tracking-wider block">
                       {prop.location.toUpperCase()} — {prop.city.toUpperCase()}
                     </span>
-                    <h4 className="font-['Playfair_Display'] font-semibold text-sm text-[#e2e2e2] line-clamp-1">
+                    <h4 className="font-['Playfair_Display'] font-semibold text-xs text-[#e2e2e2] line-clamp-1">
                       {prop.title}
                     </h4>
-                    <p className="text-xs text-[#d0c5af] font-['Manrope'] mt-0.5">
+                    <p className="text-[10px] text-[#d0c5af] font-['Manrope'] mt-0.5">
                       {prop.surface} m² • {prop.bedrooms} Chambres
                     </p>
                   </div>
 
-                  <div className="flex items-center justify-between pt-2 border-t border-[#4d4635]/40">
+                  <div className="flex items-center justify-between pt-1.5 border-t border-[#4d4635]/40">
                     <span
-                      className={`font-['Playfair_Display'] font-bold text-sm ${
+                      className={`font-['Playfair_Display'] font-bold text-xs ${
                         isRent ? 'text-[#68dba9]' : 'text-[#f2ca50]'
                       }`}
                     >
@@ -242,9 +280,9 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
                     </span>
                     <Link
                       to={`/property/${prop.id}`}
-                      className="bg-[#f2ca50] text-[#3c2f00] p-1.5 rounded hover:bg-[#ffe088] transition-colors inline-flex items-center justify-center"
+                      className="bg-[#f2ca50] text-[#3c2f00] p-1 rounded hover:bg-[#ffe088] transition-colors inline-flex items-center justify-center"
                     >
-                      <ArrowRight className="w-3.5 h-3.5" />
+                      <ArrowRight className="w-3 h-3" />
                     </Link>
                   </div>
                 </div>

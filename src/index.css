@@ -98,8 +98,25 @@
   border: 1px solid rgba(242, 202, 80, 0.3) !important;
   border-radius: 12px !important;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8) !important;
+  padding: 0 !important;
+}
+
+.leaflet-popup-content {
+  margin: 8px !important;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  color: #f2ca50 !important;
+  padding: 6px 10px 0 0 !important;
 }
 
 .leaflet-popup-tip {
   background: #1a1c1c !important;
 }
+
+@media (max-width: 640px) {
+  .leaflet-popup-content-wrapper {
+    max-width: 280px !important;
+  }
+}
+
