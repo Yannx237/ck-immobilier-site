@@ -20,43 +20,46 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
           alt={property.title}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#121414] via-[#121414]/30 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#121414] via-[#121414]/20 to-transparent"></div>
 
         {/* Badge VENTE / LOCATION */}
-        <div className="absolute top-4 left-4 flex items-center gap-1.5">
+        <div className="absolute top-3 left-3 z-10">
           <div
-            className={`px-3 py-1 rounded text-[10px] font-['Hanken_Grotesk'] font-bold tracking-widest flex items-center gap-1 shadow-md ${
+            className={`px-2.5 py-1 rounded text-[10px] font-['Hanken_Grotesk'] font-bold tracking-widest flex items-center gap-1 shadow-md ${
               isRent
-                ? 'bg-[#00311f] text-[#68dba9] border border-[#68dba9]/40'
-                : 'bg-[#3c2f00] text-[#f2ca50] border border-[#f2ca50]/40'
+                ? 'bg-[#00311f]/90 text-[#68dba9] border border-[#68dba9]/40 backdrop-blur'
+                : 'bg-[#3c2f00]/90 text-[#f2ca50] border border-[#f2ca50]/40 backdrop-blur'
             }`}
           >
             {isRent ? <Key className="w-3 h-3 text-[#68dba9]" /> : <Home className="w-3 h-3 text-[#f2ca50]" />}
             <span>{isRent ? 'LOCATION' : 'ACHAT'}</span>
           </div>
-
-          <div className="bg-[#1e2020]/80 backdrop-blur px-2.5 py-1 rounded text-[10px] font-['Hanken_Grotesk'] font-bold tracking-widest text-[#d0c5af]">
-            {property.category.toUpperCase()}
-          </div>
         </div>
 
         {/* Badge DIRECT CK */}
         {property.isDirectCk && (
-          <div className="absolute top-4 right-4 flex items-center gap-1.5 bg-[#0c0f0f]/85 backdrop-blur-md px-3 py-1.5 border border-[#f2ca50]/40 rounded-full shadow-[0_0_12px_rgba(242,202,80,0.25)]">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#f2ca50]" />
-            <span className="font-['Hanken_Grotesk'] text-[10px] font-bold text-[#f2ca50] tracking-widest">
+          <div className="absolute top-3 right-3 z-10 flex items-center gap-1 bg-[#0c0f0f]/90 backdrop-blur px-2.5 py-1 border border-[#f2ca50]/40 rounded-full shadow-lg">
+            <ShieldCheck className="w-3 h-3 text-[#f2ca50]" />
+            <span className="font-['Hanken_Grotesk'] text-[9px] font-bold text-[#f2ca50] tracking-widest">
               DIRECT CK
             </span>
           </div>
         )}
+
+        {/* Category tag bottom left of image */}
+        <div className="absolute bottom-3 left-3 z-10">
+          <span className="bg-[#121414]/80 backdrop-blur px-2 py-0.5 rounded text-[9px] font-['Hanken_Grotesk'] font-bold tracking-wider text-[#d0c5af] border border-[#4d4635]/40">
+            {property.category.toUpperCase()}
+          </span>
+        </div>
       </div>
 
       {/* Content */}
-      <div className="p-6 flex flex-col flex-grow justify-between">
+      <div className="p-5 flex flex-col flex-grow justify-between">
         <div>
-          <div className="flex items-center gap-1 text-[#f2ca50] text-xs font-['Hanken_Grotesk'] font-bold tracking-wider mb-1.5">
+          <div className="flex items-center gap-1 text-[#f2ca50] text-[11px] font-['Hanken_Grotesk'] font-bold tracking-wider mb-1">
             <MapPin className="w-3.5 h-3.5" />
-            <span>{property.location.toUpperCase()} - {property.city.toUpperCase()}</span>
+            <span>{property.location.toUpperCase()} — {property.city.toUpperCase()}</span>
           </div>
 
           <h3 className="font-['Playfair_Display'] font-semibold text-lg text-[#e2e2e2] group-hover:text-[#f2ca50] transition-colors mb-3 line-clamp-1">
@@ -77,19 +80,20 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
         </div>
 
         {/* Price and Link */}
-        <div className="flex items-center justify-between pt-2">
+        <div className="flex items-center justify-between pt-1">
           <div>
-            <span className="block text-[10px] font-['Hanken_Grotesk'] tracking-widest text-[#99907c]">
+            <span className="block text-[9px] font-['Hanken_Grotesk'] tracking-widest text-[#99907c]">
               {isRent ? 'LOYER MENSUEL' : 'VALEUR DU BIEN'}
             </span>
-            <span className={`font-['Playfair_Display'] font-bold text-lg ${isRent ? 'text-[#68dba9]' : 'text-[#f2ca50]'}`}>
+            <span className={`font-['Playfair_Display'] font-bold text-base sm:text-lg ${isRent ? 'text-[#68dba9]' : 'text-[#f2ca50]'}`}>
               {property.price}
             </span>
           </div>
 
           <Link
             to={`/property/${property.id}`}
-            className="w-10 h-10 rounded-full bg-[#1e2020] border border-[#4d4635] flex items-center justify-center text-[#f2ca50] group-hover:bg-[#f2ca50] group-hover:text-[#3c2f00] transition-all shadow-md"
+            aria-label={`Voir ${property.title}`}
+            className="w-9 h-9 rounded-full bg-[#1e2020] border border-[#4d4635] flex items-center justify-center text-[#f2ca50] group-hover:bg-[#f2ca50] group-hover:text-[#3c2f00] transition-all shadow-md shrink-0"
           >
             <ArrowRight className="w-4 h-4" />
           </Link>
