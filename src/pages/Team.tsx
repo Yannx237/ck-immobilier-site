@@ -3,38 +3,16 @@ import { ShieldCheck, Award, CheckCircle, MessageCircle, Mail, Sparkles, MapPin 
 import founderImg from '../assets/colbert_kouatcho.jpg';
 
 export const Team: React.FC = () => {
-  const teamMembers = [
-    {
-      name: 'Colbert Kouatcho',
-      role: 'Fondateur & Directeur Général',
-      specialty: 'YAOUNDÉ — CARREFOUR GOLF & BASTOS',
-      bio: 'Fondateur et visionnaire du cabinet CK Immobilier SARL. Plus de 15 ans d\'expertise dans la sécurisation foncière, les mandats exclusifs et la gestion du patrimoine immobilier d\'exception au Cameroun.',
-      imageUrl: founderImg,
-      whatsapp: '237678386875',
-      email: 'c.kouatcho@ck-immobilier.cm',
-      tag: 'FONDATEUR & DG',
-    },
-    {
-      name: 'Vanessa Ndedi',
-      role: 'Directrice Conciergerie & Off-Market',
-      specialty: 'DOUALA — LOGPOM & BONAPRISO',
-      bio: 'Spécialiste des transactions confidentielles et des résidences privées haut de gamme à Douala sous accord de confidentialité (NDA).',
-      imageUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80',
-      whatsapp: '237656242081',
-      email: 'v.ndedi@ck-immobilier.cm',
-      tag: 'EXPERT OFF-MARKET',
-    },
-    {
-      name: 'Marc-Aurèle Bastos',
-      role: 'Responsable Pôle Diplomatie & Institutions',
-      specialty: 'YAOUNDÉ — CORPS DIPLOMATIQUE',
-      bio: 'Expert en investissements pour représentations diplomatiques, ambassades et grandes propriétés de prestige au secteur Golf de Yaoundé.',
-      imageUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=600&q=80',
-      whatsapp: '237678386875',
-      email: 'ma.bastos@ck-immobilier.cm',
-      tag: 'CONSEIL INSTITUTIONNEL',
-    },
-  ];
+  const founderMember = {
+    name: 'Colbert Kouatcho',
+    role: 'Fondateur & Directeur Général',
+    specialty: 'YAOUNDÉ (SIÈGE) & DOUALA (AGENCE)',
+    bio: 'Fondateur et visionnaire du cabinet CK Immobilier SARL. Plus de 15 ans d\'expertise dans la sécurisation foncière, la vérification systématique des Titres Fonciers, les mandats exclusifs et la gestion du patrimoine immobilier d\'exception au Cameroun.',
+    imageUrl: founderImg,
+    whatsapp: '237678386875',
+    email: 'c.kouatcho@ck-immobilier.cm',
+    tag: 'FONDATEUR & DG',
+  };
 
   return (
     <div className="pt-28 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
@@ -48,10 +26,10 @@ export const Team: React.FC = () => {
           </span>
         </div>
         <h1 className="font-['Playfair_Display'] text-4xl sm:text-5xl font-bold text-[#e2e2e2]">
-          L'Équipe Dirigeante CK Immobilier
+          La Direction CK Immobilier
         </h1>
         <p className="font-['Manrope'] text-base text-[#d0c5af]">
-          Une équipe chevronnée de courtiers seniors et d'experts fonciers unis sous la direction de Mr Colbert Kouatcho.
+          Un accompagnement d'exception sous la direction stratégique de Mr Colbert Kouatcho.
         </p>
       </div>
 
@@ -88,79 +66,73 @@ export const Team: React.FC = () => {
         </div>
       </div>
 
-      {/* Team Members */}
-      <div className="space-y-8">
+      {/* Sole Founder Profile Showcase */}
+      <div className="max-w-4xl mx-auto space-y-8">
         <div className="text-center space-y-2">
           <span className="font-['Hanken_Grotesk'] text-xs font-bold text-[#f2ca50] tracking-widest block">
-            INTERLOCUTEURS PRIVILÉGIÉS
+            INTERLOCUTEUR PRIVILÉGIÉ
           </span>
           <h2 className="font-['Playfair_Display'] text-3xl font-bold text-[#e2e2e2]">
-            Vos Associés & Courtiers Seniors
+            Le Fondateur & Directeur Général
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {teamMembers.map((member, idx) => (
-            <div key={idx} className="glass-panel rounded-2xl overflow-hidden border border-[#4d4635]/40 hover:border-[#f2ca50]/60 transition-all group shadow-2xl flex flex-col justify-between">
-              
-              <div>
-                <div className="h-80 overflow-hidden bg-[#0c0f0f] relative">
-                  <img
-                    src={member.imageUrl}
-                    alt={member.name}
-                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 opacity-95 group-hover:opacity-100"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#141616] via-transparent to-transparent"></div>
-                  
-                  <span className="absolute top-4 left-4 bg-[#121414]/90 text-[#f2ca50] border border-[#f2ca50]/30 text-[9px] font-['Hanken_Grotesk'] font-bold px-2.5 py-1 rounded-full tracking-widest">
-                    {member.tag}
-                  </span>
-                </div>
+        <div className="glass-panel rounded-2xl overflow-hidden border border-[#f2ca50]/40 shadow-2xl grid grid-cols-1 md:grid-cols-12 gap-8 items-center p-6 sm:p-8">
+          
+          <div className="md:col-span-5 h-96 rounded-xl overflow-hidden bg-[#0c0f0f] relative">
+            <img
+              src={founderMember.imageUrl}
+              alt={founderMember.name}
+              className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
+            />
+            <span className="absolute top-4 left-4 bg-[#121414]/90 text-[#f2ca50] border border-[#f2ca50]/40 text-[10px] font-['Hanken_Grotesk'] font-bold px-3 py-1 rounded-full tracking-widest">
+              {founderMember.tag}
+            </span>
+          </div>
 
-                <div className="p-6 space-y-3">
-                  <div className="space-y-1">
-                    <span className="font-['Hanken_Grotesk'] text-[10px] font-bold text-[#f2ca50] tracking-widest flex items-center gap-1">
-                      <MapPin className="w-3 h-3 text-[#f2ca50]" />
-                      {member.specialty}
-                    </span>
-                    <h3 className="font-['Playfair_Display'] font-bold text-2xl text-[#e2e2e2]">
-                      {member.name}
-                    </h3>
-                    <p className="text-xs font-['Hanken_Grotesk'] font-bold text-[#d0c5af]">
-                      {member.role}
-                    </p>
-                  </div>
-
-                  <p className="text-xs text-[#99907c] font-['Manrope'] leading-relaxed pt-1">
-                    {member.bio}
-                  </p>
-                </div>
-              </div>
-
-              {/* Direct Contact Buttons */}
-              <div className="p-6 pt-0 flex items-center gap-2">
-                <a
-                  href={`https://wa.me/${member.whatsapp}?text=${encodeURIComponent(`Bonjour Mr ${member.name}, je vous contacte depuis le site CK Immobilier pour un projet de prestige.`)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 bg-[#25D366] hover:bg-[#20bd5a] text-white text-[11px] font-['Hanken_Grotesk'] font-bold py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 transition-all shadow-md cursor-pointer"
-                >
-                  <MessageCircle className="w-3.5 h-3.5" />
-                  <span>WHATSAPP</span>
-                </a>
-
-                <a
-                  href={`mailto:${member.email}`}
-                  className="bg-[#1a1c1c] hover:bg-[#252828] text-[#e2e2e2] border border-[#4d4635]/50 text-[11px] font-['Hanken_Grotesk'] font-bold py-2.5 px-3 rounded-lg flex items-center justify-center gap-1.5 transition-all cursor-pointer"
-                >
-                  <Mail className="w-3.5 h-3.5 text-[#f2ca50]" />
-                  <span>EMAIL</span>
-                </a>
-              </div>
-
+          <div className="md:col-span-7 space-y-5">
+            <div className="space-y-1">
+              <span className="font-['Hanken_Grotesk'] text-xs font-bold text-[#f2ca50] tracking-widest flex items-center gap-1.5">
+                <MapPin className="w-4 h-4 text-[#f2ca50]" />
+                {founderMember.specialty}
+              </span>
+              <h3 className="font-['Playfair_Display'] font-bold text-3xl text-[#e2e2e2]">
+                {founderMember.name}
+              </h3>
+              <p className="text-sm font-['Hanken_Grotesk'] font-bold text-[#d0c5af]">
+                {founderMember.role}
+              </p>
             </div>
-          ))}
+
+            <p className="text-sm text-[#d0c5af] font-['Manrope'] leading-relaxed">
+              {founderMember.bio}
+            </p>
+
+            {/* Direct Contact Buttons */}
+            <div className="pt-2 flex flex-wrap items-center gap-4">
+              <a
+                href={`https://wa.me/${founderMember.whatsapp}?text=${encodeURIComponent(`Bonjour Mr ${founderMember.name}, je vous contacte depuis le site CK Immobilier pour un projet de prestige.`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-['Hanken_Grotesk'] font-bold py-3.5 px-6 rounded-xl flex items-center gap-2 transition-all shadow-lg cursor-pointer"
+              >
+                <MessageCircle className="w-4 h-4" />
+                <span>DISCUTER SUR WHATSAPP</span>
+              </a>
+
+              <a
+                href={`mailto:${founderMember.email}`}
+                className="bg-[#1a1c1c] hover:bg-[#252828] text-[#e2e2e2] border border-[#4d4635]/50 text-xs font-['Hanken_Grotesk'] font-bold py-3.5 px-6 rounded-xl flex items-center gap-2 transition-all cursor-pointer"
+              >
+                <Mail className="w-4 h-4 text-[#f2ca50]" />
+                <span>CONTACTER PAR EMAIL</span>
+              </a>
+            </div>
+
+          </div>
+
         </div>
+
       </div>
 
     </div>
