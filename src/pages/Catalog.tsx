@@ -107,98 +107,95 @@ export const Catalog: React.FC = () => {
   return (
     <div className="pt-24 pb-12 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
       
-      {/* Header & Controls Bar */}
-      <div className="glass-panel p-4 md:p-6 rounded-xl space-y-4 shadow-xl">
+      {/* Clean 2-Row Header & Filter Controls Bar */}
+      <div className="glass-panel p-5 md:p-6 rounded-xl space-y-5 shadow-xl">
         
-        <div className="flex flex-col lg:flex-row gap-4 justify-between items-center">
-          
-          {/* Title & View Switcher */}
-          <div className="flex items-center justify-between w-full lg:w-auto gap-4">
-            <div>
-              <span className="font-['Hanken_Grotesk'] text-[10px] font-bold text-[#f2ca50] tracking-[0.2em] block">
-                PORTFOLIO PATRIMOINE CK
-              </span>
-              <h1 className="font-['Playfair_Display'] text-xl sm:text-2xl font-bold text-[#e2e2e2]">
-                Catalogue & Carte Interactive
-              </h1>
-            </div>
-
-            {/* View Switcher Buttons */}
-            <div className="flex items-center gap-1 p-1 bg-[#1a1c1c] rounded-lg border border-[#4d4635]/40 shrink-0">
-              <button
-                type="button"
-                onClick={() => setViewMode('MAP')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-['Hanken_Grotesk'] font-bold tracking-wider transition-all cursor-pointer ${
-                  viewMode === 'MAP'
-                    ? 'bg-[#f2ca50] text-[#3c2f00] shadow-md'
-                    : 'text-[#d0c5af] hover:text-[#f2ca50]'
-                }`}
-              >
-                <MapIcon className="w-4 h-4" />
-                <span>{t('search.viewMap')}</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setViewMode('GRID')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-['Hanken_Grotesk'] font-bold tracking-wider transition-all cursor-pointer ${
-                  viewMode === 'GRID'
-                    ? 'bg-[#f2ca50] text-[#3c2f00] shadow-md'
-                    : 'text-[#d0c5af] hover:text-[#f2ca50]'
-                }`}
-              >
-                <LayoutGrid className="w-4 h-4" />
-                <span>{t('search.viewGrid')}</span>
-              </button>
-            </div>
+        {/* Row 1: Title & View Mode Switcher */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-[#4d4635]/30 pb-4">
+          <div>
+            <span className="font-['Hanken_Grotesk'] text-[10px] font-bold text-[#f2ca50] tracking-[0.2em] block">
+              PORTFOLIO PATRIMOINE CK
+            </span>
+            <h1 className="font-['Playfair_Display'] text-2xl sm:text-3xl font-bold text-[#e2e2e2]">
+              Catalogue & Carte Interactive
+            </h1>
           </div>
 
-          {/* Desktop Search & Filters (Hidden on Mobile in MAP view to maximize map space) */}
-          <div className={`w-full lg:w-auto flex flex-col lg:flex-row items-center gap-4 ${viewMode === 'MAP' ? 'hidden lg:flex' : 'flex'}`}>
-            
-            {/* Search Input */}
-            <div className="relative w-full lg:w-64">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#f2ca50] w-4 h-4" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Rechercher par titre, quartier..."
-                className="w-full bg-[#1a1c1c] border border-[#4d4635] rounded px-9 py-2.5 text-xs font-['Manrope'] text-[#e2e2e2] placeholder-[#99907c] focus:border-[#f2ca50] focus:outline-none"
-              />
-            </div>
+          {/* View Switcher Buttons */}
+          <div className="flex items-center gap-1 p-1 bg-[#1a1c1c] rounded-lg border border-[#4d4635]/40 shrink-0">
+            <button
+              type="button"
+              onClick={() => setViewMode('MAP')}
+              className={`flex items-center gap-2 px-4 py-2 rounded text-xs font-['Hanken_Grotesk'] font-bold tracking-wider transition-all cursor-pointer ${
+                viewMode === 'MAP'
+                  ? 'bg-[#f2ca50] text-[#3c2f00] shadow-md'
+                  : 'text-[#d0c5af] hover:text-[#f2ca50]'
+              }`}
+            >
+              <MapIcon className="w-4 h-4" />
+              <span>{t('search.viewMap')}</span>
+            </button>
 
-            {/* Price Range Inputs */}
-            <div className="flex items-center gap-1.5 bg-[#1a1c1c] border border-[#4d4635]/50 px-2.5 py-1.5 rounded text-xs">
-              <DollarSign className="w-3.5 h-3.5 text-[#f2ca50]" />
-              <input
-                type="number"
-                value={minPriceInput}
-                onChange={(e) => setMinPriceInput(e.target.value)}
-                placeholder="Min FCFA"
-                className="w-20 bg-transparent text-xs text-[#e2e2e2] placeholder-[#99907c] focus:outline-none font-['Manrope']"
-              />
-              <span className="text-[#99907c]">-</span>
-              <input
-                type="number"
-                value={maxPriceInput}
-                onChange={(e) => setMaxPriceInput(e.target.value)}
-                placeholder="Max FCFA"
-                className="w-20 bg-transparent text-xs text-[#e2e2e2] placeholder-[#99907c] focus:outline-none font-['Manrope']"
-              />
-            </div>
+            <button
+              type="button"
+              onClick={() => setViewMode('GRID')}
+              className={`flex items-center gap-2 px-4 py-2 rounded text-xs font-['Hanken_Grotesk'] font-bold tracking-wider transition-all cursor-pointer ${
+                viewMode === 'GRID'
+                  ? 'bg-[#f2ca50] text-[#3c2f00] shadow-md'
+                  : 'text-[#d0c5af] hover:text-[#f2ca50]'
+              }`}
+            >
+              <LayoutGrid className="w-4 h-4" />
+              <span>{t('search.viewGrid')}</span>
+            </button>
+          </div>
+        </div>
 
-            {/* Filter Pills */}
-            <div className="flex items-center gap-2 w-full lg:w-auto overflow-x-auto pb-1 lg:pb-0 no-scrollbar">
-              <Filter className="w-4 h-4 text-[#f2ca50] shrink-0" />
-              
-              {/* Mode Pills */}
+        {/* Row 2: Search Input, Price Range, and Filter Pills (Hidden on Mobile when in MAP view) */}
+        <div className={`flex flex-col lg:flex-row flex-wrap items-center gap-4 ${viewMode === 'MAP' ? 'hidden lg:flex' : 'flex'}`}>
+          
+          {/* Search Input */}
+          <div className="relative w-full lg:w-72">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#f2ca50] w-4 h-4" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Rechercher par titre, quartier..."
+              className="w-full bg-[#1a1c1c] border border-[#4d4635] rounded px-9 py-2.5 text-xs font-['Manrope'] text-[#e2e2e2] placeholder-[#99907c] focus:border-[#f2ca50] focus:outline-none"
+            />
+          </div>
+
+          {/* Price Range Inputs */}
+          <div className="flex items-center gap-2 bg-[#1a1c1c] border border-[#4d4635]/50 px-3 py-2 rounded text-xs w-full sm:w-auto">
+            <DollarSign className="w-3.5 h-3.5 text-[#f2ca50] shrink-0" />
+            <input
+              type="number"
+              value={minPriceInput}
+              onChange={(e) => setMinPriceInput(e.target.value)}
+              placeholder="Min FCFA"
+              className="w-24 bg-transparent text-xs text-[#e2e2e2] placeholder-[#99907c] focus:outline-none font-['Manrope']"
+            />
+            <span className="text-[#99907c]">-</span>
+            <input
+              type="number"
+              value={maxPriceInput}
+              onChange={(e) => setMaxPriceInput(e.target.value)}
+              placeholder="Max FCFA"
+              className="w-24 bg-transparent text-xs text-[#e2e2e2] placeholder-[#99907c] focus:outline-none font-['Manrope']"
+            />
+          </div>
+
+          {/* Filter Pills */}
+          <div className="flex items-center gap-2 flex-wrap w-full lg:w-auto">
+            <div className="flex items-center gap-1.5 shrink-0">
+              <Filter className="w-4 h-4 text-[#f2ca50]" />
               {(['ALL', 'ACHETER', 'LOUER'] as const).map((m) => (
                 <button
                   key={m}
                   type="button"
                   onClick={() => setSelectedMode(m)}
-                  className={`font-['Hanken_Grotesk'] text-[11px] font-bold tracking-wider px-3 py-1.5 rounded transition-all shrink-0 cursor-pointer ${
+                  className={`font-['Hanken_Grotesk'] text-[11px] font-bold tracking-wider px-3.5 py-2 rounded transition-all cursor-pointer ${
                     selectedMode === m
                       ? 'bg-[#f2ca50] text-[#3c2f00] shadow-md'
                       : 'bg-[#1a1c1c] text-[#d0c5af] hover:text-[#f2ca50] border border-[#4d4635]/50'
@@ -207,16 +204,18 @@ export const Catalog: React.FC = () => {
                   {m === 'ALL' ? 'TOUS TYPES' : m === 'ACHETER' ? 'ACHAT' : 'LOCATION'}
                 </button>
               ))}
+            </div>
 
-              <span className="text-[#4d4635] font-bold">|</span>
+            <span className="text-[#4d4635] font-bold hidden sm:inline">|</span>
 
-              {/* City Pills */}
+            {/* City Pills */}
+            <div className="flex items-center gap-1.5 shrink-0">
               {['ALL', 'DOUALA', 'YAOUNDÉ'].map((city) => (
                 <button
                   key={city}
                   type="button"
                   onClick={() => setSelectedCity(city)}
-                  className={`font-['Hanken_Grotesk'] text-[11px] font-bold tracking-wider px-3 py-1.5 rounded transition-all shrink-0 cursor-pointer ${
+                  className={`font-['Hanken_Grotesk'] text-[11px] font-bold tracking-wider px-3.5 py-2 rounded transition-all cursor-pointer ${
                     selectedCity === city
                       ? 'bg-[#f2ca50] text-[#3c2f00] shadow-md'
                       : 'bg-[#1a1c1c] text-[#d0c5af] hover:text-[#f2ca50] border border-[#4d4635]/50'
@@ -225,25 +224,25 @@ export const Catalog: React.FC = () => {
                   {city === 'ALL' ? 'VILLES' : city}
                 </button>
               ))}
-
-              <button
-                type="button"
-                onClick={() => setOnlyDirectCk(!onlyDirectCk)}
-                className={`font-['Hanken_Grotesk'] text-[11px] font-bold tracking-wider px-3 py-1.5 rounded transition-all shrink-0 border cursor-pointer ${
-                  onlyDirectCk
-                    ? 'border-[#f2ca50] bg-[#f2ca50]/20 text-[#f2ca50]'
-                    : 'border-[#4d4635]/50 bg-[#1a1c1c] text-[#99907c]'
-                }`}
-              >
-                DIRECT CK
-              </button>
             </div>
 
+            {/* Direct CK Toggle */}
+            <button
+              type="button"
+              onClick={() => setOnlyDirectCk(!onlyDirectCk)}
+              className={`font-['Hanken_Grotesk'] text-[11px] font-bold tracking-wider px-3.5 py-2 rounded transition-all border cursor-pointer shrink-0 ${
+                onlyDirectCk
+                  ? 'border-[#f2ca50] bg-[#f2ca50]/20 text-[#f2ca50]'
+                  : 'border-[#4d4635]/50 bg-[#1a1c1c] text-[#99907c]'
+              }`}
+            >
+              DIRECT CK
+            </button>
           </div>
 
         </div>
 
-        {/* Dynamic Results Counter (Desktop / Grid) */}
+        {/* Dynamic Results Counter & Reset Bar */}
         <div className={`flex flex-wrap items-center justify-between pt-3 border-t border-[#4d4635]/30 text-xs font-['Hanken_Grotesk'] ${viewMode === 'MAP' ? 'hidden lg:flex' : 'flex'}`}>
           <div className="flex items-center gap-2">
             <span className="inline-flex items-center gap-1.5 bg-[#f2ca50]/15 text-[#f2ca50] border border-[#f2ca50]/30 px-3 py-1 rounded-full font-bold">
