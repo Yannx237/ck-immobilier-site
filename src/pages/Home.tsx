@@ -4,9 +4,39 @@ import { SearchBar } from '../components/SearchBar';
 import { BentoGrid } from '../components/BentoGrid';
 import { PropertyCard } from '../components/PropertyCard';
 import { sampleProperties } from '../data/properties';
-import { ShieldCheck, Award, Eye, Key, ChevronRight, PhoneCall } from 'lucide-react';
+import { ShieldCheck, Eye, Key, ChevronRight, PhoneCall, ArrowUpRight, Sparkles, Award } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const Home: React.FC = () => {
+  const { t } = useTranslation();
+
+  const servicesList = [
+    {
+      num: '01',
+      title: 'Vente & Acquisition Discrète',
+      subtitle: 'TRANSACTIONS CONFIDENTIELLES OFF-MARKET',
+      description: 'Accès exclusif à des propriétés de prestige préservées de la publicité publique. Accompagnement sous accord de confidentialité (NDA) pour acheteurs VIP et investisseurs institutionnels.',
+      icon: Eye,
+      tag: 'CONFIDENTIEL',
+    },
+    {
+      num: '02',
+      title: 'Gestion de Patrimoine & Ingénierie Foncière',
+      subtitle: 'AUDIT, VALORISATION & SÉCURITÉ JURIDIQUE',
+      description: 'Audit rigoureux du Titre Foncier à la conservation foncière, optimisation fiscale, évaluation d\'actifs de valeur et gestion locative haut de gamme à Douala et Yaoundé.',
+      icon: Award,
+      tag: 'CONFORMITÉ MINHDU',
+    },
+    {
+      num: '03',
+      title: 'Conciergerie Immobilière & Mandat Exclusif',
+      subtitle: 'LABEL DIRECT CK SUR-MESURE',
+      description: 'Prise en charge intégrale à 360° : négociation directe avec le propriétaire sans surcoût d\'intermédiaire, organisation de visites privées sécurisées et assistance notariée.',
+      icon: Key,
+      tag: 'LABEL DIRECT CK',
+    },
+  ];
+
   return (
     <div className="space-y-24 pb-20">
       
@@ -33,12 +63,12 @@ export const Home: React.FC = () => {
           </div>
 
           <h1 className="font-['Playfair_Display'] text-4xl sm:text-6xl lg:text-7xl font-bold text-[#e2e2e2] leading-tight drop-shadow-2xl">
-            L'<span className="gold-gradient-text">EXCELLENCE</span> IMMOBILIÈRE,<br />
-            À CHAQUE ÉTAPE.
+            {t('hero.title1')}<br />
+            <span className="gold-gradient-text">{t('hero.title2')}</span>
           </h1>
 
           <p className="font-['Manrope'] text-lg sm:text-xl text-[#d0c5af] max-w-2xl font-light">
-            Découvrez une sélection exclusive de résidences d'exception, villas contemporaines et penthouses de prestige à Douala et Yaoundé.
+            {t('hero.sub')}
           </p>
 
           {/* SearchBar Component */}
@@ -53,7 +83,7 @@ export const Home: React.FC = () => {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 border-b border-[#4d4635]/30 pb-6 gap-4">
           <div>
             <h2 className="font-['Playfair_Display'] text-3xl sm:text-4xl font-bold text-[#e2e2e2] mb-2">
-              Notre Patrimoine <span className="text-[#f2ca50] italic font-light">Exclusif</span>
+              {t('hero.ourPatrimony')} <span className="text-[#f2ca50] italic font-light">{t('hero.exclusivePatrimony')}</span>
             </h2>
             <p className="font-['Manrope'] text-base text-[#d0c5af] max-w-xl">
               Une sélection rigoureuse des plus belles adresses du Cameroun, gérées sous mandat exclusif par notre cabinet.
@@ -64,7 +94,7 @@ export const Home: React.FC = () => {
             to="/catalogue"
             className="font-['Hanken_Grotesk'] text-xs font-bold tracking-widest text-[#f2ca50] hover:text-[#ffe088] transition-colors flex items-center gap-2 pb-1"
           >
-            <span>VOIR TOUT LE PATRIMOINE</span>
+            <span>{t('hero.seeAllProperties')}</span>
             <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
@@ -72,55 +102,101 @@ export const Home: React.FC = () => {
         <BentoGrid />
       </section>
 
-      {/* Services / Value Proposition Section */}
-      <section className="bg-[#1a1c1c] border-y border-[#4d4635]/30 py-20">
+      {/* High-Agency Luxury Services Showcase Section */}
+      <section className="relative bg-[#0e1010] border-y border-[#4d4635]/40 py-24 overflow-hidden">
+        {/* Subtle background glow accent */}
+        <div className="absolute top-1/2 left-0 w-96 h-96 bg-[#f2ca50]/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2"></div>
+        
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-            <span className="font-['Hanken_Grotesk'] text-xs font-bold tracking-[0.2em] text-[#f2ca50]">
-              L'ENGAGEMENT PRESTIGE
-            </span>
-            <h2 className="font-['Playfair_Display'] text-3xl sm:text-4xl font-bold text-[#e2e2e2]">
-              Un Accompagnement sur-mesure pour Patrimoines d'Exception
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             
-            <div className="glass-panel p-8 rounded-xl space-y-4 hover-gold-glow">
-              <div className="w-12 h-12 rounded-lg bg-[#f2ca50]/15 border border-[#f2ca50]/40 flex items-center justify-center text-[#f2ca50]">
-                <Eye className="w-6 h-6" />
+            {/* Left Editorial Header Column */}
+            <div className="lg:col-span-4 space-y-8 lg:sticky lg:top-32">
+              <div className="space-y-4">
+                <div className="inline-flex items-center gap-2 bg-[#1e2020] border border-[#f2ca50]/40 px-3.5 py-1 rounded-full">
+                  <Sparkles className="w-3.5 h-3.5 text-[#f2ca50]" />
+                  <span className="font-['Hanken_Grotesk'] text-[10px] font-bold tracking-[0.25em] text-[#f2ca50]">
+                    EXCELLENCE & DEVOIR DE CONSEIL
+                  </span>
+                </div>
+
+                <h2 className="font-['Playfair_Display'] text-3xl sm:text-4xl lg:text-5xl font-bold text-[#e2e2e2] leading-tight">
+                  L'Art de la Transaction <span className="gold-gradient-text">Immobilière</span>
+                </h2>
+
+                <p className="font-['Manrope'] text-sm sm:text-base text-[#d0c5af] leading-relaxed font-light">
+                  CK Immobilier SARL redéfinit les standards de l'immobilier d'exception au Cameroun. Nous allions rigueur juridique, vérification systématique des titres fonciers et absolue discrétion.
+                </p>
               </div>
-              <h3 className="font-['Playfair_Display'] text-xl font-semibold text-[#e2e2e2]">
-                Vente & Acquisition Discrète
-              </h3>
-              <p className="text-sm text-[#d0c5af] font-['Manrope'] leading-relaxed">
-                Transactions confidentielles hors-marché (Off-Market) réservées à nos clients VIP et investisseurs institutionnels.
-              </p>
+
+              {/* Stats Highlight Box */}
+              <div className="p-6 rounded-xl bg-[#161818] border border-[#4d4635]/50 space-y-4">
+                <div className="flex items-baseline gap-2">
+                  <span className="font-['Playfair_Display'] text-4xl font-bold text-[#f2ca50]">100%</span>
+                  <span className="font-['Hanken_Grotesk'] text-xs text-[#e2e2e2] font-bold tracking-wider">
+                    DE TITRES FONCIERS VÉRIFIÉS
+                  </span>
+                </div>
+                <p className="font-['Manrope'] text-xs text-[#99907c]">
+                  Chaque dossier fait l'objet d'un audit de propriété préalable auprès des conservations foncières de Douala et Yaoundé.
+                </p>
+              </div>
+
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-2 font-['Hanken_Grotesk'] text-xs font-bold tracking-widest text-[#f2ca50] hover:text-[#ffe088] transition-colors border-b border-[#f2ca50]/50 pb-1"
+              >
+                <span>PRENDRE CONSEIL AVEC UN ASSOCIÉ SENIOR</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </Link>
             </div>
 
-            <div className="glass-panel p-8 rounded-xl space-y-4 hover-gold-glow">
-              <div className="w-12 h-12 rounded-lg bg-[#f2ca50]/15 border border-[#f2ca50]/40 flex items-center justify-center text-[#f2ca50]">
-                <Award className="w-6 h-6" />
-              </div>
-              <h3 className="font-['Playfair_Display'] text-xl font-semibold text-[#e2e2e2]">
-                Gestion de Patrimoine Immobilier
-              </h3>
-              <p className="text-sm text-[#d0c5af] font-['Manrope'] leading-relaxed">
-                Valorisation d'actifs, audit foncier, optimisation fiscale et gestion locative haut de gamme à Douala et Yaoundé.
-              </p>
-            </div>
+            {/* Right Editorial Service Cards List */}
+            <div className="lg:col-span-8 space-y-6">
+              {servicesList.map((service) => {
+                const IconComponent = service.icon;
+                return (
+                  <div
+                    key={service.num}
+                    className="group relative bg-[#141616] hover:bg-[#181a1a] rounded-2xl border border-[#4d4635]/30 hover:border-[#f2ca50]/60 p-6 sm:p-8 transition-all duration-500 shadow-xl overflow-hidden"
+                  >
+                    {/* Top Right Index Number */}
+                    <div className="flex justify-between items-start mb-6">
+                      <span className="font-['Playfair_Display'] text-3xl sm:text-4xl font-bold text-[#f2ca50]/30 group-hover:text-[#f2ca50] transition-colors">
+                        {service.num}
+                      </span>
+                      
+                      <div className="flex items-center gap-2">
+                        <span className="bg-[#1e2020] text-[#f2ca50] border border-[#f2ca50]/30 text-[9px] font-['Hanken_Grotesk'] font-bold px-2.5 py-1 rounded-full tracking-widest">
+                          {service.tag}
+                        </span>
+                        <div className="w-10 h-10 rounded-full bg-[#1e2020] border border-[#4d4635]/50 flex items-center justify-center text-[#f2ca50] group-hover:scale-110 group-hover:bg-[#f2ca50] group-hover:text-[#121414] transition-all">
+                          <IconComponent className="w-5 h-5" />
+                        </div>
+                      </div>
+                    </div>
 
-            <div className="glass-panel p-8 rounded-xl space-y-4 hover-gold-glow">
-              <div className="w-12 h-12 rounded-lg bg-[#f2ca50]/15 border border-[#f2ca50]/40 flex items-center justify-center text-[#f2ca50]">
-                <Key className="w-6 h-6" />
-              </div>
-              <h3 className="font-['Playfair_Display'] text-xl font-semibold text-[#e2e2e2]">
-                Conciergerie & Mandat Exclusif
-              </h3>
-              <p className="text-sm text-[#d0c5af] font-['Manrope'] leading-relaxed">
-                Prise en charge intégrale des démarches administratives, de l'aménagement d'intérieur et des visites privées.
-              </p>
+                    <div className="space-y-2">
+                      <span className="font-['Hanken_Grotesk'] text-[10px] font-bold tracking-[0.2em] text-[#d0c5af]">
+                        {service.subtitle}
+                      </span>
+                      <h3 className="font-['Playfair_Display'] text-xl sm:text-2xl font-bold text-[#e2e2e2] group-hover:text-[#f2ca50] transition-colors">
+                        {service.title}
+                      </h3>
+                      <p className="font-['Manrope'] text-sm text-[#d0c5af] leading-relaxed pt-1">
+                        {service.description}
+                      </p>
+                    </div>
+
+                    <div className="mt-6 pt-4 border-t border-[#4d4635]/20 flex items-center justify-between text-xs font-['Hanken_Grotesk'] font-bold text-[#f2ca50]">
+                      <span className="tracking-widest group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                        EN SAVOIR PLUS <ChevronRight className="w-4 h-4" />
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
 
           </div>
