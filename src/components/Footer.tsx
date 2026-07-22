@@ -89,15 +89,15 @@ export const Footer: React.FC = () => {
             </h4>
             <div className="space-y-3 text-xs text-[#d0c5af]">
               <div className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-[#f2ca50]" />
-                <span>+237 690 00 00 00 / +237 670 00 00 00</span>
+                <Phone className="w-4 h-4 text-[#f2ca50] shrink-0" />
+                <span>+237 678 38 68 75 / +237 656 24 20 81</span>
               </div>
               <div className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-[#f2ca50]" />
+                <Mail className="w-4 h-4 text-[#f2ca50] shrink-0" />
                 <span>contact@ck-immobilier.cm</span>
               </div>
               <div className="flex items-center gap-2.5 pt-2">
-                <Clock className="w-4 h-4 text-[#f2ca50]" />
+                <Clock className="w-4 h-4 text-[#f2ca50] shrink-0" />
                 <span>Lundi - Samedi : 08h00 - 19h00</span>
               </div>
             </div>

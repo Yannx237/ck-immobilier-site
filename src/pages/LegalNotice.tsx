@@ -68,7 +68,8 @@ export const LegalNotice: React.FC = () => {
           </h2>
           <div className="space-y-2 text-xs bg-[#1a1c1c] p-6 rounded-xl border border-[#4d4635]/30">
             <p><strong className="text-[#e2e2e2]">Directeur de Publication :</strong> Direction Générale CK Immobilier SARL</p>
-            <p><strong className="text-[#e2e2e2]">Téléphones d'agence :</strong> +237 690 00 00 00 / +237 670 00 00 00</p>
+            <p><strong className="text-[#e2e2e2]">Téléphones d'agence :</strong> +237 678 38 68 75 / +237 656 24 20 81</p>
+
             <p><strong className="text-[#e2e2e2]">Email Officiel :</strong> contact@ck-immobilier.cm</p>
           </div>
         </section>

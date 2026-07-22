@@ -236,12 +236,15 @@ export const PropertyDetails: React.FC = () => {
 
               <div className="pt-4 text-center">
                 <a
-                  href="tel:+237690000000"
+                  href="https://wa.me/237678386875"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-xs font-['Hanken_Grotesk'] text-[#f2ca50] hover:underline tracking-wider font-bold"
                 >
                   <Phone className="w-3.5 h-3.5" />
-                  <span>CONTACT DIRECT AGENT : +237 690 00 00 00</span>
+                  <span>CONTACT DIRECT : +237 678 38 68 75 / +237 656 24 20 81</span>
                 </a>
+
               </div>
             </div>
 

@@ -70,7 +70,7 @@ export const Contact: React.FC = () => {
                   <input
                     type="tel"
                     required
-                    placeholder="+237 600 00 00 00"
+                    placeholder="+237 678 38 68 75"
                     className="w-full bg-[#1a1c1c] border border-[#4d4635] rounded px-4 py-3 text-sm text-[#e2e2e2] focus:border-[#f2ca50] focus:outline-none"
                   />
                 </div>
@@ -154,7 +154,7 @@ export const Contact: React.FC = () => {
 
               <div className="border-t border-[#4d4635]/30 pt-4 flex items-center gap-3">
                 <Phone className="w-5 h-5 text-[#f2ca50] shrink-0" />
-                <span>+237 690 00 00 00 / +237 670 00 00 00</span>
+                <span>+237 678 38 68 75 / +237 656 24 20 81</span>
               </div>
 
               <div className="flex items-center gap-3">
