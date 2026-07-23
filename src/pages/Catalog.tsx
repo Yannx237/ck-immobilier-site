@@ -5,6 +5,7 @@ import { PropertyMap } from '../components/PropertyMap';
 import { sampleProperties, type PropertyWithMap } from '../data/properties';
 import { Search, Filter, ShieldCheck, LayoutGrid, Map as MapIcon, ArrowRight, DollarSign, RotateCcw, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 // Helper function to extract numeric price from price string
 const parsePrice = (priceStr: string): number => {
@@ -17,6 +18,7 @@ const ITEMS_PER_PAGE = 6;
 export const Catalog: React.FC = () => {
   const [searchParams] = useSearchParams();
   const { t } = useTranslation();
+  useScrollReveal();
 
   // Read URL query params
   const paramMode = searchParams.get('mode'); // 'ACHETER' | 'LOUER'
@@ -108,7 +110,7 @@ export const Catalog: React.FC = () => {
     <div className="pt-24 pb-12 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
       
       {/* Clean 2-Row Header & Filter Controls Bar */}
-      <div className="glass-panel p-5 md:p-6 rounded-xl space-y-5 shadow-xl">
+      <div className="reveal-on-scroll glass-panel p-5 md:p-6 rounded-xl space-y-5 shadow-xl">
         
         {/* Row 1: Title & View Mode Switcher */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-[#4d4635]/30 pb-4">
@@ -126,7 +128,7 @@ export const Catalog: React.FC = () => {
             <button
               type="button"
               onClick={() => setViewMode('MAP')}
-              className={`flex items-center gap-2 px-4 py-2 rounded text-xs font-['Hanken_Grotesk'] font-bold tracking-wider transition-all cursor-pointer ${
+              className={`flex items-center gap-2 px-4 py-2 rounded text-xs font-[#Hanken_Grotesk] font-bold tracking-wider transition-all cursor-pointer ${
                 viewMode === 'MAP'
                   ? 'bg-[#f2ca50] text-[#3c2f00] shadow-md'
                   : 'text-[#d0c5af] hover:text-[#f2ca50]'
@@ -274,13 +276,14 @@ export const Catalog: React.FC = () => {
           <div className="hidden lg:flex w-full lg:w-[460px] h-full overflow-y-auto pr-2 flex-col justify-between shrink-0 custom-scrollbar">
             <div className="space-y-4">
               {paginatedProperties.length > 0 ? (
-                paginatedProperties.map((prop) => {
+                paginatedProperties.map((prop, idx) => {
                   const isSelected = selectedPropertyId === prop.id;
+                  const delayClass = idx % 3 === 1 ? 'delay-100' : idx % 3 === 2 ? 'delay-200' : '';
                   return (
                     <div
                       key={prop.id}
                       onClick={() => setSelectedPropertyId(prop.id)}
-                      className={`bg-[#1a1c1c] rounded-xl border p-4 transition-all duration-300 cursor-pointer flex gap-4 ${
+                      className={`reveal-on-scroll ${delayClass} bg-[#1a1c1c] rounded-xl border p-4 transition-all duration-300 cursor-pointer flex gap-4 ${
                         isSelected
                           ? 'border-[#f2ca50] shadow-[0_0_15px_rgba(242,202,80,0.25)] bg-[#1e2020]'
                           : 'border-[#4d4635]/30 hover:border-[#f2ca50]/50'
@@ -375,7 +378,7 @@ export const Catalog: React.FC = () => {
           </div>
 
           {/* Interactive Map Area (Takes Full Width & Height of parent container) */}
-          <div className="flex-grow w-full h-full min-w-0">
+          <div className="reveal-on-scroll flex-grow w-full h-full min-w-0">
             <PropertyMap
               properties={filteredProperties}
               selectedPropertyId={selectedPropertyId}
@@ -389,8 +392,8 @@ export const Catalog: React.FC = () => {
         <div className="space-y-8">
           {paginatedProperties.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {paginatedProperties.map((property) => (
-                <PropertyCard key={property.id} property={property} />
+              {paginatedProperties.map((property, idx) => (
+                <PropertyCard key={property.id} property={property} index={idx} />
               ))}
             </div>
           ) : (

@@ -6,10 +6,12 @@ import { PropertyCard } from '../components/PropertyCard';
 import { sampleProperties } from '../data/properties';
 import { ShieldCheck, Eye, Key, ChevronRight, PhoneCall, ArrowUpRight, Sparkles, Award } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 import heroBuildingImg from '../assets/hero_ck.jpg';
 
 export const Home: React.FC = () => {
   const { t } = useTranslation();
+  useScrollReveal();
 
   const servicesList = [
     {
@@ -48,14 +50,14 @@ export const Home: React.FC = () => {
           <img
             src={heroBuildingImg}
             alt="Immeuble CK Immobilier Prestige"
-            className="w-full h-full object-cover object-center scale-105"
+            className="w-full h-full object-cover object-center scale-105 transition-transform duration-1000"
           />
           <div className="absolute inset-0 bg-[#121414]/75 backdrop-brightness-75 mix-blend-multiply"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-[#121414] via-[#121414]/50 to-[#121414]/70"></div>
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center gap-6 mt-8">
+        <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center gap-6 mt-8 animate-fade-in-up">
           <div className="inline-flex items-center gap-2 bg-[#1e2020]/90 border border-[#f2ca50]/40 px-4 py-1.5 rounded-full shadow-[0_0_15px_rgba(242,202,80,0.2)]">
             <ShieldCheck className="w-4 h-4 text-[#f2ca50]" />
             <span className="font-['Hanken_Grotesk'] text-xs font-bold tracking-[0.2em] text-[#f2ca50]">
@@ -81,7 +83,7 @@ export const Home: React.FC = () => {
 
       {/* Section Bento Grid */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 border-b border-[#4d4635]/30 pb-6 gap-4">
+        <div className="reveal-on-scroll flex flex-col md:flex-row justify-between items-start md:items-end mb-12 border-b border-[#4d4635]/30 pb-6 gap-4">
           <div>
             <h2 className="font-['Playfair_Display'] text-3xl sm:text-4xl font-bold text-[#e2e2e2] mb-2">
               {t('hero.ourPatrimony')} <span className="text-[#f2ca50] italic font-light">{t('hero.exclusivePatrimony')}</span>
@@ -113,7 +115,7 @@ export const Home: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             
             {/* Left Editorial Header Column */}
-            <div className="lg:col-span-4 space-y-8 lg:sticky lg:top-32">
+            <div className="reveal-on-scroll lg:col-span-4 space-y-8 lg:sticky lg:top-32">
               <div className="space-y-4">
                 <div className="inline-flex items-center gap-2 bg-[#1e2020] border border-[#f2ca50]/40 px-3.5 py-1 rounded-full">
                   <Sparkles className="w-3.5 h-3.5 text-[#f2ca50]" />
@@ -155,12 +157,13 @@ export const Home: React.FC = () => {
 
             {/* Right Editorial Service Cards List */}
             <div className="lg:col-span-8 space-y-6">
-              {servicesList.map((service) => {
+              {servicesList.map((service, i) => {
                 const IconComponent = service.icon;
+                const delayClass = i === 1 ? 'delay-100' : i === 2 ? 'delay-200' : '';
                 return (
                   <div
                     key={service.num}
-                    className="group relative bg-[#141616] hover:bg-[#181a1a] rounded-2xl border border-[#4d4635]/30 hover:border-[#f2ca50]/60 p-6 sm:p-8 transition-all duration-500 shadow-xl overflow-hidden"
+                    className={`reveal-on-scroll ${delayClass} group relative bg-[#141616] hover:bg-[#181a1a] rounded-2xl border border-[#4d4635]/30 hover:border-[#f2ca50]/60 p-6 sm:p-8 transition-all duration-500 shadow-xl overflow-hidden`}
                   >
                     {/* Top Right Index Number */}
                     <div className="flex justify-between items-start mb-6">
@@ -207,7 +210,7 @@ export const Home: React.FC = () => {
 
       {/* Featured Properties Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center mb-12 border-b border-[#4d4635]/30 pb-6">
+        <div className="reveal-on-scroll flex justify-between items-center mb-12 border-b border-[#4d4635]/30 pb-6">
           <div>
             <h2 className="font-['Playfair_Display'] text-3xl font-bold text-[#e2e2e2]">
               {t('home.latestOpportunities')}
@@ -222,15 +225,15 @@ export const Home: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {sampleProperties.slice(0, 3).map((prop) => (
-            <PropertyCard key={prop.id} property={prop} />
+          {sampleProperties.slice(0, 3).map((prop, idx) => (
+            <PropertyCard key={prop.id} property={prop} index={idx} />
           ))}
         </div>
       </section>
 
       {/* CTA Private Consultation */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="glass-panel rounded-2xl p-10 md:p-16 relative overflow-hidden text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-8 border border-[#f2ca50]/30 shadow-[0_0_30px_rgba(242,202,80,0.15)]">
+        <div className="reveal-on-scroll glass-panel rounded-2xl p-10 md:p-16 relative overflow-hidden text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-8 border border-[#f2ca50]/30 shadow-[0_0_30px_rgba(242,202,80,0.15)]">
           <div className="max-w-2xl space-y-3">
             <span className="font-['Hanken_Grotesk'] text-xs font-bold tracking-[0.2em] text-[#f2ca50]">
               {t('home.ctaBadge')}

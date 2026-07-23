@@ -6,14 +6,17 @@ import { useTranslation } from 'react-i18next';
 
 interface PropertyCardProps {
   property: PropertyWithMap;
+  index?: number;
 }
 
-export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
+export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index = 0 }) => {
   const { t } = useTranslation();
   const isRent = property.listingType === 'RENT';
 
+  const delayClass = index % 3 === 1 ? 'delay-100' : index % 3 === 2 ? 'delay-200' : '';
+
   return (
-    <div className="group relative overflow-hidden bg-[#1a1c1c] rounded-xl border border-[#4d4635]/40 hover:border-[#f2ca50]/70 transition-all duration-500 shadow-xl flex flex-col h-full hover:-translate-y-1">
+    <div className={`reveal-on-scroll ${delayClass} group relative overflow-hidden bg-[#1a1c1c] rounded-xl border border-[#4d4635]/40 hover:border-[#f2ca50]/70 transition-all duration-500 shadow-xl flex flex-col h-full hover:-translate-y-1`}>
       
       {/* Image container */}
       <div className="relative h-64 overflow-hidden bg-[#0c0f0f]">
