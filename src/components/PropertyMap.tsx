@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import type { PropertyWithMap } from '../data/properties';
-import { Search, Maximize2, Minimize2 } from 'lucide-react';
+import { Search, Maximize2, Minimize2, Box } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 declare const mapboxgl: any;
@@ -56,6 +56,7 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
   const [mapSearchText, setMapSearchText] = useState<string>('');
   const [mapModeFilter, setMapModeFilter] = useState<'ALL' | 'ACHETER' | 'LOUER'>('ALL');
   const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
+  const [is3DMode, setIs3DMode] = useState<boolean>(true); // Default 3D active
 
   // Filter properties in real time
   const displayedProperties = properties.filter((prop) => {
@@ -93,6 +94,20 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
     };
   }, [isFullScreen]);
 
+  // Toggle 3D Pitch and Rotation
+  const toggle3DMode = () => {
+    const new3DState = !is3DMode;
+    setIs3DMode(new3DState);
+
+    if (mapRef.current) {
+      mapRef.current.easeTo({
+        pitch: new3DState ? 60 : 0,
+        bearing: new3DState ? -17.6 : 0,
+        duration: 1000,
+      });
+    }
+  };
+
   // Initialize Mapbox GL JS map
   useEffect(() => {
     if (!mapContainerRef.current) return;
@@ -104,11 +119,69 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/dark-v11',
       center: defaultCenter,
-      zoom: 11,
-      pitch: 30, // Subtle luxury 3D pitch perspective
+      zoom: 12,
+      pitch: 60, // 3D Pitch
+      bearing: -17.6, // 3D Angle
+      antialias: true,
     });
 
-    map.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'bottom-right');
+    map.addControl(new mapboxgl.NavigationControl({ showCompass: true }), 'bottom-right');
+
+    // Add 3D Building Extrusions Layer when style loads
+    map.on('style.load', () => {
+      const layers = map.getStyle().layers;
+      const labelLayerId = layers.find(
+        (layer: any) => layer.type === 'symbol' && layer.layout && layer.layout['text-field']
+      )?.id;
+
+      if (!map.getLayer('add-3d-buildings')) {
+        map.addLayer(
+          {
+            id: 'add-3d-buildings',
+            source: 'composite',
+            'source-layer': 'building',
+            filter: ['==', 'extrude', 'true'],
+            type: 'fill-extrusion',
+            minzoom: 11,
+            paint: {
+              'fill-extrusion-color': [
+                'interpolate',
+                ['linear'],
+                ['get', 'height'],
+                0,
+                '#1a1d1d',
+                50,
+                '#2c3232',
+                100,
+                '#3e4747'
+              ],
+              'fill-extrusion-height': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
+                11,
+                0,
+                11.05,
+                ['get', 'height']
+              ],
+              'fill-extrusion-base': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
+                11,
+                0,
+                11.05,
+                ['get', 'min_height']
+              ],
+              'fill-extrusion-opacity': 0.85,
+              'fill-extrusion-ambient-occlusion-intensity': 0.4
+            }
+          },
+          labelLayerId
+        );
+      }
+    });
+
     mapRef.current = map;
 
     return () => {
@@ -234,15 +307,17 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
     });
   }, [displayedProperties, selectedPropertyId]);
 
-  // Recenter Mapbox map when selectedPropertyId changes
+  // Recenter Mapbox map with 3D animation when selectedPropertyId changes
   useEffect(() => {
     if (!mapRef.current || !selectedProp) return;
     mapRef.current.flyTo({
       center: [selectedProp.mapCoordinates.lng, selectedProp.mapCoordinates.lat],
-      zoom: 12.5,
+      zoom: 13.5,
+      pitch: is3DMode ? 60 : 0,
+      bearing: is3DMode ? -17.6 : 0,
       essential: true,
     });
-  }, [selectedPropertyId]);
+  }, [selectedPropertyId, is3DMode]);
 
   return (
     <div className={`transition-all duration-300 overflow-hidden bg-[#121414] ${
@@ -284,6 +359,17 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
           ))}
         </div>
 
+        {/* 3D Toggle */}
+        <button
+          type="button"
+          onClick={toggle3DMode}
+          className={`p-2 rounded-lg shrink-0 shadow-lg cursor-pointer font-bold flex items-center justify-center transition-all ${
+            is3DMode ? 'bg-[#f2ca50] text-[#3c2f00]' : 'bg-[#1a1c1c] text-[#d0c5af] border border-[#4d4635]'
+          }`}
+        >
+          <Box className="w-4 h-4" />
+        </button>
+
         {/* Fullscreen Toggle Button */}
         <button
           type="button"
@@ -296,8 +382,21 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
 
       </div>
 
-      {/* Desktop Fullscreen Button */}
-      <div className="absolute top-4 right-4 z-[1000] hidden sm:block">
+      {/* Desktop Controls Overlay (3D & Fullscreen) */}
+      <div className="absolute top-4 right-4 z-[1000] hidden sm:flex items-center gap-2">
+        <button
+          type="button"
+          onClick={toggle3DMode}
+          className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-['Hanken_Grotesk'] font-bold transition-all shadow-lg cursor-pointer ${
+            is3DMode
+              ? 'bg-[#f2ca50] text-[#3c2f00] shadow-[0_0_15px_rgba(242,202,80,0.4)]'
+              : 'bg-[#1a1c1c]/90 backdrop-blur-md border border-[#4d4635]/50 text-[#d0c5af] hover:text-[#f2ca50]'
+          }`}
+        >
+          <Box className="w-4 h-4" />
+          <span>{is3DMode ? 'VUE 3D ACTIVE' : 'PASSER EN 3D'}</span>
+        </button>
+
         <button
           type="button"
           onClick={() => setIsFullScreen(!isFullScreen)}
