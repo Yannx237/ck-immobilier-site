@@ -9,10 +9,10 @@ export const Team: React.FC = () => {
   const founderMember = {
     name: 'Colbert Kouatcho',
     role: t('team.founderTitle'),
-    specialty: 'YAOUNDÉ (SIÈGE) & DOUALA (AGENCE)',
-    bio: 'Fondateur et visionnaire du cabinet CK Immobilier SARL. Plus de 15 ans d\'expertise dans la sécurisation foncière, la vérification systématique des Titres Fonciers, les mandats exclusifs et la gestion du patrimoine immobilier d\'exception au Cameroun.',
+    specialty: t('team.founderSpecialty'),
+    bio: t('team.founderBio'),
     imageUrl: founderImg,
-    tag: 'FONDATEUR & DG',
+    tag: t('team.founderTag'),
   };
 
   return (

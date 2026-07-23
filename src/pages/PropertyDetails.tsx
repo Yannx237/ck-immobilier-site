@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { sampleProperties } from '../data/properties';
 import { ShieldCheck, MapPin, BedDouble, Bath, Maximize2, Phone, Calendar, ArrowLeft, Check, MessageCircle, X, Send, CheckCircle2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const PropertyDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const { t } = useTranslation();
   const property = sampleProperties.find((p) => p.id === id);
 
   // Gallery Active Image state
@@ -19,10 +21,10 @@ export const PropertyDetails: React.FC = () => {
   if (!property) {
     return (
       <div className="pt-32 pb-20 max-w-7xl mx-auto px-4 text-center space-y-6">
-        <h1 className="font-['Playfair_Display'] text-3xl text-[#e2e2e2]">Propriété Introuvable</h1>
-        <p className="font-['Manrope'] text-sm text-[#d0c5af]">Le bien d'exception demandé n'est plus disponible ou a été déplacé.</p>
+        <h1 className="font-['Playfair_Display'] text-3xl text-[#e2e2e2]">{t('property.notFound')}</h1>
+        <p className="font-['Manrope'] text-sm text-[#d0c5af]">{t('property.notFoundDesc')}</p>
         <Link to="/catalogue" className="inline-flex items-center gap-2 font-['Hanken_Grotesk'] text-xs font-bold text-[#f2ca50] hover:underline">
-          <ArrowLeft className="w-4 h-4" /> RETOURNER AU CATALOGUE
+          <ArrowLeft className="w-4 h-4" /> {t('property.returnCatalog')}
         </Link>
       </div>
     );
@@ -54,7 +56,7 @@ export const PropertyDetails: React.FC = () => {
         className="inline-flex items-center gap-2 font-['Hanken_Grotesk'] text-xs font-bold text-[#d0c5af] hover:text-[#f2ca50] transition-colors"
       >
         <ArrowLeft className="w-4 h-4" />
-        <span>RETOUR AU CATALOGUE PATRIMOINE</span>
+        <span>{t('property.returnCatalog')}</span>
       </Link>
 
       {/* Main Grid: Gallery & Information */}
@@ -77,20 +79,20 @@ export const PropertyDetails: React.FC = () => {
               <span className={`font-['Hanken_Grotesk'] text-xs font-bold px-3 py-1 rounded shadow-lg tracking-wider ${
                 property.listingType === 'SALE' ? 'bg-[#f2ca50] text-[#3c2f00]' : 'bg-[#68dba9] text-[#003822]'
               }`}>
-                {property.listingType === 'SALE' ? 'ACHAT PRESTIGE' : 'LOCATION HAUT DE GAMME'}
+                {property.listingType === 'SALE' ? t('property.saleBadge') : t('property.rentBadge')}
               </span>
 
               {property.isDirectCk && (
                 <span className="inline-flex items-center gap-1 bg-[#121414]/90 text-[#f2ca50] border border-[#f2ca50]/50 text-xs font-['Hanken_Grotesk'] font-bold px-3 py-1 rounded shadow-lg">
                   <ShieldCheck className="w-3.5 h-3.5 text-[#f2ca50]" />
-                  DIRECT CK (MANDAT EXCLUSIF)
+                  {t('property.directCkBadge')}
                 </span>
               )}
             </div>
 
             {/* Photo Counter */}
             <span className="absolute bottom-4 right-4 bg-[#121414]/90 border border-[#4d4635]/50 text-xs font-['Hanken_Grotesk'] font-bold text-[#e2e2e2] px-3 py-1 rounded-full">
-              Photo {activeImageIndex + 1} / {gallery.length}
+              {t('property.photo')} {activeImageIndex + 1} / {gallery.length}
             </span>
           </div>
 
@@ -150,7 +152,7 @@ export const PropertyDetails: React.FC = () => {
                 <span className="block font-['Playfair_Display'] font-bold text-sm text-[#e2e2e2]">
                   {property.surface} m²
                 </span>
-                <span className="block font-['Hanken_Grotesk'] text-[10px] text-[#99907c]">SURFACE</span>
+                <span className="block font-['Hanken_Grotesk'] text-[10px] text-[#99907c]">{t('property.surfaceLabel')}</span>
               </div>
 
               <div className="bg-[#1a1c1c] p-3 rounded-lg border border-[#4d4635]/30 space-y-1">
@@ -158,7 +160,7 @@ export const PropertyDetails: React.FC = () => {
                 <span className="block font-['Playfair_Display'] font-bold text-sm text-[#e2e2e2]">
                   {property.bedrooms}
                 </span>
-                <span className="block font-['Hanken_Grotesk'] text-[10px] text-[#99907c]">CHAMBRES</span>
+                <span className="block font-['Hanken_Grotesk'] text-[10px] text-[#99907c]">{t('property.bedroomsLabel')}</span>
               </div>
 
               <div className="bg-[#1a1c1c] p-3 rounded-lg border border-[#4d4635]/30 space-y-1">
@@ -166,7 +168,7 @@ export const PropertyDetails: React.FC = () => {
                 <span className="block font-['Playfair_Display'] font-bold text-sm text-[#e2e2e2]">
                   {bathroomsCount}
                 </span>
-                <span className="block font-['Hanken_Grotesk'] text-[10px] text-[#99907c]">SALLES DE BAIN</span>
+                <span className="block font-['Hanken_Grotesk'] text-[10px] text-[#99907c]">{t('property.bathroomsLabel')}</span>
               </div>
             </div>
 
@@ -181,7 +183,7 @@ export const PropertyDetails: React.FC = () => {
                 className="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white font-['Hanken_Grotesk'] font-bold text-xs tracking-widest px-6 py-4 rounded-xl shadow-[0_0_20px_rgba(37,211,102,0.3)] transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <MessageCircle className="w-5 h-5" />
-                <span>DISCUTER SUR WHATSAPP AVEC L'AGENT</span>
+                <span>{t('property.whatsappButton')}</span>
               </a>
 
               {/* Primary Action 2: Schedule Private Visit */}
@@ -194,7 +196,7 @@ export const PropertyDetails: React.FC = () => {
                 className="w-full bg-[#f2ca50] hover:bg-[#ffe088] text-[#3c2f00] font-['Hanken_Grotesk'] font-bold text-xs tracking-widest px-6 py-4 rounded-xl shadow-[0_0_20px_rgba(242,202,80,0.3)] transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Calendar className="w-5 h-5" />
-                <span>DEMANDER UNE VISITE PRIVÉE</span>
+                <span>{t('property.visitButton')}</span>
               </button>
 
               <div className="pt-2 text-center">
@@ -203,7 +205,7 @@ export const PropertyDetails: React.FC = () => {
                   className="inline-flex items-center gap-2 text-xs font-['Hanken_Grotesk'] text-[#f2ca50] hover:underline tracking-wider font-bold"
                 >
                   <Phone className="w-3.5 h-3.5" />
-                  <span>APPEL DIRECT : +237 678 38 68 75 / +237 656 24 20 81</span>
+                  <span>{t('property.directCall')}</span>
                 </a>
               </div>
 
@@ -213,8 +215,8 @@ export const PropertyDetails: React.FC = () => {
             <div className="bg-[#1a1c1c] p-4 rounded-xl border border-[#4d4635]/40 flex items-start gap-3 text-xs text-[#d0c5af] font-['Manrope']">
               <ShieldCheck className="w-5 h-5 text-[#f2ca50] shrink-0 mt-0.5" />
               <div>
-                <strong className="text-[#e2e2e2] block">Garantie Titre Foncier Vérifié</strong>
-                Ce bien a fait l'objet d'un contrôle de propriété préalable à la conservation foncière compétente.
+                <strong className="text-[#e2e2e2] block">{t('property.titleGuarantee')}</strong>
+                {t('property.titleGuaranteeDesc')}
               </div>
             </div>
 
@@ -227,7 +229,7 @@ export const PropertyDetails: React.FC = () => {
       {/* Detailed Description & Services */}
       <div className="glass-panel p-8 sm:p-12 rounded-2xl border border-[#4d4635]/40 space-y-6">
         <h2 className="font-['Playfair_Display'] text-2xl font-bold text-[#e2e2e2] border-b border-[#4d4635]/30 pb-4">
-          Description Éditoriale & Prestations
+          {t('property.editorialDesc')}
         </h2>
         <p className="font-['Manrope'] text-base text-[#d0c5af] leading-relaxed font-light">
           {descriptionText}
@@ -235,7 +237,7 @@ export const PropertyDetails: React.FC = () => {
 
         <div className="pt-4 border-t border-[#4d4635]/30 space-y-4">
           <h3 className="font-['Hanken_Grotesk'] text-xs font-bold text-[#f2ca50] tracking-[0.2em]">
-            ÉQUIPEMENTS & PRESTATIONS DE LUXE
+            {t('property.luxuryEquipments')}
           </h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {defaultFeatures.map((feat: string, i: number) => (
@@ -267,61 +269,61 @@ export const PropertyDetails: React.FC = () => {
                   <CheckCircle2 className="w-10 h-10" />
                 </div>
                 <h3 className="font-['Playfair_Display'] text-2xl font-bold text-[#e2e2e2]">
-                  Demande de Visite Confirmée
+                  {t('contact.successTitle')}
                 </h3>
                 <p className="font-['Manrope'] text-sm text-[#d0c5af]">
-                  Notre courtier senior en charge du dossier vous recontactera dans les 2 heures pour valider votre créneau de visite privée.
+                  {t('contact.successDesc')}
                 </p>
                 <button
                   type="button"
                   onClick={() => setIsVisitModalOpen(false)}
                   className="bg-[#f2ca50] text-[#3c2f00] font-['Hanken_Grotesk'] font-bold text-xs px-6 py-2.5 rounded hover:bg-[#ffe088] cursor-pointer"
                 >
-                  FERMER
+                  OK
                 </button>
               </div>
             ) : (
               <form onSubmit={handleVisitSubmit} className="space-y-4">
                 <div className="space-y-1">
                   <span className="font-['Hanken_Grotesk'] text-[10px] font-bold text-[#f2ca50] tracking-widest block">
-                    RÉSERVATION PRIVÉE
+                    {t('property.bookPrivateTour')}
                   </span>
                   <h3 className="font-['Playfair_Display'] text-xl font-bold text-[#e2e2e2]">
-                    Planifier une visite privée
+                    {t('property.bookPrivateTour')}
                   </h3>
                   <p className="text-xs text-[#99907c] font-['Manrope']">
-                    Bien : {property.title}
+                    {property.title}
                   </p>
                 </div>
 
                 <div className="space-y-3 pt-2">
                   <div>
                     <label className="block text-[11px] font-['Hanken_Grotesk'] font-bold text-[#d0c5af] mb-1">
-                      VOTRE NOM COMPLET *
+                      {t('contact.fullName')}
                     </label>
                     <input
                       type="text"
                       required
-                      placeholder="Nom et Prénom"
+                      placeholder={t('contact.namePlaceholder')}
                       className="w-full bg-[#1a1c1c] border border-[#4d4635] rounded px-3.5 py-2.5 text-xs text-[#e2e2e2] focus:border-[#f2ca50] focus:outline-none"
                     />
                   </div>
 
                   <div>
                     <label className="block text-[11px] font-['Hanken_Grotesk'] font-bold text-[#d0c5af] mb-1">
-                      TÉLÉPHONE / WHATSAPP *
+                      {t('contact.phoneWhatsapp')}
                     </label>
                     <input
                       type="tel"
                       required
-                      placeholder="+237 600 00 00 00"
+                      placeholder={t('contact.phonePlaceholder')}
                       className="w-full bg-[#1a1c1c] border border-[#4d4635] rounded px-3.5 py-2.5 text-xs text-[#e2e2e2] focus:border-[#f2ca50] focus:outline-none"
                     />
                   </div>
 
                   <div>
                     <label className="block text-[11px] font-['Hanken_Grotesk'] font-bold text-[#d0c5af] mb-1">
-                      DATE SOUHAITÉE DE VISITE
+                      DATE
                     </label>
                     <input
                       type="date"
@@ -336,7 +338,7 @@ export const PropertyDetails: React.FC = () => {
                   className="w-full bg-[#f2ca50] hover:bg-[#ffe088] text-[#3c2f00] font-['Hanken_Grotesk'] font-bold text-xs tracking-widest py-3.5 rounded-lg shadow-lg flex items-center justify-center gap-2 cursor-pointer mt-4"
                 >
                   <Send className="w-4 h-4" />
-                  <span>CONFIRMER LA DEMANDE DE VISITE</span>
+                  <span>{t('contact.submitRequest')}</span>
                 </button>
               </form>
             )}

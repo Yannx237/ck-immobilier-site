@@ -114,10 +114,10 @@ export const Catalog: React.FC = () => {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-[#4d4635]/30 pb-4">
           <div>
             <span className="font-['Hanken_Grotesk'] text-[10px] font-bold text-[#f2ca50] tracking-[0.2em] block">
-              PORTFOLIO PATRIMOINE CK
+              {t('catalog.subtitle')}
             </span>
             <h1 className="font-['Playfair_Display'] text-2xl sm:text-3xl font-bold text-[#e2e2e2]">
-              Catalogue & Carte Interactive
+              {t('catalog.title')}
             </h1>
           </div>
 
@@ -161,7 +161,7 @@ export const Catalog: React.FC = () => {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Rechercher par titre, quartier..."
+              placeholder={t('catalog.searchPlaceholder')}
               className="w-full bg-[#1a1c1c] border border-[#4d4635] rounded px-9 py-2.5 text-xs font-['Manrope'] text-[#e2e2e2] placeholder-[#99907c] focus:border-[#f2ca50] focus:outline-none"
             />
           </div>
@@ -173,7 +173,7 @@ export const Catalog: React.FC = () => {
               type="number"
               value={minPriceInput}
               onChange={(e) => setMinPriceInput(e.target.value)}
-              placeholder="Min FCFA"
+              placeholder={t('search.minPrice')}
               className="w-24 bg-transparent text-xs text-[#e2e2e2] placeholder-[#99907c] focus:outline-none font-['Manrope']"
             />
             <span className="text-[#99907c]">-</span>
@@ -181,7 +181,7 @@ export const Catalog: React.FC = () => {
               type="number"
               value={maxPriceInput}
               onChange={(e) => setMaxPriceInput(e.target.value)}
-              placeholder="Max FCFA"
+              placeholder={t('search.maxPrice')}
               className="w-24 bg-transparent text-xs text-[#e2e2e2] placeholder-[#99907c] focus:outline-none font-['Manrope']"
             />
           </div>
@@ -201,7 +201,7 @@ export const Catalog: React.FC = () => {
                       : 'bg-[#1a1c1c] text-[#d0c5af] hover:text-[#f2ca50] border border-[#4d4635]/50'
                   }`}
                 >
-                  {m === 'ALL' ? 'TOUS TYPES' : m === 'ACHETER' ? 'ACHAT' : 'LOCATION'}
+                  {m === 'ALL' ? t('catalog.allTypes') : m === 'ACHETER' ? t('catalog.buy') : t('catalog.rent')}
                 </button>
               ))}
             </div>
@@ -221,7 +221,7 @@ export const Catalog: React.FC = () => {
                       : 'bg-[#1a1c1c] text-[#d0c5af] hover:text-[#f2ca50] border border-[#4d4635]/50'
                   }`}
                 >
-                  {city === 'ALL' ? 'VILLES' : city}
+                  {city === 'ALL' ? t('catalog.cities') : city}
                 </button>
               ))}
             </div>
@@ -236,7 +236,7 @@ export const Catalog: React.FC = () => {
                   : 'border-[#4d4635]/50 bg-[#1a1c1c] text-[#99907c]'
               }`}
             >
-              DIRECT CK
+              {t('catalog.directCk')}
             </button>
           </div>
 
@@ -247,7 +247,7 @@ export const Catalog: React.FC = () => {
           <div className="flex items-center gap-2">
             <span className="inline-flex items-center gap-1.5 bg-[#f2ca50]/15 text-[#f2ca50] border border-[#f2ca50]/30 px-3 py-1 rounded-full font-bold">
               <Sparkles className="w-3.5 h-3.5 text-[#f2ca50]" />
-              {filteredProperties.length} {filteredProperties.length > 1 ? 'PROPRIÉTÉS D\'EXCEPTION TROUVÉES' : 'PROPRIÉTÉ D\'EXCEPTION TROUVÉE'}
+              {filteredProperties.length} {filteredProperties.length > 1 ? t('catalog.propertiesFound') : t('catalog.propertyFound')}
             </span>
           </div>
 
@@ -258,7 +258,7 @@ export const Catalog: React.FC = () => {
               className="inline-flex items-center gap-1.5 text-[#99907c] hover:text-[#f2ca50] transition-colors cursor-pointer font-bold tracking-wider"
             >
               <RotateCcw className="w-3.5 h-3.5" />
-              <span>RÉINITIALISER LES FILTRES</span>
+              <span>{t('catalog.resetFilters')}</span>
             </button>
           )}
         </div>
@@ -304,14 +304,14 @@ export const Catalog: React.FC = () => {
                             <span className={`text-[9px] font-['Hanken_Grotesk'] font-bold px-1.5 py-0.5 rounded ${
                               prop.listingType === 'SALE' ? 'bg-[#f2ca50]/20 text-[#f2ca50]' : 'bg-[#68dba9]/20 text-[#68dba9]'
                             }`}>
-                              {prop.listingType === 'SALE' ? 'ACHAT' : 'LOCATION'}
+                              {prop.listingType === 'SALE' ? t('catalog.buy') : t('catalog.rent')}
                             </span>
                           </div>
                           <h3 className="font-['Playfair_Display'] font-semibold text-base text-[#e2e2e2] line-clamp-1">
                             {prop.title}
                           </h3>
                           <p className="text-xs text-[#d0c5af] font-['Manrope'] mt-1">
-                            {prop.surface} m² • {prop.bedrooms} Chambres
+                            {prop.surface} {t('property.surface')} • {prop.bedrooms} {t('property.bedrooms')}
                           </p>
                         </div>
 
@@ -333,14 +333,14 @@ export const Catalog: React.FC = () => {
               ) : (
                 <div className="text-center py-16 bg-[#1a1c1c] rounded-xl border border-[#4d4635]/30 space-y-3">
                   <p className="font-['Playfair_Display'] text-sm text-[#d0c5af]">
-                    Aucun bien ne correspond à la tranche de filtres actuelle.
+                    {t('catalog.noProperties')}
                   </p>
                   <button
                     type="button"
                     onClick={handleResetFilters}
                     className="font-['Hanken_Grotesk'] text-xs font-bold text-[#f2ca50] hover:underline"
                   >
-                    RÉINITIALISER TOUS LES FILTRES
+                    {t('catalog.resetFilters')}
                   </button>
                 </div>
               )}
@@ -359,7 +359,7 @@ export const Catalog: React.FC = () => {
                 </button>
 
                 <span className="text-[#d0c5af] font-bold">
-                  PAGE {currentPage} SUR {totalPages}
+                  {t('search.page')} {currentPage} {t('search.of')} {totalPages}
                 </span>
 
                 <button
@@ -396,14 +396,14 @@ export const Catalog: React.FC = () => {
           ) : (
             <div className="text-center py-16 bg-[#1a1c1c] rounded-xl border border-[#4d4635]/30 space-y-3">
               <p className="font-['Playfair_Display'] text-xl text-[#d0c5af]">
-                Aucun bien ne correspond à votre tranche de budget actuelle.
+                {t('catalog.noProperties')}
               </p>
               <button
                 type="button"
                 onClick={handleResetFilters}
                 className="font-['Hanken_Grotesk'] text-xs font-bold text-[#f2ca50] hover:underline"
               >
-                RÉINITIALISER TOUS LES FILTRES
+                {t('catalog.resetFilters')}
               </button>
             </div>
           )}
@@ -412,7 +412,7 @@ export const Catalog: React.FC = () => {
           {totalPages > 1 && (
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4 glass-panel p-4 rounded-xl border border-[#4d4635]/40 text-xs font-['Hanken_Grotesk']">
               <span className="text-[#99907c]">
-                Affichage de {startIndex + 1} à {Math.min(startIndex + ITEMS_PER_PAGE, filteredProperties.length)} sur {filteredProperties.length} biens
+                {t('catalog.showing')} {startIndex + 1} {t('catalog.to')} {Math.min(startIndex + ITEMS_PER_PAGE, filteredProperties.length)} {t('catalog.of')} {filteredProperties.length} {t('catalog.properties')}
               </span>
 
               <div className="flex items-center gap-2">
@@ -423,7 +423,7 @@ export const Catalog: React.FC = () => {
                   className="flex items-center gap-1 px-3 py-2 bg-[#1a1c1c] border border-[#4d4635]/50 rounded-lg text-[#e2e2e2] disabled:opacity-40 disabled:cursor-not-allowed hover:border-[#f2ca50] transition-colors font-bold cursor-pointer"
                 >
                   <ChevronLeft className="w-4 h-4" />
-                  <span>PRÉCÉDENT</span>
+                  <span>{t('search.previous')}</span>
                 </button>
 
                 <div className="flex items-center gap-1">
@@ -449,7 +449,7 @@ export const Catalog: React.FC = () => {
                   onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
                   className="flex items-center gap-1 px-3 py-2 bg-[#1a1c1c] border border-[#4d4635]/50 rounded-lg text-[#e2e2e2] disabled:opacity-40 disabled:cursor-not-allowed hover:border-[#f2ca50] transition-colors font-bold cursor-pointer"
                 >
-                  <span>SUIVANT</span>
+                  <span>{t('search.next')}</span>
                   <ChevronRight className="w-4 h-4" />
                 </button>
               </div>

@@ -4,6 +4,7 @@ import L from 'leaflet';
 import type { PropertyWithMap } from '../data/properties';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, ArrowRight, Search, Maximize2, Minimize2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface PropertyMapProps {
   properties: PropertyWithMap[];
@@ -152,6 +153,7 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
   selectedPropertyId,
   onSelectProperty,
 }) => {
+  const { t } = useTranslation();
   const [mapSearchText, setMapSearchText] = useState<string>('');
   const [mapModeFilter, setMapModeFilter] = useState<'ALL' | 'ACHETER' | 'LOUER'>('ALL');
   const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
@@ -206,7 +208,7 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
             type="text"
             value={mapSearchText}
             onChange={(e) => setMapSearchText(e.target.value)}
-            placeholder="Rechercher sur la carte..."
+            placeholder={t('map.searchInMap')}
             className="w-full bg-[#121414] border border-[#4d4635]/40 rounded-lg pl-7 pr-2 py-1.5 text-xs text-[#e2e2e2] placeholder-[#99907c] focus:border-[#f2ca50] focus:outline-none font-['Manrope']"
           />
         </div>
@@ -224,7 +226,7 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
                   : 'bg-[#121414] text-[#d0c5af] border border-[#4d4635]/30'
               }`}
             >
-              {mode === 'ALL' ? 'TOUS' : mode === 'ACHETER' ? 'ACHAT' : 'LOC'}
+              {mode === 'ALL' ? t('map.all') : mode === 'ACHETER' ? t('map.sale') : t('map.rent')}
             </button>
           ))}
         </div>
@@ -233,7 +235,7 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
         <button
           type="button"
           onClick={() => setIsFullScreen(!isFullScreen)}
-          aria-label={isFullScreen ? 'Quitter le plein écran' : 'Carte en plein écran'}
+          aria-label={isFullScreen ? t('map.reduce') : t('map.fullscreen')}
           className="p-2 bg-[#f2ca50] text-[#3c2f00] rounded-lg shrink-0 shadow-lg cursor-pointer font-bold flex items-center justify-center active:scale-95 transition-transform"
         >
           {isFullScreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
@@ -249,7 +251,7 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
           className="flex items-center gap-2 bg-[#1a1c1c]/90 backdrop-blur-md px-3.5 py-2 border border-[#f2ca50]/40 text-[#f2ca50] rounded-lg text-xs font-['Hanken_Grotesk'] font-bold hover:bg-[#f2ca50] hover:text-[#3c2f00] transition-colors shadow-lg cursor-pointer"
         >
           {isFullScreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
-          <span>{isFullScreen ? 'RÉDUIRE' : 'PLEIN ÉCRAN'}</span>
+          <span>{isFullScreen ? t('map.reduce') : t('map.fullscreen')}</span>
         </button>
       </div>
 
@@ -310,7 +312,7 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
                           isRent ? 'bg-[#00311f] text-[#68dba9]' : 'bg-[#3c2f00] text-[#f2ca50]'
                         }`}
                       >
-                        {isRent ? 'LOCATION' : 'ACHAT'}
+                        {isRent ? t('search.rent') : t('search.buy')}
                       </span>
                     </div>
 
@@ -329,7 +331,7 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
                       {prop.title}
                     </h4>
                     <p className="text-[10px] text-[#d0c5af] font-['Manrope'] mt-0.5">
-                      {prop.surface} m² • {prop.bedrooms} Chambres
+                      {prop.surface} m² • {prop.bedrooms} {t('property.bedrooms')}
                     </p>
                   </div>
 

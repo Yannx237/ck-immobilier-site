@@ -13,28 +13,28 @@ export const Home: React.FC = () => {
 
   const servicesList = [
     {
-      num: '01',
-      title: 'Vente & Acquisition Discrète',
-      subtitle: 'TRANSACTIONS CONFIDENTIELLES OFF-MARKET',
-      description: 'Accès exclusif à des propriétés de prestige préservées de la publicité publique. Accompagnement sous accord de confidentialité (NDA) pour acheteurs VIP et investisseurs institutionnels.',
+      num: t('services.service1_num'),
+      title: t('services.service1_title'),
+      subtitle: t('services.service1_sub'),
+      description: t('services.service1_desc'),
       icon: Eye,
-      tag: 'CONFIDENTIEL',
+      tag: t('services.service1_tag'),
     },
     {
-      num: '02',
-      title: 'Gestion de Patrimoine & Ingénierie Foncière',
-      subtitle: 'AUDIT, VALORISATION & SÉCURITÉ JURIDIQUE',
-      description: 'Audit rigoureux du Titre Foncier à la conservation foncière, optimisation fiscale, évaluation d\'actifs de valeur et gestion locative haut de gamme à Douala et Yaoundé.',
+      num: t('services.service2_num'),
+      title: t('services.service2_title'),
+      subtitle: t('services.service2_sub'),
+      description: t('services.service2_desc'),
       icon: Award,
-      tag: 'CONFORMITÉ MINHDU',
+      tag: t('services.service2_tag'),
     },
     {
-      num: '03',
-      title: 'Conciergerie Immobilière & Mandat Exclusif',
-      subtitle: 'LABEL DIRECT CK SUR-MESURE',
-      description: 'Prise en charge intégrale à 360° : négociation directe avec le propriétaire sans surcoût d\'intermédiaire, organisation de visites privées sécurisées et assistance notariée.',
+      num: t('services.service3_num'),
+      title: t('services.service3_title'),
+      subtitle: t('services.service3_sub'),
+      description: t('services.service3_desc'),
       icon: Key,
-      tag: 'LABEL DIRECT CK',
+      tag: t('services.service3_tag'),
     },
   ];
 
@@ -59,7 +59,7 @@ export const Home: React.FC = () => {
           <div className="inline-flex items-center gap-2 bg-[#1e2020]/90 border border-[#f2ca50]/40 px-4 py-1.5 rounded-full shadow-[0_0_15px_rgba(242,202,80,0.2)]">
             <ShieldCheck className="w-4 h-4 text-[#f2ca50]" />
             <span className="font-['Hanken_Grotesk'] text-xs font-bold tracking-[0.2em] text-[#f2ca50]">
-              IMMOBILIER PRESTIGE
+              {t('hero.badge')}
             </span>
           </div>
 
@@ -87,7 +87,7 @@ export const Home: React.FC = () => {
               {t('hero.ourPatrimony')} <span className="text-[#f2ca50] italic font-light">{t('hero.exclusivePatrimony')}</span>
             </h2>
             <p className="font-['Manrope'] text-base text-[#d0c5af] max-w-xl">
-              Une sélection rigoureuse des plus belles adresses du Cameroun, gérées sous mandat exclusif par notre cabinet.
+              {t('hero.selectionDesc')}
             </p>
           </div>
 
@@ -118,16 +118,16 @@ export const Home: React.FC = () => {
                 <div className="inline-flex items-center gap-2 bg-[#1e2020] border border-[#f2ca50]/40 px-3.5 py-1 rounded-full">
                   <Sparkles className="w-3.5 h-3.5 text-[#f2ca50]" />
                   <span className="font-['Hanken_Grotesk'] text-[10px] font-bold tracking-[0.25em] text-[#f2ca50]">
-                    EXCELLENCE & DEVOIR DE CONSEIL
+                    {t('services.badge')}
                   </span>
                 </div>
 
                 <h2 className="font-['Playfair_Display'] text-3xl sm:text-4xl lg:text-5xl font-bold text-[#e2e2e2] leading-tight">
-                  L'Art de la Transaction <span className="gold-gradient-text">Immobilière</span>
+                  {t('services.title1')} <span className="gold-gradient-text">{t('services.title2')}</span>
                 </h2>
 
                 <p className="font-['Manrope'] text-sm sm:text-base text-[#d0c5af] leading-relaxed font-light">
-                  CK Immobilier SARL redéfinit les standards de l'immobilier d'exception au Cameroun. Nous allions rigueur juridique, vérification systématique des titres fonciers et absolue discrétion.
+                  {t('services.desc')}
                 </p>
               </div>
 
@@ -136,11 +136,11 @@ export const Home: React.FC = () => {
                 <div className="flex items-baseline gap-2">
                   <span className="font-['Playfair_Display'] text-4xl font-bold text-[#f2ca50]">100%</span>
                   <span className="font-['Hanken_Grotesk'] text-xs text-[#e2e2e2] font-bold tracking-wider">
-                    DE TITRES FONCIERS VÉRIFIÉS
+                    {t('services.stat')}
                   </span>
                 </div>
                 <p className="font-['Manrope'] text-xs text-[#99907c]">
-                  Chaque dossier fait l'objet d'un audit de propriété préalable auprès des conservations foncières de Douala et Yaoundé.
+                  {t('services.statDesc')}
                 </p>
               </div>
 
@@ -148,7 +148,7 @@ export const Home: React.FC = () => {
                 to="/contact"
                 className="inline-flex items-center gap-2 font-['Hanken_Grotesk'] text-xs font-bold tracking-widest text-[#f2ca50] hover:text-[#ffe088] transition-colors border-b border-[#f2ca50]/50 pb-1"
               >
-                <span>PRENDRE CONSEIL AVEC UN ASSOCIÉ SENIOR</span>
+                <span>{t('services.ctaSenior')}</span>
                 <ArrowUpRight className="w-4 h-4" />
               </Link>
             </div>
@@ -192,7 +192,7 @@ export const Home: React.FC = () => {
 
                     <div className="mt-6 pt-4 border-t border-[#4d4635]/20 flex items-center justify-between text-xs font-['Hanken_Grotesk'] font-bold text-[#f2ca50]">
                       <span className="tracking-widest group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
-                        EN SAVOIR PLUS <ChevronRight className="w-4 h-4" />
+                        {t('services.learnMore')} <ChevronRight className="w-4 h-4" />
                       </span>
                     </div>
                   </div>
@@ -210,14 +210,14 @@ export const Home: React.FC = () => {
         <div className="flex justify-between items-center mb-12 border-b border-[#4d4635]/30 pb-6">
           <div>
             <h2 className="font-['Playfair_Display'] text-3xl font-bold text-[#e2e2e2]">
-              Dernières Opportunités en Mandat
+              {t('home.latestOpportunities')}
             </h2>
           </div>
           <Link
             to="/catalogue"
             className="font-['Hanken_Grotesk'] text-xs font-bold tracking-widest text-[#f2ca50] hover:underline"
           >
-            PARCOURIR LE CATALOGUE
+            {t('home.browseCatalog')}
           </Link>
         </div>
 
@@ -233,13 +233,13 @@ export const Home: React.FC = () => {
         <div className="glass-panel rounded-2xl p-10 md:p-16 relative overflow-hidden text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-8 border border-[#f2ca50]/30 shadow-[0_0_30px_rgba(242,202,80,0.15)]">
           <div className="max-w-2xl space-y-3">
             <span className="font-['Hanken_Grotesk'] text-xs font-bold tracking-[0.2em] text-[#f2ca50]">
-              CONSULTATION PRIVÉE & MANDAT
+              {t('home.ctaBadge')}
             </span>
             <h2 className="font-['Playfair_Display'] text-3xl md:text-4xl font-bold text-[#e2e2e2]">
-              Vous désirez confier la vente ou la recherche d'un bien d'exception ?
+              {t('home.ctaTitle')}
             </h2>
             <p className="font-['Manrope'] text-base text-[#d0c5af]">
-              Nos experts seniors se tiennent à votre disposition pour une étude de projet confidentielle sous 24h.
+              {t('home.ctaSub')}
             </p>
           </div>
 
@@ -248,7 +248,7 @@ export const Home: React.FC = () => {
             className="flex items-center gap-3 bg-[#f2ca50] hover:bg-[#ffe088] text-[#3c2f00] font-['Hanken_Grotesk'] font-bold text-sm tracking-widest px-8 py-4 rounded shadow-[0_0_20px_rgba(242,202,80,0.4)] transition-all shrink-0"
           >
             <PhoneCall className="w-5 h-5" />
-            <span>PRENDRE RENDEZ-VOUS</span>
+            <span>{t('home.ctaButton')}</span>
           </Link>
         </div>
       </section>

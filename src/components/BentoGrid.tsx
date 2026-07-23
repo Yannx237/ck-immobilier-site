@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, Maximize2, Bed, ArrowRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const BentoGrid: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 md:grid-rows-2 gap-6 h-auto md:h-[750px]">
       
@@ -27,17 +30,17 @@ export const BentoGrid: React.FC = () => {
         <div className="relative z-10 w-full p-5 sm:p-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
           <div>
             <p className="font-['Hanken_Grotesk'] text-[10px] sm:text-xs text-[#f2ca50] font-bold tracking-widest mb-1">
-              VILLA CONTEMPORAINE D'EXCEPTION
+              {t('bento.tag1')}
             </p>
             <h3 className="font-['Playfair_Display'] font-bold text-xl sm:text-2xl md:text-3xl text-[#e2e2e2] mb-2 sm:mb-3">
-              Palais des Ambassadeurs, Yaoundé
+              {t('bento.title1')}
             </h3>
             <div className="flex gap-4 sm:gap-6 text-xs sm:text-sm text-[#d0c5af] font-['Manrope']">
               <span className="flex items-center gap-1.5">
                 <Maximize2 className="w-3.5 h-3.5 text-[#f2ca50]" /> 450 m²
               </span>
               <span className="flex items-center gap-1.5">
-                <Bed className="w-3.5 h-3.5 text-[#f2ca50]" /> 5 Chambres
+                <Bed className="w-3.5 h-3.5 text-[#f2ca50]" /> 5 {t('property.bedrooms')}
               </span>
             </div>
           </div>
@@ -50,7 +53,7 @@ export const BentoGrid: React.FC = () => {
               to="/property/1"
               className="inline-flex items-center justify-center gap-2 bg-[#f2ca50] text-[#3c2f00] font-['Hanken_Grotesk'] font-bold text-xs tracking-wider px-5 py-2.5 rounded hover:bg-[#ffe088] transition-all shadow-[0_0_15px_rgba(242,202,80,0.3)] w-full md:w-auto"
             >
-              <span>DÉCOUVRIR LE BIEN</span>
+              <span>{t('bento.discover')}</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -78,10 +81,10 @@ export const BentoGrid: React.FC = () => {
             DOUALA, BONANJO
           </p>
           <h3 className="font-['Playfair_Display'] font-semibold text-base sm:text-lg text-[#e2e2e2] mb-1.5">
-            Penthouse Panoramique Bonanjo
+            {t('bento.tag2')}
           </h3>
           <p className="font-['Playfair_Display'] font-bold text-base sm:text-lg text-[#f2ca50]">
-            450 000 FCFA / mois
+            450 000 FCFA {t('bento.perMonth')}
           </p>
         </div>
       </div>
@@ -107,7 +110,7 @@ export const BentoGrid: React.FC = () => {
             DOUALA, BONAPRISO
           </p>
           <h3 className="font-['Playfair_Display'] font-semibold text-base sm:text-lg text-[#e2e2e2] mb-1.5">
-            Résidence Privée Njo-Njo
+            {t('bento.tag3')}
           </h3>
           <p className="font-['Playfair_Display'] font-bold text-base sm:text-lg text-[#f2ca50]">
             185 000 000 FCFA

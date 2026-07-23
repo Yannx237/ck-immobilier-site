@@ -2,12 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, Maximize2, Bed, MapPin, ArrowRight, Key, Home } from 'lucide-react';
 import type { PropertyWithMap } from '../data/properties';
+import { useTranslation } from 'react-i18next';
 
 interface PropertyCardProps {
   property: PropertyWithMap;
 }
 
 export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
+  const { t } = useTranslation();
   const isRent = property.listingType === 'RENT';
 
   return (
@@ -32,7 +34,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
             }`}
           >
             {isRent ? <Key className="w-3 h-3 text-[#68dba9]" /> : <Home className="w-3 h-3 text-[#f2ca50]" />}
-            <span>{isRent ? 'LOCATION' : 'ACHAT'}</span>
+            <span>{isRent ? t('search.rent') : t('search.buy')}</span>
           </div>
         </div>
 
@@ -70,11 +72,11 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
           <div className="flex items-center gap-4 text-xs text-[#d0c5af] font-['Manrope'] mb-4 pb-4 border-b border-[#4d4635]/30">
             <div className="flex items-center gap-1">
               <Maximize2 className="w-3.5 h-3.5 text-[#f2ca50]" />
-              <span>{property.surface} m²</span>
+              <span>{property.surface} {t('property.surface')}</span>
             </div>
             <div className="flex items-center gap-1">
               <Bed className="w-3.5 h-3.5 text-[#f2ca50]" />
-              <span>{property.bedrooms} Chambres</span>
+              <span>{property.bedrooms} {t('property.bedrooms')}</span>
             </div>
           </div>
         </div>
@@ -83,7 +85,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
         <div className="flex items-center justify-between pt-1">
           <div>
             <span className="block text-[9px] font-['Hanken_Grotesk'] tracking-widest text-[#99907c]">
-              {isRent ? 'LOYER MENSUEL' : 'VALEUR DU BIEN'}
+              {isRent ? t('property.monthlyRent') : t('property.propertyValue')}
             </span>
             <span className={`font-['Playfair_Display'] font-bold text-base sm:text-lg ${isRent ? 'text-[#68dba9]' : 'text-[#f2ca50]'}`}>
               {property.price}
@@ -92,7 +94,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
 
           <Link
             to={`/property/${property.id}`}
-            aria-label={`Voir ${property.title}`}
+            aria-label={`${t('property.viewProperty')} ${property.title}`}
             className="w-9 h-9 rounded-full bg-[#1e2020] border border-[#4d4635] flex items-center justify-center text-[#f2ca50] group-hover:bg-[#f2ca50] group-hover:text-[#3c2f00] transition-all shadow-md shrink-0"
           >
             <ArrowRight className="w-4 h-4" />

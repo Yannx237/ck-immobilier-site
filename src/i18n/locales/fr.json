@@ -9,6 +9,24 @@
     "certifiedDirectCk": "MEMBRE CERTIFIÉ DIRECT CK",
     "minhduAccredited": "AGRÉMENT MINHDU • DIRECT CK"
   },
+  "catalog": {
+    "subtitle": "PORTFOLIO PATRIMOINE CK",
+    "title": "Catalogue & Carte Interactive",
+    "searchPlaceholder": "Rechercher par titre, quartier...",
+    "allTypes": "TOUS TYPES",
+    "buy": "ACHAT",
+    "rent": "LOCATION",
+    "cities": "VILLES",
+    "directCk": "DIRECT CK",
+    "propertiesFound": "PROPRIÉTÉS D'EXCEPTION TROUVÉES",
+    "propertyFound": "PROPRIÉTÉ D'EXCEPTION TROUVÉE",
+    "resetFilters": "RÉINITIALISER LES FILTRES",
+    "noProperties": "Aucun bien ne correspond à la tranche de filtres actuelle.",
+    "showing": "Affichage de",
+    "to": "à",
+    "of": "sur",
+    "properties": "biens"
+  },
   "search": {
     "buy": "ACHETER",
     "rent": "LOUER",
@@ -29,15 +47,22 @@
     "of": "SUR",
     "previous": "PRÉCÉDENT",
     "next": "SUIVANT",
-    "noProperties": "Aucun bien ne correspond à vos critères de recherche actuels."
+    "noProperties": "Aucun bien ne correspond à vos critères de recherche actuels.",
+    "locationPlaceholder": "Localisation, Quartier...",
+    "minMonth": "Min / mois",
+    "maxMonth": "Max / mois",
+    "minFcfa": "Min FCFA",
+    "maxFcfa": "Max FCFA"
   },
   "hero": {
     "title1": "L'EXCELLENCE IMMOBILIÈRE,",
     "title2": "À CHAQUE ÉTAPE.",
     "sub": "Découvrez une sélection exclusive de résidences d'exception, villas contemporaines et penthouses de prestige à Douala et Yaoundé.",
+    "badge": "IMMOBILIER PRESTIGE",
     "ourPatrimony": "Notre Patrimoine",
     "exclusivePatrimony": "Exclusif",
-    "seeAllProperties": "VOIR TOUT LE PATRIMOINE"
+    "seeAllProperties": "VOIR TOUT LE PATRIMOINE",
+    "selectionDesc": "Une sélection rigoureuse des plus belles adresses du Cameroun, gérées sous mandat exclusif par notre cabinet."
   },
   "services": {
     "badge": "EXCELLENCE & DEVOIR DE CONSEIL",
@@ -46,7 +71,39 @@
     "desc": "CK Immobilier SARL redéfinit les standards de l'immobilier d'exception au Cameroun. Nous allions rigueur juridique, vérification systématique des titres fonciers et absolue discrétion.",
     "stat": "100% DE TITRES FONCIERS VÉRIFIÉS",
     "statDesc": "Chaque dossier fait l'objet d'un audit de propriété préalable auprès des conservations foncières de Douala et Yaoundé.",
-    "ctaSenior": "PRENDRE CONSEIL AVEC UN ASSOCIÉ SENIOR"
+    "ctaSenior": "PRENDRE CONSEIL AVEC UN ASSOCIÉ SENIOR",
+    "service1_num": "01",
+    "service1_title": "Vente & Acquisition Discrète",
+    "service1_sub": "TRANSACTIONS CONFIDENTIELLES OFF-MARKET",
+    "service1_desc": "Accès exclusif à des propriétés de prestige préservées de la publicité publique. Accompagnement sous accord de confidentialité (NDA) pour acheteurs VIP et investisseurs institutionnels.",
+    "service1_tag": "CONFIDENTIEL",
+    "service2_num": "02",
+    "service2_title": "Gestion de Patrimoine & Ingénierie Foncière",
+    "service2_sub": "AUDIT, VALORISATION & SÉCURITÉ JURIDIQUE",
+    "service2_desc": "Audit rigoureux du Titre Foncier à la conservation foncière, optimisation fiscale, évaluation d'actifs de valeur et gestion locative haut de gamme à Douala et Yaoundé.",
+    "service2_tag": "CONFORMITÉ MINHDU",
+    "service3_num": "03",
+    "service3_title": "Conciergerie Immobilière & Mandat Exclusif",
+    "service3_sub": "LABEL DIRECT CK SUR-MESURE",
+    "service3_desc": "Prise en charge intégrale à 360° : négociation directe avec le propriétaire sans surcoût d'intermédiaire, organisation de visites privées sécurisées et assistance notariée.",
+    "service3_tag": "LABEL DIRECT CK",
+    "learnMore": "EN SAVOIR PLUS"
+  },
+  "home": {
+    "latestOpportunities": "Dernières Opportunités en Mandat",
+    "browseCatalog": "PARCOURIR LE CATALOGUE",
+    "ctaBadge": "CONSULTATION PRIVÉE & MANDAT",
+    "ctaTitle": "Vous désirez confier la vente ou la recherche d'un bien d'exception ?",
+    "ctaSub": "Nos experts seniors se tiennent à votre disposition pour une étude de projet confidentielle sous 24h.",
+    "ctaButton": "DÉMARRER UNE CONSULTATION PRIVÉE"
+  },
+  "bento": {
+    "tag1": "VILLA CONTEMPORAINE D'EXCEPTION",
+    "title1": "Palais des Ambassadeurs, Yaoundé",
+    "discover": "DÉCOUVRIR LE BIEN",
+    "tag2": "Penthouse Panoramique Bonanjo",
+    "tag3": "Résidence Privée Njo-Njo",
+    "perMonth": "/ mois"
   },
   "property": {
     "saleBadge": "ACHAT PRESTIGE",
@@ -62,7 +119,28 @@
     "titleGuarantee": "Garantie Titre Foncier Vérifié",
     "titleGuaranteeDesc": "Ce bien a fait l'objet d'un contrôle de propriété préalable à la conservation foncière compétente.",
     "editorialDesc": "Description Éditoriale & Prestations",
-    "luxuryEquipments": "ÉQUIPEMENTS & PRESTATIONS DE LUXE"
+    "luxuryEquipments": "ÉQUIPEMENTS & PRESTATIONS DE LUXE",
+    "monthlyRent": "LOYER MENSUEL",
+    "propertyValue": "VALEUR DU BIEN",
+    "notFound": "Propriété Introuvable",
+    "notFoundDesc": "Le bien d'exception demandé n'est plus disponible ou a été déplacé.",
+    "returnCatalog": "RETOUR AU CATALOGUE PATRIMOINE",
+    "photo": "Photo",
+    "surfaceLabel": "SURFACE",
+    "bedroomsLabel": "CHAMBRES",
+    "bathroomsLabel": "SALLES DE BAIN",
+    "whatsappButton": "DISCUTER SUR WHATSAPP AVEC L'AGENT",
+    "visitButton": "DEMANDER UNE VISITE PRIVÉE",
+    "directCall": "APPEL DIRECT : +237 678 38 68 75 / +237 656 24 20 81",
+    "viewProperty": "Voir"
+  },
+  "map": {
+    "searchInMap": "Rechercher sur la carte...",
+    "all": "TOUS",
+    "sale": "ACHAT",
+    "rent": "LOC",
+    "fullscreen": "PLEIN ÉCRAN",
+    "reduce": "RÉDUIRE"
   },
   "team": {
     "badge": "NOTRE CABINET & GOUVERNANCE",
@@ -75,19 +153,37 @@
     "confidentialityTitle": "Confidentialité & Off-Market",
     "confidentialityDesc": "Respect scrupuleux de l'anonymat de nos acquéreurs et vendeurs d'exception sous accord de confidentialité.",
     "anchoringTitle": "Double Ancrage Yaoundé & Douala",
-    "anchoringDesc": "Une couverture directe des deux capitales au Carrefour Golf (Yaoundé) et Carrefour Bassong (Douala)."
+    "anchoringDesc": "Une couverture directe des deux capitales au Carrefour Golf (Yaoundé) et Carrefour Bassong (Douala).",
+    "founderBio": "Fondateur et visionnaire du cabinet CK Immobilier SARL. Plus de 15 ans d'expertise dans la sécurisation foncière, la vérification systématique des Titres Fonciers, les mandats exclusifs et la gestion du patrimoine immobilier d'exception au Cameroun.",
+    "founderTag": "FONDATEUR & DG",
+    "founderSpecialty": "YAOUNDÉ (SIÈGE) & DOUALA (AGENCE)"
   },
   "contact": {
+    "badge": "CONCIERGERIE PRIVÉE & MANDATS",
     "title": "Contact & Prise de Rendez-vous Privé",
     "sub": "Notre cabinet vous accueille en toute confidentialité au siège de Yaoundé (Carrefour Golf) et à notre agence de Douala (Carrefour Bassong, Logpom).",
+    "formTitle": "Formulaire de Prise de Contact",
     "fullName": "VOTRE NOM & PRÉNOM *",
+    "namePlaceholder": "Nom complet",
     "phoneWhatsapp": "TÉLÉPHONE / WHATSAPP *",
+    "phonePlaceholder": "+237 678 38 68 75",
     "emailAddress": "ADRESSE EMAIL",
+    "emailPlaceholder": "adresse@domaine.cm",
     "selectMotif": "OBJET DE LA DEMANDE *",
+    "selectPrompt": "Sélectionnez un motif",
+    "optAcquisition": "Acquisition d'un bien d'exception",
+    "optMandat": "Confier la vente sous mandat exclusif",
+    "optPatrimoine": "Gestion & Audit de patrimoine",
+    "optAutre": "Autre demande conciergerie",
     "message": "VOTRE MESSAGE / SPÉCIFICATIONS DU PROJET",
+    "messagePlaceholder": "Veuillez préciser vos attentes (budget, secteur géographique, critères particuliers)...",
     "submitRequest": "TRANSMETTRE MA DEMANDE PRIVÉE",
     "successTitle": "Votre demande a bien été enregistrée",
-    "successDesc": "Un de nos associés seniors vous recontactera sous 24 heures pour convenir d'un entretien confidentiel."
+    "successDesc": "Un de nos associés seniors vous recontactera sous 24 heures pour convenir d'un entretien confidentiel.",
+    "officesTitle": "Siège Social & Agences",
+    "yaoundeHq": "Yaoundé — Siège Social",
+    "doualaAgency": "Douala — Agence Logpom",
+    "hours": "Lun — Sam : 08h00 à 19h00 (Sur RDV)"
   },
   "footer": {
     "companyDesc": "Société immobilière agréée au Cameroun (MINHDU). Expertise et transaction de biens d'exception à Yaoundé et Douala.",

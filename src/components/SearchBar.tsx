@@ -82,7 +82,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
             type="text"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
-            placeholder="Localisation, Quartier..."
+            placeholder={t('search.locationPlaceholder')}
             className="w-full bg-[#1a1c1c] border border-[#4d4635] rounded px-9 py-3 text-[#e2e2e2] placeholder-[#99907c] focus:border-[#f2ca50] focus:outline-none transition-colors text-sm font-['Manrope']"
           />
         </div>
@@ -95,7 +95,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
               type="number"
               value={minBudget}
               onChange={(e) => setMinBudget(e.target.value)}
-              placeholder={mode === 'LOUER' ? 'Min / mois' : 'Min FCFA'}
+              placeholder={mode === 'LOUER' ? t('search.minMonth') : t('search.minFcfa')}
               className="w-full bg-[#1a1c1c] border border-[#4d4635] rounded pl-7 pr-2 py-3 text-[#e2e2e2] placeholder-[#99907c] focus:border-[#f2ca50] focus:outline-none transition-colors text-xs font-['Manrope']"
             />
           </div>
@@ -108,7 +108,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
               type="number"
               value={maxBudget}
               onChange={(e) => setMaxBudget(e.target.value)}
-              placeholder={mode === 'LOUER' ? 'Max / mois' : 'Max FCFA'}
+              placeholder={mode === 'LOUER' ? t('search.maxMonth') : t('search.maxFcfa')}
               className="w-full bg-[#1a1c1c] border border-[#4d4635] rounded pl-7 pr-2 py-3 text-[#e2e2e2] placeholder-[#99907c] focus:border-[#f2ca50] focus:outline-none transition-colors text-xs font-['Manrope']"
             />
           </div>

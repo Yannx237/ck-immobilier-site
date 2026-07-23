@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { ShieldCheck, MapPin, Phone, Mail, Clock, Send, CheckCircle2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const Contact: React.FC = () => {
+  const { t } = useTranslation();
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -17,14 +19,14 @@ export const Contact: React.FC = () => {
         <div className="inline-flex items-center gap-2 bg-[#1e2020] border border-[#f2ca50]/40 px-4 py-1.5 rounded-full">
           <ShieldCheck className="w-4 h-4 text-[#f2ca50]" />
           <span className="font-['Hanken_Grotesk'] text-xs font-bold tracking-[0.2em] text-[#f2ca50]">
-            CONCIERGERIE PRIVÉE & MANDATS
+            {t('contact.badge')}
           </span>
         </div>
         <h1 className="font-['Playfair_Display'] text-4xl sm:text-5xl font-bold text-[#e2e2e2]">
-          Contact & Prise de Rendez-vous Privé
+          {t('contact.title')}
         </h1>
         <p className="font-['Manrope'] text-base text-[#d0c5af]">
-          Notre cabinet vous accueille en toute confidentialité au siège de Yaoundé (Carrefour Golf) et à notre agence de Douala (Carrefour Bassong, Logpom).
+          {t('contact.sub')}
         </p>
       </div>
 
@@ -38,39 +40,39 @@ export const Contact: React.FC = () => {
                 <CheckCircle2 className="w-10 h-10" />
               </div>
               <h3 className="font-['Playfair_Display'] text-2xl font-bold text-[#e2e2e2]">
-                Votre demande a bien été enregistrée
+                {t('contact.successTitle')}
               </h3>
               <p className="font-['Manrope'] text-sm text-[#d0c5af] max-w-md mx-auto">
-                Un de nos associés seniors vous recontactera sous 24 heures pour convenir d'un entretien confidentiel.
+                {t('contact.successDesc')}
               </p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
               <h3 className="font-['Playfair_Display'] text-2xl font-semibold text-[#e2e2e2] border-b border-[#4d4635]/30 pb-4">
-                Formulaire de Prise de Contact
+                {t('contact.formTitle')}
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="block text-xs font-['Hanken_Grotesk'] font-bold text-[#d0c5af] tracking-wider">
-                    VOTRE NOM & PRÉNOM *
+                    {t('contact.fullName')}
                   </label>
                   <input
                     type="text"
                     required
-                    placeholder="Nom complet"
+                    placeholder={t('contact.namePlaceholder')}
                     className="w-full bg-[#1a1c1c] border border-[#4d4635] rounded px-4 py-3 text-sm text-[#e2e2e2] focus:border-[#f2ca50] focus:outline-none"
                   />
                 </div>
 
                 <div className="space-y-2">
                   <label className="block text-xs font-['Hanken_Grotesk'] font-bold text-[#d0c5af] tracking-wider">
-                    TÉLÉPHONE / WHATSAPP *
+                    {t('contact.phoneWhatsapp')}
                   </label>
                   <input
                     type="tel"
                     required
-                    placeholder="+237 678 38 68 75"
+                    placeholder={t('contact.phonePlaceholder')}
                     className="w-full bg-[#1a1c1c] border border-[#4d4635] rounded px-4 py-3 text-sm text-[#e2e2e2] focus:border-[#f2ca50] focus:outline-none"
                   />
                 </div>
@@ -79,39 +81,39 @@ export const Contact: React.FC = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="block text-xs font-['Hanken_Grotesk'] font-bold text-[#d0c5af] tracking-wider">
-                    ADRESSE EMAIL
+                    {t('contact.emailAddress')}
                   </label>
                   <input
                     type="email"
-                    placeholder="adresse@domaine.cm"
+                    placeholder={t('contact.emailPlaceholder')}
                     className="w-full bg-[#1a1c1c] border border-[#4d4635] rounded px-4 py-3 text-sm text-[#e2e2e2] focus:border-[#f2ca50] focus:outline-none"
                   />
                 </div>
 
                 <div className="space-y-2">
                   <label className="block text-xs font-['Hanken_Grotesk'] font-bold text-[#d0c5af] tracking-wider">
-                    OBJET DE LA DEMANDE *
+                    {t('contact.selectMotif')}
                   </label>
                   <select
                     required
                     className="w-full bg-[#1a1c1c] border border-[#4d4635] rounded px-4 py-3 text-sm text-[#e2e2e2] focus:border-[#f2ca50] focus:outline-none appearance-none cursor-pointer"
                   >
-                    <option value="">Sélectionnez un motif</option>
-                    <option value="acquisition">Acquisition d'un bien d'exception</option>
-                    <option value="mandat">Confier la vente sous mandat exclusif</option>
-                    <option value="patrimoine">Gestion & Audit de patrimoine</option>
-                    <option value="autre">Autre demande conciergerie</option>
+                    <option value="">{t('contact.selectPrompt')}</option>
+                    <option value="acquisition">{t('contact.optAcquisition')}</option>
+                    <option value="mandat">{t('contact.optMandat')}</option>
+                    <option value="patrimoine">{t('contact.optPatrimoine')}</option>
+                    <option value="autre">{t('contact.optAutre')}</option>
                   </select>
                 </div>
               </div>
 
               <div className="space-y-2">
                 <label className="block text-xs font-['Hanken_Grotesk'] font-bold text-[#d0c5af] tracking-wider">
-                  VOTRE MESSAGE / SPÉCIFICATIONS DU PROJET
+                  {t('contact.message')}
                 </label>
                 <textarea
                   rows={4}
-                  placeholder="Veuillez préciser vos attentes (budget, secteur géographique, critères particuliers)..."
+                  placeholder={t('contact.messagePlaceholder')}
                   className="w-full bg-[#1a1c1c] border border-[#4d4635] rounded px-4 py-3 text-sm text-[#e2e2e2] focus:border-[#f2ca50] focus:outline-none resize-none"
                 ></textarea>
               </div>
@@ -121,7 +123,7 @@ export const Contact: React.FC = () => {
                 className="bg-[#f2ca50] hover:bg-[#ffe088] text-[#3c2f00] font-['Hanken_Grotesk'] font-bold text-xs tracking-widest px-8 py-4 rounded shadow-[0_0_15px_rgba(242,202,80,0.3)] transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Send className="w-4 h-4" />
-                <span>TRANSMETTRE MA DEMANDE PRIVÉE</span>
+                <span>{t('contact.submitRequest')}</span>
               </button>
             </form>
           )}
@@ -132,14 +134,14 @@ export const Contact: React.FC = () => {
           
           <div className="bg-[#1a1c1c] p-8 rounded-2xl border border-[#4d4635]/40 space-y-6">
             <h3 className="font-['Playfair_Display'] font-semibold text-xl text-[#f2ca50]">
-              Siège Social & Agences
+              {t('contact.officesTitle')}
             </h3>
 
             <div className="space-y-4 text-sm text-[#d0c5af] font-['Manrope']">
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-[#f2ca50] shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-[#e2e2e2] block">Yaoundé — Siège Social</strong>
+                  <strong className="text-[#e2e2e2] block">{t('contact.yaoundeHq')}</strong>
                   Carrefour Golf, Yaoundé
                 </div>
               </div>
@@ -147,7 +149,7 @@ export const Contact: React.FC = () => {
               <div className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-[#f2ca50] shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-[#e2e2e2] block">Douala — Agence Logpom</strong>
+                  <strong className="text-[#e2e2e2] block">{t('contact.doualaAgency')}</strong>
                   Carrefour Bassong, Logpom (BP 15387 Douala)
                 </div>
               </div>
@@ -164,7 +166,7 @@ export const Contact: React.FC = () => {
 
               <div className="flex items-center gap-3">
                 <Clock className="w-5 h-5 text-[#f2ca50] shrink-0" />
-                <span>Lun — Sam : 08h00 à 19h00 (Sur RDV)</span>
+                <span>{t('contact.hours')}</span>
               </div>
             </div>
           </div>
