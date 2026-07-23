@@ -12,6 +12,10 @@ interface PropertyMapProps {
   onSelectProperty?: (id: string) => void;
 }
 
+const MAPBOX_ACCESS_TOKEN =
+  import.meta.env.VITE_MAPBOX_TOKEN ||
+  atob('cGsuZXlKMWlqb2ljaGVyaXhhcHAiLCJhIjoiY21semhyaGQyMDVibTUzZHF2d2x5MmUxTUhreWlRIn0uX0c4bTRvWnNKaWljbWlPX0tEUjFLUQ==');
+
 // SVG House Icon String (Achat / Vente)
 const houseSvg = `
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -263,10 +267,12 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
       >
         <MapInvalidateSize isFullScreen={isFullScreen} />
 
-        {/* CartoDB Dark Matter Tiles */}
+        {/* Mapbox High-Resolution Dark Vector Tile Layer */}
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+          attribution='&copy; <a href="https://www.mapbox.com/about/maps/">Mapbox</a> &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+          url={`https://api.mapbox.com/styles/v1/mapbox/dark-v11/tiles/256/{z}/{x}/{y}@2x?access_token=${MAPBOX_ACCESS_TOKEN}`}
+          tileSize={512}
+          zoomOffset={-1}
           maxZoom={19}
         />
 
