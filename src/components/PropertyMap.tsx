@@ -13,7 +13,7 @@ interface PropertyMapProps {
 
 const MAPBOX_ACCESS_TOKEN =
   import.meta.env.VITE_MAPBOX_TOKEN ||
-  atob('cGsuZXlKMWlqb2ljaGVyaXhhcHAiLCJhIjoiY21semhyaGQyMDVibTUzZHF2d2x5MmUxTUhreWlRIn0uX0c4bTRvWnNKaWljbWlPX0tEUjFLUQ==');
+  atob('cGsuZXlKMUlqb2lZMmhsY21sNFlYQndJaXdpWVNJNkltTnRiSHBvY21oa01qQTFibVV6WkhGMmFXd3laVEl4TUhraWZRLl9HOG00b1pzSmlpY21pT19LRFIxS1E=');
 
 // Helper to format map badge prices concisely (e.g. 350M FCFA or 450k/mo)
 const formatMapPrice = (priceStr: string, isRent: boolean): string => {
