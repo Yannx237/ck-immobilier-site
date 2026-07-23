@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import L from 'leaflet';
+import React, { useState, useEffect, useRef } from 'react';
 import type { PropertyWithMap } from '../data/properties';
-import { Link } from 'react-router-dom';
-import { ShieldCheck, ArrowRight, Search, Maximize2, Minimize2 } from 'lucide-react';
+import { Search, Maximize2, Minimize2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+
+declare const mapboxgl: any;
 
 interface PropertyMapProps {
   properties: PropertyWithMap[];
@@ -15,23 +14,6 @@ interface PropertyMapProps {
 const MAPBOX_ACCESS_TOKEN =
   import.meta.env.VITE_MAPBOX_TOKEN ||
   atob('cGsuZXlKMWlqb2ljaGVyaXhhcHAiLCJhIjoiY21semhyaGQyMDVibTUzZHF2d2x5MmUxTUhreWlRIn0uX0c4bTRvWnNKaWljbWlPX0tEUjFLUQ==');
-
-// SVG House Icon String (Achat / Vente)
-const houseSvg = `
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-  <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-  <polyline points="9 22 9 12 15 12 15 22"/>
-</svg>
-`;
-
-// SVG Key Icon String (Location)
-const keySvg = `
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-  <circle cx="7.5" cy="15.5" r="5.5"/>
-  <path d="m21 2-9.6 9.6"/>
-  <path d="m15.5 7.5 3 3"/>
-</svg>
-`;
 
 // Helper to format map badge prices concisely (e.g. 350M FCFA or 450k/mo)
 const formatMapPrice = (priceStr: string, isRent: boolean): string => {
@@ -46,111 +28,20 @@ const formatMapPrice = (priceStr: string, isRent: boolean): string => {
   return priceStr;
 };
 
-// Custom Leaflet DivIcon with House/Key SVG Icons & Color Coding (Achat vs Location)
-const createCustomMarkerIcon = (
-  price: string,
-  listingType: 'SALE' | 'RENT',
-  isDirectCk: boolean,
-  isSelected: boolean
-) => {
-  const isRent = listingType === 'RENT';
-  const tagLabel = isRent ? 'LOC' : 'ACHAT';
-  
-  const shortPriceStr = formatMapPrice(price, isRent);
+const houseSvg = `
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+  <polyline points="9 22 9 12 15 12 15 22"/>
+</svg>
+`;
 
-  // Color tokens
-  const primaryBg = isRent ? '#25a475' : '#d4af37'; // Emerald Green for RENT, Prestige Gold for SALE
-  const borderCol = isSelected ? '#ffffff' : isRent ? '#68dba9' : '#f2ca50';
-  const iconColor = isSelected ? '#ffffff' : isRent ? '#00311f' : '#3c2f00';
-
-  return L.divIcon({
-    className: 'custom-property-marker',
-    html: `
-      <div style="position: relative; display: flex; flex-direction: column; align-items: center; cursor: pointer; transform: translate(-50%, -100%);">
-        ${
-          isDirectCk
-            ? `<div style="position: absolute; inset: -5px; background: ${isRent ? 'rgba(104,219,169,0.35)' : 'rgba(242,202,80,0.35)'}; filter: blur(6px); border-radius: 9999px;"></div>`
-            : ''
-        }
-        
-        <div style="
-          width: ${isSelected ? '40px' : '34px'};
-          height: ${isSelected ? '40px' : '34px'};
-          border-radius: 9999px;
-          background: ${primaryBg};
-          border: 2px solid ${borderCol};
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: ${iconColor};
-          box-shadow: 0 0 ${isSelected ? '22px' : '12px'} ${isRent ? 'rgba(37,164,117,0.7)' : 'rgba(242,202,80,0.7)'};
-          transition: all 0.3s ease;
-          position: relative;
-          z-index: 2;
-        ">
-          ${isRent ? keySvg : houseSvg}
-        </div>
-
-        <div style="
-          margin-top: 4px;
-          background: rgba(18, 20, 20, 0.95);
-          border: 1px solid ${borderCol};
-          padding: 2px 8px;
-          border-radius: 6px;
-          font-family: 'Hanken Grotesk', sans-serif;
-          font-size: 10px;
-          font-weight: 800;
-          color: ${isRent ? '#68dba9' : '#f2ca50'};
-          letter-spacing: 0.05em;
-          white-space: nowrap;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-          position: relative;
-          z-index: 2;
-          display: flex;
-          align-items: center;
-          gap: 4px;
-        ">
-          <span style="opacity: 0.8; font-size: 9px; font-weight: 700; border-right: 1px solid rgba(255,255,255,0.2); padding-right: 4px;">${tagLabel}</span>
-          <span>${shortPriceStr}</span>
-        </div>
-      </div>
-    `,
-    iconSize: [44, 44],
-    iconAnchor: [22, 44],
-  });
-};
-
-// Map recenter helper
-const MapRecenter: React.FC<{ lat: number; lng: number }> = ({ lat, lng }) => {
-  const map = useMap();
-  useEffect(() => {
-    map.setView([lat, lng], Math.max(map.getZoom(), 12), { animate: true });
-  }, [lat, lng, map]);
-  return null;
-};
-
-// Helper component to continuously invalidate Leaflet map size when container mounts or toggles fullscreen
-const MapInvalidateSize: React.FC<{ isFullScreen: boolean }> = ({ isFullScreen }) => {
-  const map = useMap();
-  useEffect(() => {
-    const t1 = setTimeout(() => map.invalidateSize(), 100);
-    const t2 = setTimeout(() => map.invalidateSize(), 400);
-    const t3 = setTimeout(() => map.invalidateSize(), 800);
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
-    };
-  }, [isFullScreen, map]);
-
-  useEffect(() => {
-    const handleResize = () => map.invalidateSize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [map]);
-
-  return null;
-};
+const keySvg = `
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="7.5" cy="15.5" r="5.5"/>
+  <path d="m21 2-9.6 9.6"/>
+  <path d="m15.5 7.5 3 3"/>
+</svg>
+`;
 
 export const PropertyMap: React.FC<PropertyMapProps> = ({
   properties,
@@ -158,23 +49,15 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
   onSelectProperty,
 }) => {
   const { t } = useTranslation();
+  const mapContainerRef = useRef<HTMLDivElement | null>(null);
+  const mapRef = useRef<any>(null);
+  const markersRef = useRef<{ [id: string]: any }>({});
+
   const [mapSearchText, setMapSearchText] = useState<string>('');
   const [mapModeFilter, setMapModeFilter] = useState<'ALL' | 'ACHETER' | 'LOUER'>('ALL');
   const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
 
-  // Lock body scroll when full screen map is active
-  useEffect(() => {
-    if (isFullScreen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [isFullScreen]);
-
-  // Filter map markers in real-time based on map floating search bar
+  // Filter properties in real time
   const displayedProperties = properties.filter((prop) => {
     const matchesSearch =
       !mapSearchText.trim() ||
@@ -192,8 +75,174 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
 
   const selectedProp = displayedProperties.find((p) => p.id === selectedPropertyId) || displayedProperties[0] || properties[0];
   const defaultCenter: [number, number] = selectedProp
-    ? [selectedProp.mapCoordinates.lat, selectedProp.mapCoordinates.lng]
-    : [4.0435, 9.6894];
+    ? [selectedProp.mapCoordinates.lng, selectedProp.mapCoordinates.lat]
+    : [9.6894, 4.0435]; // [lng, lat] for Mapbox GL JS
+
+  // Lock body scroll when full screen map is active
+  useEffect(() => {
+    if (isFullScreen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    if (mapRef.current) {
+      setTimeout(() => mapRef.current.resize(), 300);
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isFullScreen]);
+
+  // Initialize Mapbox GL JS map
+  useEffect(() => {
+    if (!mapContainerRef.current) return;
+    if (typeof mapboxgl === 'undefined') return;
+
+    mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
+
+    const map = new mapboxgl.Map({
+      container: mapContainerRef.current,
+      style: 'mapbox://styles/mapbox/dark-v11',
+      center: defaultCenter,
+      zoom: 11,
+      pitch: 30, // Subtle luxury 3D pitch perspective
+    });
+
+    map.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'bottom-right');
+    mapRef.current = map;
+
+    return () => {
+      map.remove();
+      mapRef.current = null;
+    };
+  }, []);
+
+  // Update Markers on Mapbox GL Map
+  useEffect(() => {
+    if (!mapRef.current || typeof mapboxgl === 'undefined') return;
+
+    // Clear old markers
+    Object.values(markersRef.current).forEach((marker) => marker.remove());
+    markersRef.current = {};
+
+    displayedProperties.forEach((prop) => {
+      const isSelected = selectedPropertyId === prop.id;
+      const isRent = prop.listingType === 'RENT';
+      const tagLabel = isRent ? 'LOC' : 'ACHAT';
+      const shortPriceStr = formatMapPrice(prop.price, isRent);
+
+      const primaryBg = isRent ? '#25a475' : '#d4af37';
+      const borderCol = isSelected ? '#ffffff' : isRent ? '#68dba9' : '#f2ca50';
+      const iconColor = isSelected ? '#ffffff' : isRent ? '#00311f' : '#3c2f00';
+
+      // Create Custom Element
+      const el = document.createElement('div');
+      el.className = 'cursor-pointer group';
+      el.style.transform = 'translate(-50%, -100%)';
+      el.innerHTML = `
+        <div style="position: relative; display: flex; flex-direction: column; align-items: center;">
+          ${
+            prop.isDirectCk
+              ? `<div style="position: absolute; inset: -6px; background: ${isRent ? 'rgba(104,219,169,0.35)' : 'rgba(242,202,80,0.35)'}; filter: blur(6px); border-radius: 9999px;"></div>`
+              : ''
+          }
+          
+          <div style="
+            width: ${isSelected ? '42px' : '36px'};
+            height: ${isSelected ? '42px' : '36px'};
+            border-radius: 9999px;
+            background: ${primaryBg};
+            border: 2px solid ${borderCol};
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: ${iconColor};
+            box-shadow: 0 0 ${isSelected ? '22px' : '12px'} ${isRent ? 'rgba(37,164,117,0.7)' : 'rgba(242,202,80,0.7)'};
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+          ">
+            ${isRent ? keySvg : houseSvg}
+          </div>
+
+          <div style="
+            margin-top: 4px;
+            background: rgba(18, 20, 20, 0.95);
+            border: 1px solid ${borderCol};
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-family: 'Hanken Grotesk', sans-serif;
+            font-size: 10px;
+            font-weight: 800;
+            color: ${isRent ? '#68dba9' : '#f2ca50'};
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+          ">
+            <span style="opacity: 0.8; font-size: 9px; font-weight: 700; border-right: 1px solid rgba(255,255,255,0.2); padding-right: 4px;">${tagLabel}</span>
+            <span>${shortPriceStr}</span>
+          </div>
+        </div>
+      `;
+
+      el.addEventListener('click', () => {
+        if (onSelectProperty) onSelectProperty(prop.id);
+      });
+
+      // Create Popup HTML
+      const popupHtml = `
+        <div style="padding: 6px; width: 220px; font-family: 'Manrope', sans-serif; color: #e2e2e2;">
+          <div style="position: relative; height: 100px; border-radius: 8px; overflow: hidden; background: #0c0f0f; margin-bottom: 8px;">
+            <img src="${prop.imageUrl}" alt="${prop.title}" style="width: 100%; height: 100%; object-fit: cover;" />
+            <span style="position: absolute; top: 6px; left: 6px; background: ${isRent ? '#00311f' : '#3c2f00'}; color: ${isRent ? '#68dba9' : '#f2ca50'}; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 4px;">
+              ${isRent ? 'LOCATION' : 'ACHAT'}
+            </span>
+          </div>
+          <span style="font-size: 9px; font-weight: 800; color: #f2ca50; letter-spacing: 0.05em; display: block; margin-bottom: 2px;">
+            ${prop.location.toUpperCase()} — ${prop.city.toUpperCase()}
+          </span>
+          <h4 style="font-family: 'Playfair Display', serif; font-size: 13px; font-weight: 700; color: #e2e2e2; margin: 0 0 4px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            ${prop.title}
+          </h4>
+          <p style="font-size: 11px; color: #d0c5af; margin: 0 0 8px 0;">
+            ${prop.surface} m² • ${prop.bedrooms} Chambres
+          </p>
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(77,70,53,0.4); padding-top: 6px;">
+            <span style="font-family: 'Playfair Display', serif; font-weight: 700; font-size: 13px; color: ${isRent ? '#68dba9' : '#f2ca50'};">
+              ${prop.price}
+            </span>
+            <a href="/property/${prop.id}" style="background: #f2ca50; color: #3c2f00; padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: 800; text-decoration: none;">
+              VOIR →
+            </a>
+          </div>
+        </div>
+      `;
+
+      const popup = new mapboxgl.Popup({ offset: [0, -36], closeButton: false }).setHTML(popupHtml);
+
+      const marker = new mapboxgl.Marker({ element: el, anchor: 'bottom' })
+        .setLngLat([prop.mapCoordinates.lng, prop.mapCoordinates.lat])
+        .setPopup(popup)
+        .addTo(mapRef.current);
+
+      markersRef.current[prop.id] = marker;
+    });
+  }, [displayedProperties, selectedPropertyId]);
+
+  // Recenter Mapbox map when selectedPropertyId changes
+  useEffect(() => {
+    if (!mapRef.current || !selectedProp) return;
+    mapRef.current.flyTo({
+      center: [selectedProp.mapCoordinates.lng, selectedProp.mapCoordinates.lat],
+      zoom: 12.5,
+      essential: true,
+    });
+  }, [selectedPropertyId]);
 
   return (
     <div className={`transition-all duration-300 overflow-hidden bg-[#121414] ${
@@ -259,109 +308,8 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
         </button>
       </div>
 
-      <MapContainer
-        center={defaultCenter}
-        zoom={11}
-        scrollWheelZoom={true}
-        className="w-full h-full"
-      >
-        <MapInvalidateSize isFullScreen={isFullScreen} />
-
-        {/* Mapbox High-Resolution Dark Vector Tile Layer */}
-        <TileLayer
-          attribution='&copy; <a href="https://www.mapbox.com/about/maps/">Mapbox</a> &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-          url={`https://api.mapbox.com/styles/v1/mapbox/dark-v11/tiles/256/{z}/{x}/{y}@2x?access_token=${MAPBOX_ACCESS_TOKEN}`}
-          tileSize={512}
-          zoomOffset={-1}
-          maxZoom={19}
-        />
-
-        {selectedProp && (
-          <MapRecenter
-            lat={selectedProp.mapCoordinates.lat}
-            lng={selectedProp.mapCoordinates.lng}
-          />
-        )}
-
-        {displayedProperties.map((prop) => {
-          const isSelected = selectedPropertyId === prop.id;
-          const isRent = prop.listingType === 'RENT';
-          const customIcon = createCustomMarkerIcon(
-            prop.price,
-            prop.listingType,
-            !!prop.isDirectCk,
-            isSelected
-          );
-
-          return (
-            <Marker
-              key={prop.id}
-              position={[prop.mapCoordinates.lat, prop.mapCoordinates.lng]}
-              icon={customIcon}
-              eventHandlers={{
-                click: () => onSelectProperty && onSelectProperty(prop.id),
-              }}
-            >
-              <Popup>
-                <div className="w-60 p-2 space-y-2">
-                  <div className="relative h-24 rounded-lg overflow-hidden bg-[#0c0f0f]">
-                    <img
-                      src={prop.imageUrl}
-                      alt={prop.title}
-                      className="w-full h-full object-cover"
-                    />
-
-                    {/* Badge Achat/Location in Popup */}
-                    <div className="absolute top-1.5 left-1.5 flex items-center gap-1">
-                      <span
-                        className={`text-[8px] font-['Hanken_Grotesk'] font-bold px-1.5 py-0.5 rounded shadow ${
-                          isRent ? 'bg-[#00311f] text-[#68dba9]' : 'bg-[#3c2f00] text-[#f2ca50]'
-                        }`}
-                      >
-                        {isRent ? t('search.rent') : t('search.buy')}
-                      </span>
-                    </div>
-
-                    {prop.isDirectCk && (
-                      <span className="absolute top-1.5 right-1.5 bg-[#121414]/90 text-[#f2ca50] border border-[#f2ca50]/40 text-[8px] font-['Hanken_Grotesk'] font-bold px-1.5 py-0.5 rounded flex items-center gap-0.5 shadow">
-                        <ShieldCheck className="w-2.5 h-2.5 text-[#f2ca50]" /> CK
-                      </span>
-                    )}
-                  </div>
-
-                  <div>
-                    <span className="text-[9px] font-['Hanken_Grotesk'] font-bold text-[#f2ca50] tracking-wider block">
-                      {prop.location.toUpperCase()} — {prop.city.toUpperCase()}
-                    </span>
-                    <h4 className="font-['Playfair_Display'] font-semibold text-xs text-[#e2e2e2] line-clamp-1">
-                      {prop.title}
-                    </h4>
-                    <p className="text-[10px] text-[#d0c5af] font-['Manrope'] mt-0.5">
-                      {prop.surface} m² • {prop.bedrooms} {t('property.bedrooms')}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center justify-between pt-1.5 border-t border-[#4d4635]/40">
-                    <span
-                      className={`font-['Playfair_Display'] font-bold text-xs ${
-                        isRent ? 'text-[#68dba9]' : 'text-[#f2ca50]'
-                      }`}
-                    >
-                      {prop.price}
-                    </span>
-                    <Link
-                      to={`/property/${prop.id}`}
-                      className="bg-[#f2ca50] text-[#3c2f00] p-1 rounded hover:bg-[#ffe088] transition-colors inline-flex items-center justify-center"
-                    >
-                      <ArrowRight className="w-3 h-3" />
-                    </Link>
-                  </div>
-                </div>
-              </Popup>
-            </Marker>
-          );
-        })}
-      </MapContainer>
+      {/* Mapbox GL Map Container */}
+      <div ref={mapContainerRef} className="w-full h-full" />
 
     </div>
   );
