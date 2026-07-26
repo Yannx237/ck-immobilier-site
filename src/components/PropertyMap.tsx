@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import type { PropertyWithMap } from '../data/properties';
-import { Search, Maximize2, Minimize2, Box } from 'lucide-react';
+import { Search, Maximize2, Minimize2, Box, Layers, Sun, Moon, Sparkles } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 declare const mapboxgl: any;
@@ -56,7 +56,9 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
   const [mapSearchText, setMapSearchText] = useState<string>('');
   const [mapModeFilter, setMapModeFilter] = useState<'ALL' | 'ACHETER' | 'LOUER'>('ALL');
   const [isFullScreen, setIsFullScreen] = useState<boolean>(false);
-  const [is3DMode, setIs3DMode] = useState<boolean>(true); // Default 3D active
+  const [is3DMode, setIs3DMode] = useState<boolean>(true);
+  const [currentStyle, setCurrentStyle] = useState<'STANDARD_3D' | 'SATELLITE_3D' | 'DARK_3D'>('STANDARD_3D');
+  const [lightPreset, setLightPreset] = useState<'dusk' | 'day' | 'night'>('dusk');
 
   // Filter properties in real time
   const displayedProperties = properties.filter((prop) => {
@@ -101,10 +103,35 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
 
     if (mapRef.current) {
       mapRef.current.easeTo({
-        pitch: new3DState ? 60 : 0,
-        bearing: new3DState ? -17.6 : 0,
+        pitch: new3DState ? 65 : 0,
+        bearing: new3DState ? -20 : 0,
         duration: 1000,
       });
+    }
+  };
+
+  // Change Mapbox 3D Style (Standard 3D Photorealistic / Satellite / Dark)
+  const changeMapStyle = (styleType: 'STANDARD_3D' | 'SATELLITE_3D' | 'DARK_3D') => {
+    setCurrentStyle(styleType);
+    if (!mapRef.current) return;
+
+    let styleUrl = 'mapbox://styles/mapbox/standard';
+    if (styleType === 'SATELLITE_3D') styleUrl = 'mapbox://styles/mapbox/satellite-streets-v12';
+    else if (styleType === 'DARK_3D') styleUrl = 'mapbox://styles/mapbox/dark-v11';
+
+    mapRef.current.setStyle(styleUrl);
+  };
+
+  // Toggle Lighting Preset for Mapbox Standard 3D (Day / Dusk / Night)
+  const cycleLightPreset = () => {
+    const nextPreset = lightPreset === 'dusk' ? 'day' : lightPreset === 'day' ? 'night' : 'dusk';
+    setLightPreset(nextPreset);
+    if (mapRef.current && currentStyle === 'STANDARD_3D') {
+      try {
+        mapRef.current.setConfigProperty('basemap', 'lightPreset', nextPreset);
+      } catch (err) {
+        console.warn('Mapbox config property set warning:', err);
+      }
     }
   };
 
@@ -117,24 +144,46 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
 
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style: 'mapbox://styles/mapbox/dark-v11',
+      style: 'mapbox://styles/mapbox/standard', // Flagship Mapbox Standard Photorealistic 3D Style
       center: defaultCenter,
-      zoom: 12,
-      pitch: 60, // 3D Pitch
-      bearing: -17.6, // 3D Angle
+      zoom: 13,
+      pitch: 65, // High 3D Angle
+      bearing: -20, // 3D Rotation
       antialias: true,
     });
 
     map.addControl(new mapboxgl.NavigationControl({ showCompass: true }), 'bottom-right');
 
-    // Add 3D Building Extrusions Layer when style loads
     map.on('style.load', () => {
+      // Set Mapbox Standard 3D lighting preset
+      try {
+        map.setConfigProperty('basemap', 'lightPreset', 'dusk');
+      } catch (e) {
+        // Fallback for custom styles
+      }
+
+      // Add 3D Terrain elevation if supported
+      try {
+        if (!map.getSource('mapbox-dem')) {
+          map.addSource('mapbox-dem', {
+            type: 'raster-dem',
+            url: 'mapbox://mapbox.mapbox-terrain-dem-v1',
+            tileSize: 512,
+            maxzoom: 14,
+          });
+          map.setTerrain({ source: 'mapbox-dem', exaggeration: 1.5 });
+        }
+      } catch (e) {
+        console.warn('3D Terrain load warning:', e);
+      }
+
+      // Add 3D Building Extrusions Layer for dark/custom styles
       const layers = map.getStyle().layers;
-      const labelLayerId = layers.find(
+      const labelLayerId = layers?.find(
         (layer: any) => layer.type === 'symbol' && layer.layout && layer.layout['text-field']
       )?.id;
 
-      if (!map.getLayer('add-3d-buildings')) {
+      if (!map.getLayer('add-3d-buildings') && map.getSource('composite')) {
         map.addLayer(
           {
             id: 'add-3d-buildings',
@@ -221,8 +270,8 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
           }
           
           <div style="
-            width: ${isSelected ? '42px' : '36px'};
-            height: ${isSelected ? '42px' : '36px'};
+            width: ${isSelected ? '44px' : '38px'};
+            height: ${isSelected ? '44px' : '38px'};
             border-radius: 9999px;
             background: ${primaryBg};
             border: 2px solid ${borderCol};
@@ -230,7 +279,7 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
             align-items: center;
             justify-content: center;
             color: ${iconColor};
-            box-shadow: 0 0 ${isSelected ? '22px' : '12px'} ${isRent ? 'rgba(37,164,117,0.7)' : 'rgba(242,202,80,0.7)'};
+            box-shadow: 0 0 ${isSelected ? '24px' : '14px'} ${isRent ? 'rgba(37,164,117,0.7)' : 'rgba(242,202,80,0.7)'};
             transition: all 0.3s ease;
             position: relative;
             z-index: 2;
@@ -296,7 +345,7 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
         </div>
       `;
 
-      const popup = new mapboxgl.Popup({ offset: [0, -36], closeButton: false }).setHTML(popupHtml);
+      const popup = new mapboxgl.Popup({ offset: [0, -38], closeButton: false }).setHTML(popupHtml);
 
       const marker = new mapboxgl.Marker({ element: el, anchor: 'bottom' })
         .setLngLat([prop.mapCoordinates.lng, prop.mapCoordinates.lat])
@@ -312,9 +361,9 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
     if (!mapRef.current || !selectedProp) return;
     mapRef.current.flyTo({
       center: [selectedProp.mapCoordinates.lng, selectedProp.mapCoordinates.lat],
-      zoom: 13.5,
-      pitch: is3DMode ? 60 : 0,
-      bearing: is3DMode ? -17.6 : 0,
+      zoom: 14.5,
+      pitch: is3DMode ? 65 : 0,
+      bearing: is3DMode ? -20 : 0,
       essential: true,
     });
   }, [selectedPropertyId, is3DMode]);
@@ -382,8 +431,59 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
 
       </div>
 
-      {/* Desktop Controls Overlay (3D & Fullscreen) */}
+      {/* Desktop Controls Overlay (3D Style Switcher, Lighting, & Fullscreen) */}
       <div className="absolute top-4 right-4 z-[1000] hidden sm:flex items-center gap-2">
+        
+        {/* Mapbox 3D Style Switcher Pills */}
+        <div className="flex items-center gap-1 p-1 bg-[#1a1c1c]/90 backdrop-blur-md rounded-lg border border-[#f2ca50]/40 shadow-lg">
+          <button
+            type="button"
+            onClick={() => changeMapStyle('STANDARD_3D')}
+            className={`px-2.5 py-1.5 rounded text-[11px] font-['Hanken_Grotesk'] font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              currentStyle === 'STANDARD_3D' ? 'bg-[#f2ca50] text-[#3c2f00]' : 'text-[#d0c5af] hover:text-[#f2ca50]'
+            }`}
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>3D BÂTIMENTS RÉELS</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => changeMapStyle('SATELLITE_3D')}
+            className={`px-2.5 py-1.5 rounded text-[11px] font-['Hanken_Grotesk'] font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              currentStyle === 'SATELLITE_3D' ? 'bg-[#f2ca50] text-[#3c2f00]' : 'text-[#d0c5af] hover:text-[#f2ca50]'
+            }`}
+          >
+            <Layers className="w-3.5 h-3.5" />
+            <span>3D SATELLITE</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => changeMapStyle('DARK_3D')}
+            className={`px-2.5 py-1.5 rounded text-[11px] font-['Hanken_Grotesk'] font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+              currentStyle === 'DARK_3D' ? 'bg-[#f2ca50] text-[#3c2f00]' : 'text-[#d0c5af] hover:text-[#f2ca50]'
+            }`}
+          >
+            <Moon className="w-3.5 h-3.5" />
+            <span>3D DARK</span>
+          </button>
+        </div>
+
+        {/* Dynamic 3D Lighting Preset Control */}
+        {currentStyle === 'STANDARD_3D' && (
+          <button
+            type="button"
+            onClick={cycleLightPreset}
+            title="Changer l'éclairage 3D (Crépuscule / Jour / Nuit)"
+            className="flex items-center gap-1.5 bg-[#1a1c1c]/90 backdrop-blur-md px-3 py-2 border border-[#f2ca50]/40 text-[#f2ca50] rounded-lg text-xs font-['Hanken_Grotesk'] font-bold hover:bg-[#f2ca50] hover:text-[#3c2f00] transition-colors shadow-lg cursor-pointer"
+          >
+            <Sun className="w-4 h-4" />
+            <span className="uppercase">{lightPreset}</span>
+          </button>
+        )}
+
+        {/* 3D Tilt Toggle */}
         <button
           type="button"
           onClick={toggle3DMode}
@@ -394,9 +494,10 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
           }`}
         >
           <Box className="w-4 h-4" />
-          <span>{is3DMode ? 'VUE 3D ACTIVE' : 'PASSER EN 3D'}</span>
+          <span>{is3DMode ? 'INCLINAISON 3D' : 'VUE 2D'}</span>
         </button>
 
+        {/* Fullscreen Toggle */}
         <button
           type="button"
           onClick={() => setIsFullScreen(!isFullScreen)}
@@ -405,6 +506,7 @@ export const PropertyMap: React.FC<PropertyMapProps> = ({
           {isFullScreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
           <span>{isFullScreen ? t('map.reduce') : t('map.fullscreen')}</span>
         </button>
+
       </div>
 
       {/* Mapbox GL Map Container */}

@@ -4,6 +4,7 @@ import { sampleProperties } from '../data/properties';
 import { ShieldCheck, MapPin, BedDouble, Bath, Maximize2, Phone, Calendar, ArrowLeft, Check, MessageCircle, X, Send, CheckCircle2, Compass } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { PropertyMap } from '../components/PropertyMap';
+import { Building3DViewer } from '../components/Building3DViewer';
 
 export const PropertyDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -251,16 +252,21 @@ export const PropertyDetails: React.FC = () => {
         </div>
       </div>
 
-      {/* 3D Mapbox Map Section for this Property */}
+      {/* Interactive 3D Architectural Building Model Showcase */}
+      <Building3DViewer
+        propertyTitle={property.title}
+      />
+
+      {/* 3D Mapbox Standard Map Section for this Property */}
       <div className="glass-panel p-6 sm:p-8 rounded-2xl border border-[#f2ca50]/30 space-y-6 shadow-2xl">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#4d4635]/30 pb-4">
           <div>
             <span className="font-['Hanken_Grotesk'] text-xs font-bold text-[#f2ca50] tracking-widest flex items-center gap-1.5 mb-1">
               <Compass className="w-4 h-4 text-[#f2ca50]" />
-              LOCALISATION 3D & CARTE INTERACTIVE
+              MAPBOX STANDARD 3D — RENDER BÂTIMENTS RÉELS & CADRE DE VIE
             </span>
             <h3 className="font-['Playfair_Display'] text-2xl font-bold text-[#e2e2e2]">
-              Secteur & Cadre de Vie ({property.location}, {property.city})
+              Localisation & Bâtiments Réels 3D ({property.location}, {property.city})
             </h3>
           </div>
           <span className="text-xs text-[#d0c5af] font-['Manrope'] bg-[#1a1c1c] px-3 py-1.5 rounded-full border border-[#4d4635]/40 shrink-0">
@@ -268,7 +274,7 @@ export const PropertyDetails: React.FC = () => {
           </span>
         </div>
 
-        <div className="h-[420px] rounded-xl overflow-hidden border border-[#4d4635]/40 shadow-xl relative">
+        <div className="h-[480px] rounded-xl overflow-hidden border border-[#4d4635]/40 shadow-xl relative">
           <PropertyMap properties={[property]} selectedPropertyId={property.id} />
         </div>
       </div>
