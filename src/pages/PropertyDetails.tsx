@@ -4,7 +4,6 @@ import { sampleProperties } from '../data/properties';
 import { ShieldCheck, MapPin, BedDouble, Bath, Maximize2, Phone, Calendar, ArrowLeft, Check, MessageCircle, X, Send, CheckCircle2, Compass } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { PropertyMap } from '../components/PropertyMap';
-import { Building3DViewer } from '../components/Building3DViewer';
 
 export const PropertyDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -251,11 +250,6 @@ export const PropertyDetails: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {/* Interactive 3D Architectural Building Model Showcase */}
-      <Building3DViewer
-        propertyTitle={property.title}
-      />
 
       {/* 3D Mapbox Standard Map Section for this Property */}
       <div className="glass-panel p-6 sm:p-8 rounded-2xl border border-[#f2ca50]/30 space-y-6 shadow-2xl">
