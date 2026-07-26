@@ -7,7 +7,7 @@ import { sampleProperties } from '../data/properties';
 import { ShieldCheck, Eye, Key, ChevronRight, PhoneCall, ArrowUpRight, Sparkles, Award } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useScrollReveal } from '../hooks/useScrollReveal';
-import heroBuildingImg from '../assets/hero_ck.jpg';
+import heroBuildingImg from '../assets/branding/hero_ck.jpg';
 
 export const Home: React.FC = () => {
   const { t } = useTranslation();

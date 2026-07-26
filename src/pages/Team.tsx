@@ -1,7 +1,7 @@
 import React from 'react';
 import { ShieldCheck, Award, CheckCircle, Sparkles, MapPin } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import founderImg from '../assets/colbert_kouatcho.jpg';
+import founderImg from '../assets/branding/colbert_kouatcho.jpg';
 
 export const Team: React.FC = () => {
   const { t } = useTranslation();

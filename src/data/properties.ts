@@ -1,3 +1,18 @@
+// Import local property assets
+import golf1 from '../assets/properties/immeuble_golf/WhatsApp Image 2026-07-22 at 18.09.38.jpeg';
+import golf2 from '../assets/properties/immeuble_golf/WhatsApp Image 2026-07-22 at 18.09.43 (1).jpeg';
+import golf3 from '../assets/properties/immeuble_golf/WhatsApp Image 2026-07-22 at 18.11.30.jpeg';
+
+import douala1 from '../assets/properties/chambre_douala/WhatsApp Image 2026-07-17 at 18.03.42 (1).jpeg';
+import douala2 from '../assets/properties/chambre_douala/WhatsApp Image 2026-07-17 at 18.03.45 (3).jpeg';
+import douala3 from '../assets/properties/chambre_douala/WhatsApp Image 2026-07-17 at 18.03.47.jpeg';
+
+import bangou1 from '../assets/properties/bangou_auberge/WhatsApp Image 2026-07-17 at 18.03.43 (2).jpeg';
+import bangou2 from '../assets/properties/bangou_auberge/WhatsApp Image 2026-07-25 at 11.10.47.jpeg';
+import bangou3 from '../assets/properties/bangou_auberge/WhatsApp Image 2026-07-25 at 11.10.48.jpeg';
+
+import bamena1 from '../assets/properties/auberge_bamena/WhatsApp Image 2026-07-17 at 18.03.48 (1).jpeg';
+
 export interface Property {
   id: string;
   title: string;
@@ -40,13 +55,13 @@ export const sampleProperties: PropertyWithMap[] = [
     listingType: 'SALE',
     surface: 450,
     bedrooms: 5,
-    imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAlIgSpulC6OctBSdrYtKCA1csxGvPXIz0EPOc9yfUhv_gRLyoGT2lwPA_IjptCbiu2hrr1EOV_rtuKGGbn-Wg4nMCkPKGg3fAsXr5caFVYGASIy8F-N86v1d_ZldRON8__vK1tmZ53--kfuQjzpGWS1i3crWijZngnQl3YzgreTGwMdu77l7-juAk-vPypFzhQBOZIC_WyHTx0SPt7mzvEvHOZG2MJm1coj0D21yIM41f0PqfGbMfUrXfdnwqJdgb2-gqHD29WyEmi',
+    imageUrl: golf1,
     galleryImages: [
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuAlIgSpulC6OctBSdrYtKCA1csxGvPXIz0EPOc9yfUhv_gRLyoGT2lwPA_IjptCbiu2hrr1EOV_rtuKGGbn-Wg4nMCkPKGg3fAsXr5caFVYGASIy8F-N86v1d_ZldRON8__vK1tmZ53--kfuQjzpGWS1i3crWijZngnQl3YzgreTGwMdu77l7-juAk-vPypFzhQBOZIC_WyHTx0SPt7mzvEvHOZG2MJm1coj0D21yIM41f0PqfGbMfUrXfdnwqJdgb2-gqHD29WyEmi',
+      golf1,
+      golf2,
+      golf3,
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
       'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1200&q=80',
     ],
     isDirectCk: true,
     category: 'Villa Contemporaine',
@@ -62,12 +77,12 @@ export const sampleProperties: PropertyWithMap[] = [
     listingType: 'RENT',
     surface: 320,
     bedrooms: 4,
-    imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAiatGuxCHIORekehsiuQ1RaoqaC5leNF0LWx3ZTSpU5dwSyX4zF90dy8PkXZ3VfOdC5jd4lRpSLTLGt9C3V0xFr1mF4uXvQD-4sfvMMSweIRYdCQG80M_VwoZiBTSn4mBLkOWVnFI1pEH5scWvjc90uuf9PZftb3VfyJfy5UlDackEbBlUSWWNp1H_DzF3mshAxNraszAdegX9wB4rUZsDELbG62UNuxjG96z2dE3WbFIwCJgh5xL2Aw1wYWtCDeYYm_zlBwwvytmx',
+    imageUrl: douala1,
     galleryImages: [
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuAiatGuxCHIORekehsiuQ1RaoqaC5leNF0LWx3ZTSpU5dwSyX4zF90dy8PkXZ3VfOdC5jd4lRpSLTLGt9C3V0xFr1mF4uXvQD-4sfvMMSweIRYdCQG80M_VwoZiBTSn4mBLkOWVnFI1pEH5scWvjc90uuf9PZftb3VfyJfy5UlDackEbBlUSWWNp1H_DzF3mshAxNraszAdegX9wB4rUZsDELbG62UNuxjG96z2dE3WbFIwCJgh5xL2Aw1wYWtCDeYYm_zlBwwvytmx',
+      douala1,
+      douala2,
+      douala3,
       'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80',
     ],
     isDirectCk: true,
     category: 'Appartement de Prestige',
@@ -83,12 +98,11 @@ export const sampleProperties: PropertyWithMap[] = [
     listingType: 'SALE',
     surface: 380,
     bedrooms: 4,
-    imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAzLihmQWOaM5YRkeJyMyxZUnBfy-6PgUrX1WGIC9_2oqIIntZHLfqXGbP_Pa1AVtUB9MZ8-hNB09o9hpp0Bnbfzz9TQs5dSGbA0MgrSlEZim000ofDRufJCrlgm4CD1_7W_7trtPx4GFCQIGd4t2AXrfAdp_uf5cJxZsZgHvZx7-pGmNVxPiB0TKy4TL3ROgHWlXKDVOwECyYbfT1RusGumumDM66bHZxsIJku2jun-5o3t4lH4kIbELLMMRV2KZP7TNFQjqSDz_Do',
+    imageUrl: bamena1,
     galleryImages: [
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuAzLihmQWOaM5YRkeJyMyxZUnBfy-6PgUrX1WGIC9_2oqIIntZHLfqXGbP_Pa1AVtUB9MZ8-hNB09o9hpp0Bnbfzz9TQs5dSGbA0MgrSlEZim000ofDRufJCrlgm4CD1_7W_7trtPx4GFCQIGd4t2AXrfAdp_uf5cJxZsZgHvZx7-pGmNVxPiB0TKy4TL3ROgHWlXKDVOwECyYbfT1RusGumumDM66bHZxsIJku2jun-5o3t4lH4kIbELLMMRV2KZP7TNFQjqSDz_Do',
+      bamena1,
       'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1200&q=80',
       'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=80',
     ],
     isDirectCk: true,
     category: 'Villa Moderne',
@@ -104,11 +118,11 @@ export const sampleProperties: PropertyWithMap[] = [
     listingType: 'RENT',
     surface: 290,
     bedrooms: 3,
-    imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAiatGuxCHIORekehsiuQ1RaoqaC5leNF0LWx3ZTSpU5dwSyX4zF90dy8PkXZ3VfOdC5jd4lRpSLTLGt9C3V0xFr1mF4uXvQD-4sfvMMSweIRYdCQG80M_VwoZiBTSn4mBLkOWVnFI1pEH5scWvjc90uuf9PZftb3VfyJfy5UlDackEbBlUSWWNp1H_DzF3mshAxNraszAdegX9wB4rUZsDELbG62UNuxjG96z2dE3WbFIwCJgh5xL2Aw1wYWtCDeYYm_zlBwwvytmx',
+    imageUrl: golf2,
     galleryImages: [
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuAiatGuxCHIORekehsiuQ1RaoqaC5leNF0LWx3ZTSpU5dwSyX4zF90dy8PkXZ3VfOdC5jd4lRpSLTLGt9C3V0xFr1mF4uXvQD-4sfvMMSweIRYdCQG80M_VwoZiBTSn4mBLkOWVnFI1pEH5scWvjc90uuf9PZftb3VfyJfy5UlDackEbBlUSWWNp1H_DzF3mshAxNraszAdegX9wB4rUZsDELbG62UNuxjG96z2dE3WbFIwCJgh5xL2Aw1wYWtCDeYYm_zlBwwvytmx',
-      'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=1200&q=80',
+      golf2,
+      golf1,
+      golf3,
     ],
     isDirectCk: false,
     category: 'Duplex Haut Standing',
@@ -124,12 +138,11 @@ export const sampleProperties: PropertyWithMap[] = [
     listingType: 'SALE',
     surface: 520,
     bedrooms: 6,
-    imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAlIgSpulC6OctBSdrYtKCA1csxGvPXIz0EPOc9yfUhv_gRLyoGT2lwPA_IjptCbiu2hrr1EOV_rtuKGGbn-Wg4nMCkPKGg3fAsXr5caFVYGASIy8F-N86v1d_ZldRON8__vK1tmZ53--kfuQjzpGWS1i3crWijZngnQl3YzgreTGwMdu77l7-juAk-vPypFzhQBOZIC_WyHTx0SPt7mzvEvHOZG2MJm1coj0D21yIM41f0PqfGbMfUrXfdnwqJdgb2-gqHD29WyEmi',
+    imageUrl: bangou1,
     galleryImages: [
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuAlIgSpulC6OctBSdrYtKCA1csxGvPXIz0EPOc9yfUhv_gRLyoGT2lwPA_IjptCbiu2hrr1EOV_rtuKGGbn-Wg4nMCkPKGg3fAsXr5caFVYGASIy8F-N86v1d_ZldRON8__vK1tmZ53--kfuQjzpGWS1i3crWijZngnQl3YzgreTGwMdu77l7-juAk-vPypFzhQBOZIC_WyHTx0SPt7mzvEvHOZG2MJm1coj0D21yIM41f0PqfGbMfUrXfdnwqJdgb2-gqHD29WyEmi',
-      'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
+      bangou1,
+      bangou2,
+      bangou3,
     ],
     isDirectCk: true,
     category: 'Propriété d\'Exception',
@@ -145,11 +158,11 @@ export const sampleProperties: PropertyWithMap[] = [
     listingType: 'RENT',
     surface: 210,
     bedrooms: 2,
-    imageUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAzLihmQWOaM5YRkeJyMyxZUnBfy-6PgUrX1WGIC9_2oqIIntZHLfqXGbP_Pa1AVtUB9MZ8-hNB09o9hpp0Bnbfzz9TQs5dSGbA0MgrSlEZim000ofDRufJCrlgm4CD1_7W_7trtPx4GFCQIGd4t2AXrfAdp_uf5cJxZsZgHvZx7-pGmNVxPiB0TKy4TL3ROgHWlXKDVOwECyYbfT1RusGumumDM66bHZxsIJku2jun-5o3t4lH4kIbELLMMRV2KZP7TNFQjqSDz_Do',
+    imageUrl: douala3,
     galleryImages: [
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuAzLihmQWOaM5YRkeJyMyxZUnBfy-6PgUrX1WGIC9_2oqIIntZHLfqXGbP_Pa1AVtUB9MZ8-hNB09o9hpp0Bnbfzz9TQs5dSGbA0MgrSlEZim000ofDRufJCrlgm4CD1_7W_7trtPx4GFCQIGd4t2AXrfAdp_uf5cJxZsZgHvZx7-pGmNVxPiB0TKy4TL3ROgHWlXKDVOwECyYbfT1RusGumumDM66bHZxsIJku2jun-5o3t4lH4kIbELLMMRV2KZP7TNFQjqSDz_Do',
-      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1200&q=80',
-      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80',
+      douala3,
+      douala1,
+      douala2,
     ],
     isDirectCk: true,
     category: 'Loft de Luxe',

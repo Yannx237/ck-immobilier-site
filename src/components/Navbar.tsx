@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { User, Globe, Menu, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import logoImg from '../assets/bonlogo.png';
+import logoImg from '../assets/branding/bonlogo.png';
 
 export const Navbar: React.FC = () => {
   const location = useLocation();

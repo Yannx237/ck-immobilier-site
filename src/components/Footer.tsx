@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, Award, Clock } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import logoImg from '../assets/bonlogo.png';
+import logoImg from '../assets/branding/bonlogo.png';
 
 export const Footer: React.FC = () => {
   const { t } = useTranslation();
