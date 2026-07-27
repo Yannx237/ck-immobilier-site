@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, Maximize2, Bed, MapPin, ArrowRight, Key, Home } from 'lucide-react';
+import { ShieldCheck, Maximize2, Bed, MapPin, Key, Home, Sparkles } from 'lucide-react';
 import type { PropertyWithMap } from '../data/properties';
 import { useTranslation } from 'react-i18next';
 
@@ -11,6 +11,7 @@ interface PropertyCardProps {
 
 export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index = 0 }) => {
   const { t } = useTranslation();
+  const isNightly = property.price.toLowerCase().includes('nuitée');
   const isRent = property.listingType === 'RENT';
 
   const delayClass = index % 3 === 1 ? 'delay-100' : index % 3 === 2 ? 'delay-200' : '';
@@ -27,17 +28,33 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index = 0 
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#121414] via-[#121414]/20 to-transparent"></div>
 
-        {/* Badge VENTE / LOCATION */}
+        {/* Badge VENTE / LOCATION / NUITÉE */}
         <div className="absolute top-3 left-3 z-10">
           <div
             className={`px-2.5 py-1 rounded text-[10px] font-['Hanken_Grotesk'] font-bold tracking-widest flex items-center gap-1 shadow-md ${
-              isRent
+              isNightly
+                ? 'bg-[#002b3d]/90 text-[#38bdf8] border border-[#38bdf8]/40 backdrop-blur'
+                : isRent
                 ? 'bg-[#00311f]/90 text-[#68dba9] border border-[#68dba9]/40 backdrop-blur'
                 : 'bg-[#3c2f00]/90 text-[#f2ca50] border border-[#f2ca50]/40 backdrop-blur'
             }`}
           >
-            {isRent ? <Key className="w-3 h-3 text-[#68dba9]" /> : <Home className="w-3 h-3 text-[#f2ca50]" />}
-            <span>{isRent ? t('search.rent') : t('search.buy')}</span>
+            {isNightly ? (
+              <>
+                <Sparkles className="w-3 h-3 text-[#38bdf8]" />
+                <span>AUBERGE / LA NUITÉE</span>
+              </>
+            ) : isRent ? (
+              <>
+                <Key className="w-3 h-3 text-[#68dba9]" />
+                <span>{t('search.rent')}</span>
+              </>
+            ) : (
+              <>
+                <Home className="w-3 h-3 text-[#f2ca50]" />
+                <span>{t('search.buy')}</span>
+              </>
+            )}
           </div>
         </div>
 
@@ -88,9 +105,9 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index = 0 
         <div className="flex items-center justify-between pt-1">
           <div>
             <span className="block text-[9px] font-['Hanken_Grotesk'] tracking-widest text-[#99907c]">
-              {isRent ? t('property.monthlyRent') : t('property.propertyValue')}
+              {isNightly ? 'TARIF NUITÉE' : isRent ? t('property.monthlyRent') : t('property.propertyValue')}
             </span>
-            <span className={`font-['Playfair_Display'] font-bold text-base sm:text-lg ${isRent ? 'text-[#68dba9]' : 'text-[#f2ca50]'}`}>
+            <span className={`font-['Playfair_Display'] font-bold text-base sm:text-lg ${isNightly ? 'text-[#38bdf8]' : isRent ? 'text-[#68dba9]' : 'text-[#f2ca50]'}`}>
               {property.price}
             </span>
           </div>
@@ -98,12 +115,11 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, index = 0 
           <Link
             to={`/property/${property.id}`}
             aria-label={`${t('property.viewProperty')} ${property.title}`}
-            className="w-9 h-9 rounded-full bg-[#1e2020] border border-[#4d4635] flex items-center justify-center text-[#f2ca50] group-hover:bg-[#f2ca50] group-hover:text-[#3c2f00] transition-all shadow-md shrink-0"
+            className="inline-flex items-center gap-1 bg-[#1a1c1c] hover:bg-[#f2ca50] text-[#d0c5af] hover:text-[#3c2f00] border border-[#4d4635]/50 hover:border-[#f2ca50] px-3.5 py-2 rounded-lg text-xs font-['Hanken_Grotesk'] font-bold transition-all duration-300"
           >
-            <ArrowRight className="w-4 h-4" />
+            <span>{t('property.viewProperty')}</span>
           </Link>
         </div>
-
       </div>
 
     </div>
