@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Check } from 'lucide-react';
-import founderPhoto from '../assets/branding/colbert_kouatcho.jpg';
+import founderPhoto from '../assets/branding/colbert_kouatcho.webp';
 import { ButtonAnchor } from '../components/ui/Button';
 import { Container, Section } from '../components/ui/Layout';
 import { TextLink } from '../components/ui/TextLink';

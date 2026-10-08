@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { CalendarCheck, Phone, ShieldCheck } from 'lucide-react';
-import founderPhoto from '../../assets/branding/colbert_kouatcho.jpg';
+import founderPhoto from '../../assets/branding/colbert_kouatcho.webp';
 import { PRIMARY_PHONE, SITE, whatsappUrl } from '../../config/site';
 import type { Property } from '../../data/properties';
 import { propertyMessage } from '../../lib/property';

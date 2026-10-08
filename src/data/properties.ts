@@ -1,18 +1,9 @@
-// Le glob embarque chaque fichier correspondant dans le build, même non affiché :
-// on exclut les flyers (dont ceux d'une autre agence) et les photos non rattachées à un bien.
-const photos = import.meta.glob<string>(
-  [
-    '../assets/properties/**/*.jpeg',
-    '!../assets/properties/general/WhatsApp Image 2026-07-17 at 18.03.41 (1).jpeg',
-    '!../assets/properties/general/WhatsApp Image 2026-07-17 at 18.03.44.jpeg',
-    '!../assets/properties/general/WhatsApp Image 2026-07-17 at 18.03.46.jpeg',
-    '!../assets/properties/chambre_douala/WhatsApp Image 2026-07-17 at 18.03.42 (1).jpeg',
-    '!../assets/properties/chambre_douala/WhatsApp Image 2026-07-17 at 18.03.45 (3).jpeg',
-    '!../assets/properties/chambre_douala/WhatsApp Image 2026-07-22 *.jpeg',
-    '!../assets/properties/bangou_auberge/WhatsApp Image 2026-07-17 at 18.03.43 (2).jpeg',
-  ],
-  { eager: true, import: 'default' },
-);
+// Seules les photos affichées existent en .webp : les flyers (dont ceux d'une autre agence)
+// sont restés en .jpeg et ne sont donc pas embarqués dans le build.
+const photos = import.meta.glob<string>('../assets/properties/**/*.webp', {
+  eager: true,
+  import: 'default',
+});
 
 const photo = (path: string) => {
   const url = photos[`../assets/properties/${path}`];
@@ -21,7 +12,7 @@ const photo = (path: string) => {
 };
 
 const gallery = (folder: string, files: string[]) =>
-  files.map((file) => photo(`${folder}/WhatsApp Image 2026-${file}.jpeg`));
+  files.map((file) => photo(`${folder}/WhatsApp Image 2026-${file}.webp`));
 
 export type ListingType = 'SALE' | 'RENT' | 'NIGHT';
 export type City = 'Douala' | 'Yaoundé' | 'Ouest';

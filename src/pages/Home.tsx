@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ArrowUpRight } from 'lucide-react';
-import visitPhoto from '../assets/branding/visite-immobiliere.png';
+import visitPhoto from '../assets/branding/visite-immobiliere.webp';
 import { PropertyCard } from '../components/property/PropertyCard';
 import { PropertyMap } from '../components/property/PropertyMap';
 import { SearchPanel } from '../components/search/SearchPanel';
