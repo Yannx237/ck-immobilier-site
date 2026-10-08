@@ -1,172 +1,60 @@
 @import "tailwindcss";
 
+/* Tokens du design (voir DESIGN.md) : blanc, encre bleu nuit, un seul accent cobalt. */
 @theme {
-  --color-gold-50: #fffdf0;
-  --color-gold-100: #fff9c4;
-  --color-gold-200: #fff185;
-  --color-gold-300: #ffe547;
-  --color-gold-400: #ffd41c;
-  --color-gold-500: #f2ca50;
-  --color-gold-600: #d4af37;
-  --color-gold-700: #aa8620;
-  --color-gold-800: #88681c;
-  --color-gold-900: #71551b;
-  --color-gold-950: #422f0b;
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
 
-  --color-dark-bg: #121414;
-  --color-dark-surface: #1a1c1c;
-  --color-dark-[#121414]: #121414;
+  --color-ink: #0e1b33;
+  --color-muted: #5a6478;
+  --color-mist: #f3f6fa;
+  --color-line: #e3e8ef;
+  --color-cobalt: #1747b5;
+  --color-cobalt-dark: #123a94;
+  --color-cobalt-tint: #e8eefb;
+  --color-whatsapp: #1faf5a;
+  --color-whatsapp-dark: #17914a;
 
-  --font-playfair: 'Playfair Display', serif;
-  --font-manrope: 'Manrope', sans-serif;
-  --font-hanken: 'Hanken Grotesk', sans-serif;
+  --shadow-soft: 0 20px 40px -20px rgb(14 27 51 / 0.18);
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    background-color: #121414;
-    color: #e2e2e2;
-    font-family: 'Manrope', sans-serif;
-    overflow-x: hidden;
+    @apply bg-white font-sans text-ink antialiased;
+    font-feature-settings: "ss01";
+  }
+
+  ::selection {
+    @apply bg-cobalt-tint text-ink;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-cobalt;
   }
 }
 
-/* Elegant Slim Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 4px;
-}
-
-::-webkit-scrollbar-track {
-  background: #121414;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #4d4635;
-  border-radius: 9999px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #f2ca50;
-}
-
-/* Class to completely hide scrollbar while preserving scrollability */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* Glassmorphism & Gold Glow utilities */
-.glass-panel {
-  background: rgba(26, 28, 28, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(153, 144, 124, 0.2);
-}
-
-.gold-gradient-text {
-  background: linear-gradient(135deg, #fff9c4 0%, #f2ca50 50%, #aa8620 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.gold-glow {
-  box-shadow: 0 0 25px rgba(242, 202, 80, 0.25);
-}
-
-.hover-gold-glow {
-  transition: all 0.3s ease;
-}
-
-.hover-gold-glow:hover {
-  box-shadow: 0 0 20px rgba(242, 202, 80, 0.3);
-  border-color: rgba(242, 202, 80, 0.5);
-}
-
-/* Scroll Reveal & Micro-Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(28px);
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
   }
 }
 
-@keyframes fadeInScale {
-  from {
-    opacity: 0;
-    transform: scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+/* Mapbox : contrôles et attribution accordés à la palette. */
+.mapboxgl-ctrl-group {
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px -4px rgb(14 27 51 / 0.2) !important;
 }
 
-.animate-fade-in-up {
-  animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.animate-fade-in-scale {
-  animation: fadeInScale 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* Scroll reveal initial state class */
-.reveal-on-scroll {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
-}
-
-.reveal-on-scroll.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Stagger Delays */
-.delay-100 { transition-delay: 100ms; }
-.delay-200 { transition-delay: 200ms; }
-.delay-300 { transition-delay: 300ms; }
-.delay-400 { transition-delay: 400ms; }
-.delay-500 { transition-delay: 500ms; }
-
-/* Custom Leaflet / Mapbox Map Dark Theme Overrides */
-.leaflet-container {
-  background-color: #121414 !important;
-  font-family: 'Manrope', sans-serif !important;
-}
-
-.leaflet-popup-content-wrapper {
-  background: #1a1c1c !important;
-  color: #e2e2e2 !important;
-  border: 1px solid rgba(242, 202, 80, 0.3) !important;
-  border-radius: 12px !important;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8) !important;
-  padding: 0 !important;
-}
-
-.leaflet-popup-content {
-  margin: 8px !important;
-}
-
-.leaflet-container a.leaflet-popup-close-button {
-  color: #f2ca50 !important;
-  padding: 6px 10px 0 0 !important;
-}
-
-.leaflet-popup-tip {
-  background: #1a1c1c !important;
-}
-
-@media (max-width: 640px) {
-  .leaflet-popup-content-wrapper {
-    max-width: 280px !important;
-  }
+.mapboxgl-ctrl-attrib {
+  font-family: var(--font-sans);
+  font-size: 10px;
 }

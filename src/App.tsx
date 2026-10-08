@@ -1,51 +1,65 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { BrowserRouter, Route, Routes, useLocation, useMatch } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Analytics } from '@vercel/analytics/react';
-import { Navbar } from './components/Navbar';
-import { Footer } from './components/Footer';
-import { Home } from './pages/Home';
+import { Footer } from './components/layout/Footer';
+import { Header } from './components/layout/Header';
+import { MobileContactBar } from './components/layout/MobileContactBar';
+import { Agency } from './pages/Agency';
 import { Catalog } from './pages/Catalog';
-import { PropertyDetails } from './pages/PropertyDetails';
 import { Contact } from './pages/Contact';
-import { Team } from './pages/Team';
-import { LegalNotice } from './pages/LegalNotice';
-import { PrivacyPolicy } from './pages/PrivacyPolicy';
-import { EthicsCharter } from './pages/EthicsCharter';
+import { Home } from './pages/Home';
+import { LegalPage } from './pages/LegalPage';
+import { NotFound } from './pages/NotFound';
+import { PropertyDetails } from './pages/PropertyDetails';
 
-// Helper component to scroll to top on route change
-const ScrollToTop: React.FC = () => {
+const ScrollToTop = () => {
   const { pathname } = useLocation();
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
-
   return null;
 };
 
-export const App: React.FC = () => {
+const Shell = () => {
+  const { t } = useTranslation();
+  // La fiche bien affiche sa propre barre de contact, avec le prix et un message pré-rempli.
+  const onPropertyPage = useMatch('/property/:id');
+
   return (
-    <Router>
-      <ScrollToTop />
-      <div className="min-h-screen bg-[#121414] text-[#e2e2e2] flex flex-col font-['Manrope',sans-serif] selection:bg-[#d4af37] selection:text-[#121414]">
-        <Navbar />
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/catalogue" element={<Catalog />} />
-            <Route path="/property/:id" element={<PropertyDetails />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/equipe" element={<Team />} />
-            <Route path="/mentions-legales" element={<LegalNotice />} />
-            <Route path="/confidentialite" element={<PrivacyPolicy />} />
-            <Route path="/charte-ethique" element={<EthicsCharter />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-      <Analytics />
-    </Router>
+    <div className="flex min-h-dvh flex-col">
+      <a
+        href="#contenu"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:shadow-soft"
+      >
+        {t('common.skipToContent')}
+      </a>
+      <Header />
+      <main id="contenu" className="flex-1 max-md:pb-20">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/catalogue" element={<Catalog />} />
+          <Route path="/property/:id" element={<PropertyDetails />} />
+          <Route path="/equipe" element={<Agency />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/mentions-legales" element={<LegalPage page="notice" />} />
+          <Route path="/confidentialite" element={<LegalPage page="privacy" />} />
+          <Route path="/charte-ethique" element={<LegalPage page="ethics" />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+      <Footer />
+      {!onPropertyPage && <MobileContactBar />}
+    </div>
   );
 };
+
+export const App = () => (
+  <BrowserRouter>
+    <ScrollToTop />
+    <Shell />
+    <Analytics />
+  </BrowserRouter>
+);
 
 export default App;

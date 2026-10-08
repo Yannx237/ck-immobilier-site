@@ -13,11 +13,17 @@ i18n
       fr: { translation: frTranslation },
       en: { translation: enTranslation },
     },
+    supportedLngs: ['fr', 'en'],
+    nonExplicitSupportedLngs: true,
     fallbackLng: 'fr',
-    lng: 'fr', // Default language
-    interpolation: {
-      escapeValue: false, // React already escapes values
-    },
+    // Le français reste la langue par défaut : on ne bascule en anglais
+    // que si le visiteur l'a choisi (mémorisé) ou si son navigateur est en anglais.
+    detection: { order: ['localStorage', 'navigator'], caches: ['localStorage'] },
+    interpolation: { escapeValue: false },
   });
+
+const syncHtmlLang = (lng: string) => document.documentElement.setAttribute('lang', lng.slice(0, 2));
+syncHtmlLang(i18n.resolvedLanguage ?? 'fr');
+i18n.on('languageChanged', syncHtmlLang);
 
 export default i18n;
