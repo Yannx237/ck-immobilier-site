@@ -70,7 +70,19 @@
     "zoneCount_other": "{{count}} biens",
     "founderText": "Nous louons et vendons uniquement des biens que nous avons visités et dont nous avons vérifié les papiers.",
     "meetTeam": "Découvrir l'agence",
-    "readCharter": "Lire notre charte éthique"
+    "readCharter": "Lire notre charte éthique",
+    "projectTitle": "Parlons de votre projet.",
+    "projectText": "Une ville, un budget, une date : dites-nous ce que vous cherchez. Choisissez votre projet pour nous écrire sur WhatsApp.",
+    "projectOptions": {
+      "buy": { "title": "Je souhaite acheter", "text": "Trouver un bien à Douala ou Yaoundé" },
+      "rent": { "title": "Je cherche une location", "text": "Un appartement ou un duplex pour m’installer" },
+      "night": { "title": "Je réserve une nuit", "text": "Une chambre à Bamena ou Bangou" }
+    },
+    "projectMessages": {
+      "buy": "Bonjour CK Immobilier, je souhaite acheter un bien. Pouvez-vous m’accompagner dans ma recherche ?",
+      "rent": "Bonjour CK Immobilier, je cherche un appartement ou un duplex à louer. Pouvons-nous en discuter ?",
+      "night": "Bonjour CK Immobilier, je souhaite réserver une chambre dans une auberge CK à Bamena ou Bangou. Quelles sont vos disponibilités ?"
+    }
   },
   "catalog": {
     "metaTitle": "Catalogue — CK Immobilier",
@@ -197,8 +209,11 @@
     "services": [
       { "title": "Vente d'immeubles et d'appartements", "text": "Nous contrôlons le titre foncier à la conservation foncière avant de publier une annonce. Vous recevez les documents avant toute avance d'argent." },
       { "title": "Location d'appartements", "text": "Appartements climatisés à Douala et duplex à Yaoundé, gérés par l'agence. Un seul interlocuteur, de la visite à la remise des clés." },
-      { "title": "Auberges CK à Bamena et Bangou", "text": "Des chambres à la nuit en bordure de route, pour une étape sur la route de l'Ouest. Surveillance 24 h/24 et parking." }
+      { "title": "Accueil et séjours en auberge", "text": "Dans les auberges CK à Bamena et Bangou, nous vous accueillons pour vos nuits et vos étapes sur la route de l'Ouest. Des chambres à la nuit, un parking et une surveillance 24 h/24." }
     ],
+    "serviceCta0": "Voir les biens à vendre",
+    "serviceCta1": "Trouver une location",
+    "serviceCta2": "Voir les auberges CK",
     "commitmentsTitle": "Nos engagements",
     "commitments": [
       "Aucun bien mis en vente sans vérification du titre foncier.",

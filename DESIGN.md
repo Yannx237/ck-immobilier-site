@@ -41,7 +41,7 @@ A working real-estate agency site, not a brand manifesto. Crisp white surfaces, 
 
 ## 6. Motion & Interaction
 - 200ms ease-out on hover states; card photo scale 1.03; gallery crossfade 300ms.
-- No scroll-triggered fade-ins on every block, no parallax, no floating elements.
+- No scroll-triggered fade-ins on every block, no parallax, no floating elements. The agency services section has a user-requested exception: three fictional cutout presenters alternate around a cobalt timeline that fills with scrolling. Each service enters once; reduced motion keeps the line complete and content static.
 
 ## 7. Content Voice
 - French first, plain and concrete: "Appartement 3 chambres meublé, Logpom", "Disponible le 1er novembre", "Groupe électrogène, forage, gardien 24h/24".

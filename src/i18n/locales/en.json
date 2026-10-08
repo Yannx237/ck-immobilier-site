@@ -70,7 +70,19 @@
     "zoneCount_other": "{{count}} listings",
     "founderText": "We only rent and sell properties we have visited and whose papers we have checked.",
     "meetTeam": "About the agency",
-    "readCharter": "Read our code of ethics"
+    "readCharter": "Read our code of ethics",
+    "projectTitle": "Let’s talk about your plans.",
+    "projectText": "A city, a budget, a date: tell us what you’re looking for. Choose your project to message us on WhatsApp.",
+    "projectOptions": {
+      "buy": { "title": "I want to buy", "text": "Find a property in Douala or Yaoundé" },
+      "rent": { "title": "I’m looking for a rental", "text": "An apartment or duplex to move into" },
+      "night": { "title": "I’d like to book a night", "text": "A room in Bamena or Bangou" }
+    },
+    "projectMessages": {
+      "buy": "Hello CK Immobilier, I would like to buy a property. Can you help with my search?",
+      "rent": "Hello CK Immobilier, I’m looking for an apartment or duplex to rent. Can we discuss my needs?",
+      "night": "Hello CK Immobilier, I would like to book a room at a CK guesthouse in Bamena or Bangou. What is your availability?"
+    }
   },
   "catalog": {
     "metaTitle": "Catalogue — CK Immobilier",
@@ -197,8 +209,11 @@
     "services": [
       { "title": "Selling buildings and apartments", "text": "We check the land title at the land registry before publishing a listing. You get the documents before any deposit." },
       { "title": "Apartment rentals", "text": "Air-conditioned apartments in Douala and duplexes in Yaoundé, managed by the agency. One contact person from viewing to key handover." },
-      { "title": "CK guesthouses in Bamena and Bangou", "text": "Rooms by the night by the main road, for a stop on the way West. 24-hour security and parking." }
+      { "title": "Guesthouse hospitality and stays", "text": "At the CK guesthouses in Bamena and Bangou, we welcome you for overnight stays and stopovers on the road to the West. Rooms by the night, parking and 24-hour security." }
     ],
+    "serviceCta0": "View properties for sale",
+    "serviceCta1": "Find a rental",
+    "serviceCta2": "View CK guesthouses",
     "commitmentsTitle": "Our commitments",
     "commitments": [
       "No property listed for sale without a land title check.",

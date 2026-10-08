@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import founderPhoto from '../assets/branding/colbert_kouatcho.jpg';
+import { ArrowUpRight } from 'lucide-react';
 import visitPhoto from '../assets/branding/visite-immobiliere.png';
 import { PropertyCard } from '../components/property/PropertyCard';
 import { PropertyMap } from '../components/property/PropertyMap';
 import { SearchPanel } from '../components/search/SearchPanel';
 import { Container, Section, SectionHeader } from '../components/ui/Layout';
 import { TextLink } from '../components/ui/TextLink';
-import { SITE, whatsappUrl } from '../config/site';
+import { whatsappUrl } from '../config/site';
 import { CITIES, properties } from '../data/properties';
 import { countByCity } from '../lib/catalog';
 
@@ -108,27 +108,26 @@ export const Home = () => {
         <PropertyMap properties={properties} className="h-[360px] lg:col-span-8 lg:h-[440px]" />
       </Section>
 
-      {/* L'agence */}
-      <Section className="border-t border-line" containerClassName="grid gap-8 sm:grid-cols-[auto_1fr] sm:items-center sm:gap-12">
-        <figure>
-          <img
-            src={founderPhoto}
-            alt={SITE.founder}
-            loading="lazy"
-            className="size-40 rounded-2xl object-cover object-top sm:size-56"
-          />
-          <figcaption className="mt-3">
-            <span className="block font-medium text-ink">{SITE.founder}</span>
-            <span className="text-sm text-muted">{t('property.agentRole')}</span>
-          </figcaption>
-        </figure>
-        <div className="max-w-2xl">
-          <p className="text-xl leading-relaxed text-ink sm:text-2xl">{t('home.founderText')}</p>
-          <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3">
-            <TextLink to="/equipe">{t('home.meetTeam')}</TextLink>
-            <TextLink to="/charte-ethique">{t('home.readCharter')}</TextLink>
-          </div>
+      {/* Une prochaine action concrète, selon le projet du visiteur. */}
+      <Section className="border-t border-line bg-cobalt-tint/40" containerClassName="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-20">
+        <div>
+          <h2 className="max-w-[16ch] text-3xl leading-tight font-semibold tracking-tight text-ink sm:text-4xl">{t('home.projectTitle')}</h2>
+          <p className="mt-4 max-w-[44ch] text-lg leading-relaxed text-muted">{t('home.projectText')}</p>
+          <p className="mt-6 text-sm text-muted">{t('common.hours')}</p>
         </div>
+        <ul className="divide-y divide-cobalt/15 border-y border-cobalt/15">
+          {(['buy', 'rent', 'night'] as const).map((project) => (
+            <li key={project}>
+              <a href={whatsappUrl(t(`home.projectMessages.${project}`))} target="_blank" rel="noopener noreferrer" className="group flex min-h-24 items-center justify-between gap-4 py-6">
+                <span>
+                  <span className="block text-xl font-medium text-ink group-hover:text-cobalt">{t(`home.projectOptions.${project}.title`)}</span>
+                  <span className="mt-1 block text-sm text-muted">{t(`home.projectOptions.${project}.text`)}</span>
+                </span>
+                <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-white text-cobalt transition-colors group-hover:bg-cobalt group-hover:text-white"><ArrowUpRight aria-hidden="true" className="size-5" strokeWidth={1.75} /></span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </Section>
     </>
   );

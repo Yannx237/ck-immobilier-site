@@ -6,15 +6,10 @@ import { Container, Section } from '../components/ui/Layout';
 import { TextLink } from '../components/ui/TextLink';
 import { WhatsAppIcon } from '../components/ui/icons';
 import { whatsappUrl } from '../config/site';
-import { getProperty } from '../data/properties';
-import { cn } from '../lib/cn';
-
-// Une photo réelle par activité : l'immeuble du Golf, un appartement de Logpom, l'auberge de Bangou.
-const SERVICE_PHOTOS = ['1', '2', '5'].map((id) => getProperty(id)!.images[id === '2' ? 1 : 0]);
+import { ServicesTimeline } from '../components/agency/ServicesTimeline';
 
 export const Agency = () => {
   const { t } = useTranslation();
-  const services = t('agency.services', { returnObjects: true }) as { title: string; text: string }[];
   const commitments = t('agency.commitments', { returnObjects: true }) as string[];
 
   return (
@@ -43,22 +38,7 @@ export const Agency = () => {
 
       <Section className="border-t border-line">
         <h2 className="text-2xl font-semibold tracking-tight text-ink sm:text-[28px]">{t('agency.servicesTitle')}</h2>
-        <div className="mt-10 space-y-14">
-          {services.map((service, i) => (
-            <div key={service.title} className="grid gap-6 md:grid-cols-2 md:items-center md:gap-12">
-              <img
-                src={SERVICE_PHOTOS[i]}
-                alt=""
-                loading="lazy"
-                className={cn('aspect-[3/2] w-full rounded-2xl object-cover shadow-soft', i % 2 === 1 && 'md:order-2')}
-              />
-              <div className="max-w-[48ch]">
-                <h3 className="text-xl font-semibold tracking-tight text-ink">{service.title}</h3>
-                <p className="mt-3 leading-relaxed text-muted">{service.text}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+        <ServicesTimeline />
       </Section>
 
       <Section tone="mist">

@@ -48,6 +48,19 @@
   }
 }
 
+/* Les trois activités suivent un même fil ; les portraits alternent sur desktop. */
+.service-track { left: 0; width: 48px; }
+.service-step { padding-left: 72px; gap: 8px; padding-bottom: 48px; }
+.service-node { left: 0; top: 48%; }
+.service-step:last-child { padding-bottom: 0; }
+@media (min-width: 768px) {
+  .service-track { left: calc(50% - 24px); }
+  .service-step { grid-template-columns: 1fr 1fr; gap: 112px; min-height: 480px; padding-left: 0; padding-bottom: 48px; }
+  .service-node { left: calc(50% - 24px); top: calc(50% - 24px); }
+  .service-reverse .service-portrait { grid-column: 2; grid-row: 1; }
+  .service-reverse .service-copy { grid-column: 1; grid-row: 1; justify-self: end; }
+}
+
 /* Mapbox : contrôles et attribution accordés à la palette. */
 .mapboxgl-ctrl-group {
   border-radius: 8px !important;
