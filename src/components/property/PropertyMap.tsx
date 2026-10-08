@@ -16,11 +16,10 @@ interface PropertyMapProps {
   className?: string;
 }
 
-const pillClass = (active: boolean) =>
-  cn(
-    'cursor-pointer whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-semibold tabular-nums shadow-md transition-colors',
-    active ? 'bg-cobalt text-white' : 'bg-white text-ink hover:bg-cobalt-tint',
-  );
+const markerPinClass = (active: boolean) => cn(
+  'flex size-10 items-center justify-center rounded-[14px] border-2 border-white shadow-lg transition duration-200',
+  active ? 'scale-110 bg-ink text-white ring-4 ring-cobalt/20' : 'bg-cobalt text-white hover:scale-110',
+);
 
 /** Repère `true` dès que l'élément approche de la zone visible. */
 const useNearViewport = (ref: React.RefObject<HTMLElement | null>) => {
@@ -83,13 +82,44 @@ export const PropertyMap = ({ properties, activeId, scrollZoom = false, zoom, cl
         properties.forEach((property) => {
           // Mapbox gère les classes et la position de l'élément racine : la pastille stylée est un enfant.
           const el = document.createElement('div');
-          const pill = document.createElement('button');
-          pill.type = 'button';
-          pill.className = pillClass(false);
-          pill.textContent = `${formatShortAmount(property.price)}${t(`price.${property.listingType}`)}`;
-          pill.setAttribute('aria-label', property.title);
-          pill.addEventListener('click', () => navigate(`/property/${property.id}`));
-          el.appendChild(pill);
+          el.className = 'property-map-marker';
+          const link = document.createElement('button');
+          link.type = 'button';
+          link.className = 'property-map-marker__button';
+          link.setAttribute('aria-label', `${property.title}, ${property.district}, ${property.city}, ${formatShortAmount(property.price)} FCFA`);
+          link.title = `${property.district} · ${property.city} — ${formatShortAmount(property.price)} FCFA`;
+          link.addEventListener('click', () => navigate(`/property/${property.id}`));
+
+          const label = document.createElement('span');
+          label.className = 'property-map-marker__label';
+          const price = document.createElement('strong');
+          price.className = 'property-map-marker__price';
+          price.textContent = `${formatShortAmount(property.price)}${t(`price.${property.listingType}`)}`;
+          const area = document.createElement('span');
+          area.className = 'property-map-marker__area';
+          area.textContent = `${property.district} · ${property.city}`;
+          label.append(price, area);
+
+          const pin = document.createElement('span');
+          pin.className = `property-map-marker__pin ${markerPinClass(false)}`;
+          pin.setAttribute('aria-hidden', 'true');
+          const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+          icon.setAttribute('viewBox', '0 0 24 24');
+          icon.setAttribute('width', '19');
+          icon.setAttribute('height', '19');
+          icon.setAttribute('fill', 'none');
+          icon.setAttribute('stroke', 'currentColor');
+          icon.setAttribute('stroke-width', '1.8');
+          icon.setAttribute('stroke-linecap', 'round');
+          icon.setAttribute('stroke-linejoin', 'round');
+          const roof = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          roof.setAttribute('d', 'm3 10 9-7 9 7');
+          const house = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          house.setAttribute('d', 'M5 9v12h14V9M9 21v-7h6v7');
+          icon.append(roof, house);
+          pin.append(icon);
+          link.append(label, pin);
+          el.append(link);
 
           markers.set(
             property.id,
@@ -126,8 +156,8 @@ export const PropertyMap = ({ properties, activeId, scrollZoom = false, zoom, cl
   useEffect(() => {
     markersRef.current.forEach((marker, id) => {
       const el = marker.getElement();
-      const pill = el.firstElementChild;
-      if (pill) pill.className = pillClass(id === activeId);
+      const pin = el.querySelector('.property-map-marker__pin');
+      if (pin) pin.className = `property-map-marker__pin ${markerPinClass(id === activeId)}`;
       el.style.zIndex = id === activeId ? '10' : '';
     });
   }, [activeId, ready, properties]);
@@ -136,6 +166,9 @@ export const PropertyMap = ({ properties, activeId, scrollZoom = false, zoom, cl
     <div className={cn('relative overflow-hidden rounded-xl bg-mist', className)}>
       {/* Mapbox impose position: relative à ce conteneur : sa taille doit venir de h-full, pas de inset-0. */}
       <div ref={containerRef} className="size-full" />
+      <p className="property-map-note absolute bottom-3 left-3 z-10 max-w-[calc(100%-72px)] rounded-md bg-white/95 px-2.5 py-1.5 text-xs text-ink shadow-sm">
+        {t('map.approximateLocation')}
+      </p>
       {!ready && (
         <div className="absolute inset-0 flex items-center justify-center text-sm text-muted">
           <MapPin className={cn('size-6 text-cobalt/40', !failed && 'animate-pulse')} strokeWidth={1.5} />

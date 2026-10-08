@@ -16,7 +16,8 @@
     "call": "Call",
     "callNumber": "Call {{phone}}",
     "skipToContent": "Skip to content",
-    "hours": "Mon–Sat, 8 am – 7 pm"
+    "hours": "Mon–Sat, 8 am – 7 pm",
+    "approximateLocation": "Approximate neighborhood location · exact address available on request"
   },
   "listing": {
     "SALE": "For sale",

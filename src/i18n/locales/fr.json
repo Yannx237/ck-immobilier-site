@@ -16,7 +16,8 @@
     "call": "Appeler",
     "callNumber": "Appeler le {{phone}}",
     "skipToContent": "Aller au contenu",
-    "hours": "Lun–sam, 8 h – 19 h"
+    "hours": "Lun–sam, 8 h – 19 h",
+    "approximateLocation": "Position indicative du quartier · adresse exacte communiquée sur demande"
   },
   "listing": {
     "SALE": "À vendre",
